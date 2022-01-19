@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      login: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
