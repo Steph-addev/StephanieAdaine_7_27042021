@@ -31,20 +31,17 @@ module.exports = {
       },
       adminRole: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+        allowNull: true,
       },
       username: {
         type: Sequelize.STRING,
         defaultValue: "username",
       },
-      name: {
+      department: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      firstname: {
+      workplace: {
         type: Sequelize.STRING,
         allowNull: true,
       },

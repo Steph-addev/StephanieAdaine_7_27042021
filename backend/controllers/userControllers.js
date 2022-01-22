@@ -2,10 +2,7 @@ const { User } = require("../models");
 
 exports.createUser = (req, res) => {
   User.create({
-    email: req.body.email,
-    password: req.body.password,
     adminRole: req.body.adminRole,
-    username: req.body.username,
     name: req.body.name,
     firstname: req.body.firstname,
     profileImage: req.body.profileImage,

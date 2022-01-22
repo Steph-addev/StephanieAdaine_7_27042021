@@ -37,17 +37,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       adminRole: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
       },
       username: {
         type: DataTypes.STRING,
         defaultValue: "username",
       },
-      name: DataTypes.STRING,
-      firstname: DataTypes.STRING,
+      department: DataTypes.STRING,
+      workplace: DataTypes.STRING,
       profileImage: DataTypes.BLOB,
       profileDesc: DataTypes.STRING,
     },
