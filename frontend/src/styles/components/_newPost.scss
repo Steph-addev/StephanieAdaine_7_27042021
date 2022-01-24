@@ -1,0 +1,15 @@
+.newpost {
+  .newpost-news {
+    background-color: rgb(221, 218, 218);
+    border-radius: 30px;
+    width: 550px;
+    height: 240px;
+    &_likeComment {
+      align-items: baseline;
+    }
+  }
+  .newpost-image_profile {
+    height: 50px;
+    width: 50px;
+  }
+}

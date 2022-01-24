@@ -1,0 +1,12 @@
+//Global styles
+@import "./settings";
+
+//Pages's styles
+@import "./pages/login";
+@import "./pages/profile";
+@import "./pages/home";
+
+//Components's styles
+@import "./components/navbar";
+@import "./components/addPost";
+@import "./components/newpost";
