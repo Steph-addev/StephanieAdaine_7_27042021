@@ -3,8 +3,8 @@ const { User } = require("../models");
 exports.createUser = (req, res) => {
   User.create({
     adminRole: req.body.adminRole,
-    name: req.body.name,
-    firstname: req.body.firstname,
+    department: req.body.name,
+    workplace: req.body.firstname,
     profileImage: req.body.profileImage,
     profileDesc: req.body.profileDesc,
   })

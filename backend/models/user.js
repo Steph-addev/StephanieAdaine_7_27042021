@@ -40,7 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        defaultValue: "username",
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
       department: DataTypes.STRING,
       workplace: DataTypes.STRING,

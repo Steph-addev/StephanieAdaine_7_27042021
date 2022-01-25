@@ -35,7 +35,10 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING,
-        defaultValue: "username",
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
       department: {
         type: Sequelize.STRING,

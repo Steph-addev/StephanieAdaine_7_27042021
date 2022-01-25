@@ -4,17 +4,18 @@ const morgan = require("morgan");
 const cors = require("cors");
 const mysql = require("mysql2");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 //Import files & folders
 const db = require("./models");
 const usersRoutes = require("./routes/userRoutes");
 const postsRoutes = require("./routes/postRoutes");
-const commentsRoutes = require("./routes/commentRoutes");
 const authsRoutes = require("./routes/authRoutes");
 
 let corsOptions = {
-  origin: "https//localhost:8081",
+  origin: process.env.CLIENT_URL,
+  credentials: true,
 };
 
 //Connexion automatique à la database avec sequelize
@@ -32,6 +33,7 @@ const app = express();
 
 app.use(cors(corsOptions));
 app.use(morgan("dev"));
+app.use(cookieParser());
 app.use(express.json());
 
 app.use("/images", express.static(path.join(__dirname, "images")));
@@ -39,7 +41,6 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 //Endpoints & Controllers
 app.use("/users", usersRoutes);
 app.use("/posts", postsRoutes);
-app.use("/comments", commentsRoutes);
 app.use("/authentification", authsRoutes);
 
 db.sequelize.sync({ force: true }).then((req) => {
