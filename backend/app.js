@@ -17,7 +17,7 @@ const multer = require("./middlewares/multer-config");
 
 //Import variables
 let corsOptions = {
-  origin: process.env.CLIENT_URL,
+  origin: "http://localhost:3000",
   credentials: true,
   allowedHeaders: ["sessionId", "Content-Type"],
   exposedHeaders: ["sessionId"],

@@ -7,6 +7,8 @@ function Signin() {
   let emailError = document.getElementById("email-check-error");
   let passwordError = document.getElementById("password-check-error");
 
+  const [loginStatus, setloginStatus] = useState(false);
+
   const subConnection = (e) => {
     e.preventDefault();
     axios({
@@ -24,12 +26,15 @@ function Signin() {
         if (resp.data.errors) {
           emailError.textContent = resp.data.errors.email;
           passwordError.textContent = resp.data.errors.password;
+          setloginStatus(false);
         } else {
           window.location = "/accueil/";
+          setloginStatus(true);
         }
       })
       .catch((err) => {
         console.log(err);
+        setloginStatus(false);
       });
   };
 
@@ -48,7 +53,9 @@ function Signin() {
               <input type="password" id="password" className="form control" value={password} onChange={(e) => setPassword(e.target.value)}></input>
               <span id="password-check-error"></span>
             </div>
-            <button type="submit">Se connecter</button>
+            <button type="submit" status={loginStatus.toString()}>
+              Se connecter
+            </button>
           </form>
         </div>
       </div>

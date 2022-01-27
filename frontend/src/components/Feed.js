@@ -8,7 +8,7 @@ function Feed() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get(`http://localhost:5000/posts/`);
+      const res = await axios.get(`http://localhost:5000/posts`);
       console.log(res);
       setNewPost(res.data);
       console.log(res.data);

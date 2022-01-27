@@ -10,7 +10,7 @@ function NewPost() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`http://localhost:5000/users/`);
+      const res = await axios.get(`http://localhost:5000/users`);
       console.log(res);
       setUser(res.data);
     };

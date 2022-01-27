@@ -33,15 +33,14 @@ exports.login = (req, res) => {
   User.findOne({ where: { email: req.body.email } })
     .then((user) => {
       if (!user) {
-        return res.status(401).json({ error: "Utilisateur non trouvé !" });
+        return res.status(401).json({ error: "Utilisateur non trouvé !", auth: false });
       }
       bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
           if (!valid) {
-            return res.status(401).json({ error: "Mot de passe incorrect !" });
+            return res.status(401).json({ error: "Mot de passe incorrect !", auth: false });
           }
-
           const token = jwt.sign({ userId: user.uuid }, process.env.HIDDEN_TOKEN, { expiresIn: maxAge });
           res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge });
           console.log("Login réussie !");
@@ -63,5 +62,6 @@ exports.login = (req, res) => {
 
 exports.logout = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
+  res.send("You are disconnected");
   res.redirect("/");
 };
