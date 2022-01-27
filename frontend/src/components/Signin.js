@@ -4,22 +4,29 @@ import axios from "axios";
 function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let emailError = document.getElementById("email-check-error");
+  let passwordError = document.getElementById("password-check-error");
 
   const subConnection = (e) => {
     e.preventDefault();
     axios({
       method: "post",
-      url: "http://localhost:5000/authentification/connection",
+      url: "http://localhost:5000/authentification/login",
       credentials: true,
       data: {
         email: email,
         password: password,
       },
     })
-      .then((response) => {
-        console.log(response);
-        console.log(response.data);
-        window.location = "/accueil/";
+      .then((resp) => {
+        console.log(resp);
+        console.log(resp.data);
+        if (resp.data.errors) {
+          emailError.textContent = resp.data.errors.email;
+          passwordError.textContent = resp.data.errors.password;
+        } else {
+          window.location = "/accueil/";
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -34,10 +41,12 @@ function Signin() {
             <div className="login-box_connection--email form-group">
               <label htmlFor="email">Email:</label>
               <input type="email" id="email" className="form control" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+              <span id="email-check-error"></span>
             </div>
             <div className="login-box_connection--password">
               <label htmlFor="password">Mot de passe:</label>
               <input type="password" id="password" className="form control" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+              <span id="password-check-error"></span>
             </div>
             <button type="submit">Se connecter</button>
           </form>

@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Posts", {
+    await queryInterface.createTable("Likes", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,27 +16,17 @@ module.exports = {
           key: "uuid",
         },
       },
+      PostId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Posts",
+          key: "uuid",
+        },
+      },
       uuid: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
-      },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        required: true,
-      },
-      content: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        required: true,
-      },
-      images: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      likes: {
-        type: Sequelize.INTEGER,
-        defaultValue: "0",
       },
       createdAt: {
         allowNull: false,
@@ -49,6 +39,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Posts");
+    await queryInterface.dropTable("Likes");
   },
 };

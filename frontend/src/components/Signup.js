@@ -19,7 +19,7 @@ function Signup() {
       },
     })
       .then((response) => {
-        window.location = "/accueil";
+        /*        window.location = "/accueil"; */
         console.log(response);
         console.log(response.data);
       })

@@ -49,7 +49,7 @@ module.exports = {
         allowNull: true,
       },
       profileImage: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
         allowNull: true,
       },
       profileDesc: {

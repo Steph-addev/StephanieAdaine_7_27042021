@@ -47,7 +47,7 @@ exports.deletePost = (req, res) => {
 };
 
 exports.modifyPost = (req, res) => {
-  Post.update({ ...req.body }, { where: { uuid: req.params.uuid } })
+  Post.update({ ...req.body.content }, { where: { uuid: req.params.uuid } })
     .then(() => res.status(200).json({ message: "Le post a été modifié !" }))
     .catch((err) => {
       if (err) {

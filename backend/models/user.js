@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       department: DataTypes.STRING,
       workplace: DataTypes.STRING,
-      profileImage: DataTypes.BLOB,
+      profileImage: DataTypes.STRING,
       profileDesc: DataTypes.STRING,
     },
     {

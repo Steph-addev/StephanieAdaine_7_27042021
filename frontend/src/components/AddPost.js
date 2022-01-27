@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaImage } from "react-icons/fa";
 import profileImg from "../assets/icon.svg";
+import axios from "axios";
 
 function AddPost() {
+  const [text, setText] = useState("");
+
+  const addOnePost = (e) => {
+    e.preventDefault();
+    axios({
+      method: "post",
+      url: "http://localhost:5000/posts",
+      credentials: true,
+      data: {
+        content: text,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <div className="addPost d-flex justify-content-center">
@@ -11,15 +33,17 @@ function AddPost() {
             <img src={profileImg} className="addPost-image_profile" alt="test"></img>
             <p>Exprimez-vous</p>
           </div>
-          <textarea placeholder="Votre message ici" className="my-3"></textarea>
-          <div className="d-flex justify-content-around">
-            <button className="button-style button-style_image">
-              <FaImage />
-            </button>
-            <button type="submit" className="button-style button-style_publish">
-              Publier
-            </button>
-          </div>
+          <form onSubmit={addOnePost}>
+            <textarea type="text" placeholder="Votre message ici" className="my-3" value={text} onChange={(e) => setText(e.target.value)}></textarea>
+            <div className="d-flex justify-content-around">
+              <button className="button-style button-style_image">
+                <FaImage />
+              </button>
+              <button type="submit" className="button-style button-style_publish">
+                Publier
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-//Import pluggins
+//Import pluggins to rule the APP
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -9,16 +9,23 @@ require("dotenv").config();
 
 //Import files & folders
 const db = require("./models");
-const usersRoutes = require("./routes/userRoutes");
-const postsRoutes = require("./routes/postRoutes");
-const authsRoutes = require("./routes/authRoutes");
+const usersRoute = require("./routes/userRoutes");
+const postsRoute = require("./routes/postRoutes");
+const authsRoute = require("./routes/authRoutes");
+const authsMiddleware = require("./middlewares/authMiddlewares");
+const multer = require("./middlewares/multer-config");
 
+//Import variables
 let corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
+  allowedHeaders: ["sessionId", "Content-Type"],
+  exposedHeaders: ["sessionId"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
 };
 
-//Connexion automatique à la database avec sequelize
+//Automatic connection to database with sequelize
 const { sequelize } = require("./models");
 sequelize
   .authenticate()
@@ -36,16 +43,28 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/images", express.static(path.join(__dirname, "images")));
+//Middleware jwt on each routes
+/* app.get("*", authsMiddleware, (req, res) => {
+  res.send("You are authenticate");
+}); */
 
 //Endpoints & Controllers
-app.use("/users", usersRoutes);
-app.use("/posts", postsRoutes);
-app.use("/authentification", authsRoutes);
+app.use("/users", usersRoute);
+app.use("/posts", postsRoute);
+app.use("/authentification", authsRoute);
 
-db.sequelize.sync({ force: true }).then((req) => {
+//Middleware to add images to the App
+app.post("/upload", multer, (req, res, next) => {
+  console.log(req.file);
+  res.send("Image uploaded");
+  next();
+});
+app.use("/images", express.static(path.join(__dirname, "images")));
+
+//Automatic update of the to database
+/* db.sequelize.sync({ force: true }).then((req) => {
   app.listen({ port: 3001 });
   console.log("Server is on!");
-});
+}); */
 
 module.exports = app;

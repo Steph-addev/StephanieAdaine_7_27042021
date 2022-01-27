@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ProfilPic from "../assets/profile-picture.png";
 import axios from "axios";
+import ProfilePicture from "./ProfilePicture";
 
 function ProfileForm() {
   const [profileName, setprofileName] = useState("");
@@ -35,14 +35,10 @@ function ProfileForm() {
     <div>
       <div className="profileForm">
         <h1>Mon profil</h1>
+        <div>
+          <ProfilePicture />
+        </div>
         <form className="profileForm-box" onSubmit={setProfile}>
-          <div className="profileForm-box_image d-flex">
-            <img src={ProfilPic} alt="" className="profileForm-box_image--picture"></img>
-            <input type="file" className="profileForm-box_image--input"></input>
-            <label className="profileForm-box_image--label" htmlFor="file">
-              Changer sa photo de profil
-            </label>
-          </div>
           <div>
             <label>Nom de profil:</label>
             <input id="profileName" value={profileName} onChange={(e) => setprofileName(e.target.value)}></input>
