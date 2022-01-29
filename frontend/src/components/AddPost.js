@@ -3,21 +3,33 @@ import { FaImage } from "react-icons/fa";
 import profileImg from "../assets/icon.svg";
 import axios from "axios";
 
-function AddPost() {
+function AddPost({ props }) {
+  console.log(props.length);
+
+  function getUserId(userId) {
+    for (let a = 0; a < props.length; a++) {
+      let userId = props[a].UserId;
+    }
+  }
+
   const [text, setText] = useState("");
+  const [title, setTitle] = useState("");
 
   const addOnePost = (e) => {
+    getUserId();
+
     e.preventDefault();
     axios({
       method: "post",
       url: "http://localhost:5000/posts",
       credentials: true,
       data: {
+        UserId: "userPostId",
+        title: title,
         content: text,
       },
     })
       .then((response) => {
-        console.log(response);
         console.log(response.data);
       })
       .catch((err) => {
@@ -34,6 +46,7 @@ function AddPost() {
             <p>Exprimez-vous</p>
           </div>
           <form onSubmit={addOnePost}>
+            <input value={title} onChange={(e) => setTitle(e.target.value)}></input>
             <textarea type="text" placeholder="Votre message ici" className="my-3" value={text} onChange={(e) => setText(e.target.value)}></textarea>
             <div className="d-flex justify-content-around">
               <button className="button-style button-style_image">

@@ -5,13 +5,13 @@ import axios from "axios";
 
 function Feed() {
   const [newPost, setNewPost] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get(`http://localhost:5000/posts`);
-      console.log(res);
-      setNewPost(res.data);
-      console.log(res.data);
+      const postResults = await axios.get(`http://localhost:5000/posts`);
+      setNewPost(postResults.data);
+      setUser(postResults.data);
     };
     fetchPosts();
   }, []);
@@ -19,7 +19,7 @@ function Feed() {
   return (
     <div className="feed">
       <div className="feed-box p-3">
-        <AddPost />
+        <AddPost props={user} />
         {newPost.map((param) => (
           <NewPost key={param.id} post={param} />
         ))}

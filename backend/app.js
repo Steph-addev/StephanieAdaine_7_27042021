@@ -13,7 +13,6 @@ const usersRoute = require("./routes/userRoutes");
 const postsRoute = require("./routes/postRoutes");
 const authsRoute = require("./routes/authRoutes");
 const authsMiddleware = require("./middlewares/authMiddlewares");
-const multer = require("./middlewares/multer-config");
 
 //Import variables
 let corsOptions = {
@@ -53,12 +52,7 @@ app.use("/users", usersRoute);
 app.use("/posts", postsRoute);
 app.use("/authentification", authsRoute);
 
-//Middleware to add images to the App
-app.post("/upload", multer, (req, res, next) => {
-  console.log(req.file);
-  res.send("Image uploaded");
-  next();
-});
+//Images access link
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 //Automatic update of the to database

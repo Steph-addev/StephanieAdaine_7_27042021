@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
     }
-    toJSON() {
+    /*     toJSON() {
       return { ...this.get(), id: undefined, UserId: undefined };
-    }
+    } */
   }
   Post.init(
     {
@@ -31,7 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       images: DataTypes.STRING,
       create_at: DataTypes.DATE,
       update_at: DataTypes.DATE,
-      likes: DataTypes.INTEGER,
+      likes: {
+        type: DataTypes.INTEGER,
+        defaultValue: "0",
+      },
     },
     {
       sequelize,

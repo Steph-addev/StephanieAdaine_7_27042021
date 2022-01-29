@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
+import Signin from "./Signin";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ function Signup() {
       },
     })
       .then((response) => {
-        /*        window.location = "/accueil"; */
+        window.location = "/";
         console.log(response);
         console.log(response.data);
       })

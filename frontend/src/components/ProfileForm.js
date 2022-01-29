@@ -1,67 +1,83 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import ProfilePicture from "./ProfilePicture";
 
-function ProfileForm() {
+function ProfileForm({ profile }) {
+  let navigate = useNavigate();
   const [profileName, setprofileName] = useState("");
   const [profilePassword, setprofilePassword] = useState("");
   const [profileEmail, setprofileEmail] = useState("");
   const [profileBio, setprofileBio] = useState("");
   const [profileDepartment, setprofileDepartment] = useState("");
   const [profileSite, setprofileSite] = useState("");
+  const [profileUser, setProfileUser] = useState({});
 
   const setProfile = (event) => {
     event.preventDefault();
     /*     const recupUrl = window.location.search;
     const recupId = new URLSearchParams(recupUrl);
     const userId = recupId.get("uuid"); */
-    axios
-      .get("/users/e684e7bc-5138-48b9-896f-6e4feeb1622f")
-      .then(function (response) {
-        // handle success
-        console.log(response);
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
   };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/users/1`) // trouver le moyen de liéer l'id à la session
+      .then((userId) => {
+        setProfileUser(userId.data);
+        console.log(userId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div>
       <div className="profileForm">
-        <h1>Mon profil</h1>
+        <h1>Profil de {profileUser.username}</h1>
         <div>
-          <ProfilePicture />
+          <div>
+            <form className="profileForm-box_image d-flex" method="post" action="http://localhost:5000/users/1/upload" encType="multipart/form-data" data={profileUser.username}>
+              <img src={profileUser.profileImage} alt="" className="profileForm-box_image--picture"></img>
+              <input type="file" className="profileForm-box_image--input" name="image"></input>
+              <input
+                type="submit"
+                className="profileForm-box_image--button"
+                onClick={() => {
+                  navigate("/profil");
+                }}
+              ></input>
+              <label className="profileForm-box_image--label" htmlFor="file">
+                Changer sa photo de profil
+              </label>
+            </form>
+          </div>
         </div>
         <form className="profileForm-box" onSubmit={setProfile}>
           <div>
             <label>Nom de profil:</label>
-            <input id="profileName" value={profileName} onChange={(e) => setprofileName(e.target.value)}></input>
+            <input placeholder={profileUser.username} id="profileName" value={profileName} onChange={(e) => setprofileName(e.target.value)}></input>
           </div>
           <div>
             <label>Email:</label>
-            <input id="profileEmail" value={profileEmail} onChange={(e) => setprofileEmail(e.target.value)}></input>
+            <input placeholder={profileUser.email} id="profileEmail" value={profileEmail} onChange={(e) => setprofileEmail(e.target.value)}></input>
           </div>
           <div>
             <label>Mot de passe:</label>
-            <input id="profilePassword" value={profilePassword} onChange={(e) => setprofilePassword(e.target.value)}></input>
+            <input type="password" id="profilePassword" value={profilePassword} onChange={(e) => setprofilePassword(e.target.value)}></input>
           </div>
           <div>
             <label>Bio:</label>
-            <textarea id="profileBio" value={profileBio} onChange={(e) => setprofileBio(e.target.value)}></textarea>
+            <textarea placeholder={profileUser.profileDesc} id="profileBio" value={profileBio} onChange={(e) => setprofileBio(e.target.value)}></textarea>
           </div>
           <div>
             <label>Département:</label>
-            <input id="profileDepartment" value={profileDepartment} onChange={(e) => setprofileDepartment(e.target.value)}></input>
+            <input placeholder={profileUser.department} id="profileDepartment" value={profileDepartment} onChange={(e) => setprofileDepartment(e.target.value)}></input>
           </div>
           <div>
             <label>Site de travail:</label>
-            <input id="profileSite" value={profileSite} onChange={(e) => setprofileSite(e.target.value)}></input>
+            <input placeholder={profileUser.workplace} id="profileSite" value={profileSite} onChange={(e) => setprofileSite(e.target.value)}></input>
           </div>
         </form>
       </div>

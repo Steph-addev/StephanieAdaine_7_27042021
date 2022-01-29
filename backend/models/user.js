@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.User.hasMany(models.Post);
     }
-    toJSON() {
+    /*     toJSON() {
       return { ...this.get(), id: undefined };
-    }
+    } */
   }
   User.init(
     {
