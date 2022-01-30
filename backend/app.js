@@ -43,9 +43,9 @@ app.use(cookieParser());
 app.use(express.json());
 
 //Middleware jwt on each routes
-/* app.get("*", authsMiddleware, (req, res) => {
+app.get("*", authsMiddleware, (req, res) => {
   res.send("You are authenticate");
-}); */
+});
 
 //Endpoints & Controllers
 app.use("/users", usersRoute);

@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
-  try {
-    const token = req.cookies.jwt;
+  const token = req.cookies.jwt;
+  /*   try {
+
     const decodedToken = jwt.verify(token, process.env.HIDDEN_TOKEN);
     const userId = decodedToken.userId;
     console.log("authMidd:", userId);
@@ -13,9 +14,9 @@ module.exports = (req, res, next) => {
     res.status(401).json({
       error: new Error("Invalid request"),
     });
-  }
+  } */
 
-  /*   if (!token) {
+  if (!token) {
     res.send("You need a token to access");
   } else {
     jwt.verify(token, process.env.HIDDEN_TOKEN, (err, decodedToken) => {
@@ -26,5 +27,5 @@ module.exports = (req, res, next) => {
         next();
       }
     });
-  } */
+  }
 };

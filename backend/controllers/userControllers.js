@@ -3,6 +3,9 @@ const fs = require("fs");
 
 exports.createUser = (req, res) => {
   User.create({
+    email: req.body.email,
+    password: req.body.password,
+    username: req.body.username,
     adminRole: req.body.adminRole,
     department: req.body.name,
     workplace: req.body.firstname,
@@ -28,7 +31,7 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.getOneUser = (req, res) => {
-  User.findOne({ where: { id: req.params.id } })
+  User.findOne({ where: { uuid: req.params.uuid } })
     .then((user) => res.send(user).json())
     .catch((err) => {
       if (err) {

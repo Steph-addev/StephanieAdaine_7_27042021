@@ -1,30 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaImage } from "react-icons/fa";
 import profileImg from "../assets/icon.svg";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
-function AddPost({ props }) {
-  console.log(props.length);
-
-  function getUserId(userId) {
-    for (let a = 0; a < props.length; a++) {
-      let userId = props[a].UserId;
-    }
-  }
-
+function AddPost({ userImage }) {
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
+  const { user } = useContext(AuthContext);
 
   const addOnePost = (e) => {
-    getUserId();
-
     e.preventDefault();
     axios({
       method: "post",
       url: "http://localhost:5000/posts",
       credentials: true,
       data: {
-        UserId: "userPostId",
+        UserId: user.id,
         title: title,
         content: text,
       },
@@ -42,7 +34,7 @@ function AddPost({ props }) {
       <div className="addPost d-flex justify-content-center">
         <div className="addPost-publish px-4 py-4">
           <div className="d-flex ">
-            <img src={profileImg} className="addPost-image_profile" alt="test"></img>
+            <img src={userImage.profileImage} className="addPost-image_profile" alt="test"></img>
             <p>Exprimez-vous</p>
           </div>
           <form onSubmit={addOnePost}>

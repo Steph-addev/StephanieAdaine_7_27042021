@@ -21,7 +21,7 @@ module.exports.uploadPicture = async (req, res, next) => {
   User.findOne({ where: { id: req.params.id } })
     .then((User) => {
       User.update({ profileImage: `${req.protocol}://${req.get("host")}/images/${fileName}` })
-        .then(() => res.status(200).redirect(process.env.CLIENT_URL + "/profil"))
+        .then(() => res.status(200).json({ message: "La photo de profil a été mise à jour" }))
         .catch((error) => res.status(400).json({ error }));
     })
     .catch((err) => {

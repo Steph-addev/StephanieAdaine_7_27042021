@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AddPost from "./AddPost";
 import NewPost from "./NewPost";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
-function Feed() {
+function Feed({ data }) {
   const [newPost, setNewPost] = useState([]);
-  const [user, setUser] = useState({});
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const postResults = await axios.get(`http://localhost:5000/posts`);
-      setNewPost(postResults.data);
-      setUser(postResults.data);
+      try {
+        const res = await axios.get(process.env.REACT_APP_SERVER_URL + "/posts");
+        setNewPost(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchPosts();
   }, []);
@@ -19,7 +23,7 @@ function Feed() {
   return (
     <div className="feed">
       <div className="feed-box p-3">
-        <AddPost props={user} />
+        <AddPost userImage={data} />
         {newPost.map((param) => (
           <NewPost key={param.id} post={param} />
         ))}

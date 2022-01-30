@@ -1,14 +1,16 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useContext } from "react";
 import profileImg from "../assets/icon.svg";
 import { FaRegThumbsUp } from "react-icons/fa";
-/* import { FaRegThumbsDown } from "react-icons/fa"; */
 import { FaRegCommentAlt } from "react-icons/fa";
 import axios from "axios";
+import { format } from "timeago.js";
+import { AuthContext } from "../context/AuthContext";
 
 function NewPost({ post }) {
-  const [user, setUser] = useState({});
   const [like, setLike] = useState(post.likes);
   const [liked, setLiked] = useState(false);
+  const { user } = useContext(AuthContext);
+  const [dataUser, setDataUser] = useState({});
 
   const likeClick = () => {
     setLike(liked ? like - 1 : like + 1);
@@ -17,9 +19,9 @@ function NewPost({ post }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${post.UserId}`)
-      .then((userId) => {
-        setUser(userId.data);
+      .get(`http://localhost:5000/users/${user.userId}`)
+      .then((userApi) => {
+        setDataUser(userApi.data);
       })
       .catch((err) => {
         console.log(err);
@@ -31,11 +33,11 @@ function NewPost({ post }) {
         <div className="newpost-news container">
           <div className="row">
             <div className="col-2">
-              <img src={profileImg} className="newpost-image_profile" alt="test"></img>
+              <img src={dataUser.profileImage} className="newpost-image_profile" alt="test"></img>
             </div>
             <div className="col-6 ">
-              <p className="mb-0">{user.username}</p>
-              <p>{post.createdAt}</p>
+              <p className="mb-0">{dataUser.username}</p>
+              <p>{format(post.createdAt)}</p>
             </div>
           </div>
           <div className="row">

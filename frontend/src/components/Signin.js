@@ -1,17 +1,26 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useContext } from "react";
 import axios from "axios";
+import { loginCall } from "../apiCall";
+import { AuthContext } from "../context/AuthContext";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import Home from "../pages/Home";
 
 function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let emailError = document.getElementById("email-check-error");
-  let passwordError = document.getElementById("password-check-error");
-
-  const [loginStatus, setloginStatus] = useState(false);
+  /*   let emailError = document.getElementById("email-check-error");
+  let passwordError = document.getElementById("password-check-error"); */
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  const [authUser, setAuthUser] = useState(false);
+  let navigate = useNavigate();
+  const location = useLocation();
 
   const subConnection = (e) => {
     e.preventDefault();
-    axios({
+    loginCall({ email: email, password: password }, dispatch);
+    console.log(user);
+
+    /*     axios({
       method: "post",
       url: "http://localhost:5000/authentification/login",
       credentials: true,
@@ -35,7 +44,7 @@ function Signin() {
       .catch((err) => {
         console.log(err);
         setloginStatus(false);
-      });
+      }); */
   };
 
   return (
@@ -45,16 +54,27 @@ function Signin() {
           <form action="" onSubmit={subConnection}>
             <div className="login-box_connection--email form-group">
               <label htmlFor="email">Email:</label>
-              <input type="email" id="email" className="form control" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+              <input required type="email" id="email" className="form control" value={email} onChange={(e) => setEmail(e.target.value)}></input>
               <span id="email-check-error"></span>
             </div>
             <div className="login-box_connection--password">
               <label htmlFor="password">Mot de passe:</label>
-              <input type="password" id="password" className="form control" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+              <input required type="password" id="password" className="form control" value={password} onChange={(e) => setPassword(e.target.value)}></input>
               <span id="password-check-error"></span>
             </div>
-            <button type="submit" status={loginStatus.toString()}>
-              Se connecter
+            <button
+              type="submit"
+              disabled={isFetching}
+              onClick={() => {
+                if (user.auth == true) {
+                  setAuthUser({ loggedIn: true });
+                  navigate("/accueil");
+                } else {
+                  navigate("/");
+                }
+              }}
+            >
+              {isFetching ? "chargement" : "Se connecter"}
             </button>
           </form>
         </div>

@@ -8,7 +8,7 @@ const uploadCtrl = require("../controllers/uploadControllers");
 //Routes for users
 router.post("/", usersCtrl.createUser);
 router.get("/", usersCtrl.getAllUsers);
-router.get("/:id", usersCtrl.getOneUser);
+router.get("/:uuid", usersCtrl.getOneUser);
 router.put("/:id", usersCtrl.modifyUser);
 router.delete("/:id", usersCtrl.deleteUser);
 

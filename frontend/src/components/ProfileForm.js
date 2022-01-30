@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ProfilePicture from "./ProfilePicture";
+import { AuthContext } from "../context/AuthContext";
 
 function ProfileForm({ profile }) {
   let navigate = useNavigate();
@@ -12,6 +13,7 @@ function ProfileForm({ profile }) {
   const [profileDepartment, setprofileDepartment] = useState("");
   const [profileSite, setprofileSite] = useState("");
   const [profileUser, setProfileUser] = useState({});
+  const { user } = useContext(AuthContext);
 
   const setProfile = (event) => {
     event.preventDefault();
@@ -22,7 +24,7 @@ function ProfileForm({ profile }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/1`) // trouver le moyen de liéer l'id à la session
+      .get(`http://localhost:5000/users/${user.userId}`) // trouver le moyen de liéer l'id à la session
       .then((userId) => {
         setProfileUser(userId.data);
         console.log(userId);
