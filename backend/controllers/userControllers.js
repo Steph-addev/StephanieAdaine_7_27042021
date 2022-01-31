@@ -31,7 +31,7 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.getOneUser = (req, res) => {
-  User.findOne({ where: { uuid: req.params.uuid } })
+  User.findOne({ where: { id: req.params.id } })
     .then((user) => res.send(user).json())
     .catch((err) => {
       if (err) {
@@ -41,7 +41,7 @@ exports.getOneUser = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
-  User.destroy({ where: { uuid: req.params.uuid } })
+  User.destroy({ where: { id: req.params.id } })
     .then(() => res.status(200).json({ message: "L'utilisateur a été supprimé !" }))
     .catch((err) => {
       if (err) {
@@ -51,7 +51,7 @@ exports.deleteUser = (req, res) => {
 };
 
 exports.modifyUser = (req, res) => {
-  User.update({ ...req.body }, { where: { uuid: req.params.uuid } })
+  User.update({ ...req.body }, { where: { id: req.params.id } })
     .then(() => res.status(200).json({ message: "L'utilisateur a été modifié !" }))
     .catch((err) => {
       if (err) {

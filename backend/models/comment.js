@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
     }
-    toJSON() {
+    /*     toJSON() {
       return { ...this.get(), id: undefined, UserId: undefined, PostId: undefined };
-    }
+    } */
   }
   Comment.init(
     {

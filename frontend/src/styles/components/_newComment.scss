@@ -1,15 +1,12 @@
-.newcomment {
+.newcomment_content {
   background-color: rgb(172, 153, 153);
   -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
   box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
-  height: 70px; // A MODIFIER EN FONCTION DE LA TAILLE DU COMMENTAIRE
-  &_content {
-    margin-left: 20px;
-    h3 {
-      font-size: 18px;
-    }
-    p {
-      font-size: 14px;
-    }
+  height: 200px; // A MODIFIER EN FONCTION DE LA TAILLE DU COMMENTAIRE
+  h3 {
+    font-size: 18px;
+  }
+  p {
+    font-size: 14px;
   }
 }

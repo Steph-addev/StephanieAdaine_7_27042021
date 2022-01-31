@@ -41,15 +41,14 @@ exports.login = (req, res) => {
           if (!valid) {
             return res.status(401).json({ error: "Mot de passe incorrect !", auth: false });
           }
-          const token = jwt.sign({ userId: user.uuid }, process.env.HIDDEN_TOKEN, { expiresIn: maxAge });
+          const token = jwt.sign({ userId: user.id }, process.env.HIDDEN_TOKEN, { expiresIn: maxAge });
           res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge });
           console.log("Login réussie !");
           console.log("Création du token = ", token);
-          console.log(user.uuid);
+          console.log(user.id);
           res.status(200).json({
             auth: true,
-            userId: user.uuid,
-            id: user.id,
+            userId: user.id,
             token: token,
           });
         })

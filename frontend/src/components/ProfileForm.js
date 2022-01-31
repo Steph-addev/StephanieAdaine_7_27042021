@@ -31,7 +31,7 @@ function ProfileForm() {
 
   const deleteUser = (e) => {
     axios
-      .delete(`http://localhost:5000/users/${profileUser.uuid}`)
+      .delete(`http://localhost:5000/users/${profileUser.id}`)
       .then((res) => {
         console.log(res);
         console.log("L'utilisateur a été supprimé");
@@ -46,7 +46,7 @@ function ProfileForm() {
     e.preventDefault();
     if ((profileName, profileSite, profileBio, profilePassword, profileDepartment, profileEmail)) {
       axios
-        .put(`http://localhost:5000/users/${profileUser.uuid}`, userData)
+        .put(`http://localhost:5000/users/${profileUser.id}`, userData)
         .then((res) => {
           console.log(res);
           console.log("L'utilisateur a été modifé");
@@ -75,8 +75,8 @@ function ProfileForm() {
         <h1>Profil de {profileUser.username}</h1>
         <div>
           <div>
-            <form className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.uuid}/upload`} encType="multipart/form-data" data={profileUser.username}>
-              <img src={profileUser.profileImage} alt="" className="profileForm-box_image--picture"></img>
+            <form className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.id}/upload`} encType="multipart/form-data">
+              <img src={profileUser.profileImage} alt="photo de profil" className="profileForm-box_image--picture"></img>
               <input type="file" className="profileForm-box_image--input" name="image"></input>
               <input
                 type="submit"

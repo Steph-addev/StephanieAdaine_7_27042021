@@ -11,11 +11,11 @@ function AddComments({ postId, userInfo }) {
     e.preventDefault();
     axios({
       method: "patch",
-      url: `http://localhost:5000/posts/comment-add/${postId}`,
+      url: `http://localhost:5000/posts/comment-add/${postId.id}`,
       credentials: true,
       data: {
         UserId: userInfo,
-        PostId: postId,
+        PostId: postId.id,
         content: text,
       },
     })

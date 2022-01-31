@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import profileImg from "../assets/icon.svg";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
@@ -19,9 +19,9 @@ function AddPostPicture() {
   }, []);
 
   return (
-    <div>
+    <Fragment>
       <img src={dataUser.profileImage} className="addPost-image_profile" alt="Profile picture"></img>
-    </div>
+    </Fragment>
   );
 }
 

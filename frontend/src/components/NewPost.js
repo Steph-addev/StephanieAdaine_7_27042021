@@ -20,7 +20,7 @@ function NewPost({ post }) {
 
   const dataUpdate = {
     UserId: post.UserId,
-    uuid: post.uuid,
+    id: post.id,
     content: textUpdate,
   };
 
@@ -31,7 +31,7 @@ function NewPost({ post }) {
   const updatePost = async () => {
     if (textUpdate) {
       axios
-        .put(`http://localhost:5000/posts/${post.uuid}`, dataUpdate)
+        .put(`http://localhost:5000/posts/${post.id}`, dataUpdate)
         .then((res) => {
           console.log(res);
           console.log(res.data);
@@ -44,7 +44,7 @@ function NewPost({ post }) {
 
   const deletePost = async () => {
     axios
-      .delete(`http://localhost:5000/posts/${post.uuid}`)
+      .delete(`http://localhost:5000/posts/${post.id}`)
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -81,7 +81,6 @@ function NewPost({ post }) {
           <div className="row">
             <div className="col-1"></div>
             <div className="col-6 newpost">
-              <h2>{post.title}</h2>
               {isUpdated === false && <p>{post.content}</p>}
               {isUpdated && (
                 <div className="newpost-news_update">
@@ -93,13 +92,14 @@ function NewPost({ post }) {
                   </div>
                 </div>
               )}
-              <img src={post.images}></img>
+              <img src={post.images} alt="photo postée par utilisateur"></img>
               {dataUser.id === post.UserId && (
-                <div className="button-container d-flex">
-                  <div onClick={() => setIsUpdated(!isUpdated)}>
+                <div className="button-container row justify-content-end">
+                  <div onClick={() => setIsUpdated(!isUpdated)} className="newpost-box_icons--update col-1">
                     <FaPencilAlt />
                   </div>
                   <div
+                    className="newpost-box_icons--update col-1"
                     onClick={() => {
                       if (window.confirm("Voulez-vous supprimer votre publication?")) deletePost();
                     }}

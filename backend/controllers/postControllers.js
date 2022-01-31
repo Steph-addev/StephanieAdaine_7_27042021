@@ -1,22 +1,23 @@
 const { Post } = require("../models");
+const fs = require("fs");
+const { promisify } = require("util");
+const pipeline = promisify(require("stream").pipeline);
 
 exports.createPost = async (req, res) => {
-  if (req.file !== null) {
-    try {
-      //Check of the image's format
-      if (req.file.detectedMimeType !== "image/jpg" && req.file.detectedMimeType !== "image/jpeg" && req.file.detectedMimeType !== "image/png") throw "invalid image format";
-      //Check of the image's size
-      if (req.file.size > 500000) throw "image too heavy";
-    } catch (err) {
-      return res.status(201).json(err);
-    }
-    fileName = req.body.postId + "posts" + Date.now() + "jpg";
-    await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}../../images/posts/${fileName}`));
+  /*   try {
+    //Check of the image's format
+    if (req.file.detectedMimeType !== "image/jpg" && req.file.detectedMimeType !== "image/jpeg" && req.file.detectedMimeType !== "image/png") throw "invalid image format";
+    //Check of the image's size
+    if (req.file.size > 500000) throw "image too heavy";
+  } catch (err) {
+    return res.status(201).json(err);
   }
+ */
+  const fileName = req.body.postId + "posts" + Date.now() + "jpg";
+  /*  await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}../../images/posts/${fileName}`)); */
 
   Post.create({
     UserId: req.body.UserId,
-    title: req.body.title,
     content: req.body.content,
     images: req.file !== null ? `${req.protocol}://${req.get("host")}/images/${fileName}` : "",
     likes: req.body.likes,
@@ -40,7 +41,7 @@ exports.getAllPosts = (req, res) => {
 };
 
 exports.getOnePost = (req, res) => {
-  Post.findOne({ where: { uuid: req.params.uuid } })
+  Post.findOne({ where: { id: req.params.id } })
     .then((post) => res.send(post).json())
     .catch((err) => {
       if (err) {
@@ -50,7 +51,7 @@ exports.getOnePost = (req, res) => {
 };
 
 exports.deletePost = (req, res) => {
-  Post.destroy({ where: { uuid: req.params.uuid } })
+  Post.destroy({ where: { id: req.params.id } })
     .then(() => res.status(200).json({ message: "Le post a été supprimé !" }))
     .catch((err) => {
       if (err) {
@@ -60,7 +61,7 @@ exports.deletePost = (req, res) => {
 };
 
 exports.modifyPost = (req, res) => {
-  Post.update({ ...req.body }, { where: { uuid: req.params.uuid } })
+  Post.update({ ...req.body }, { where: { id: req.params.id } })
     .then(() => res.status(200).json({ message: "Le post a été modifié !" }))
     .catch((err) => {
       if (err) {

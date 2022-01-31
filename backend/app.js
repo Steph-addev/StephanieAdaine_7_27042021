@@ -56,9 +56,9 @@ app.use("/authentification", authsRoute);
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 //Automatic update of the to database
-/* db.sequelize.sync({ force: true }).then((req) => {
+db.sequelize.sync({ force: true }).then((req) => {
   app.listen({ port: 3001 });
   console.log("Server is on!");
-}); */
+});
 
 module.exports = app;

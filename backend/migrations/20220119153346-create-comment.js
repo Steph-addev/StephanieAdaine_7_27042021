@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Users",
-          key: "uuid",
+          key: "id",
         },
       },
       PostId: {
@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Posts",
-          key: "uuid",
+          key: "id",
         },
       },
       uuid: {
