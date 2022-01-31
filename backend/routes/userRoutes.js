@@ -9,10 +9,10 @@ const uploadCtrl = require("../controllers/uploadControllers");
 router.post("/", usersCtrl.createUser);
 router.get("/", usersCtrl.getAllUsers);
 router.get("/:uuid", usersCtrl.getOneUser);
-router.put("/:id", usersCtrl.modifyUser);
-router.delete("/:id", usersCtrl.deleteUser);
+router.put("/:uuid", usersCtrl.modifyUser);
+router.delete("/:uuid", usersCtrl.deleteUser);
 
 //Routes for uploads
-router.post("/:id/upload", upload.single("image"), uploadCtrl.uploadPicture);
+router.post("/:uuid/upload", upload.single("image"), uploadCtrl.uploadPicture);
 
 module.exports = router;

@@ -51,7 +51,7 @@ exports.deleteUser = (req, res) => {
 };
 
 exports.modifyUser = (req, res) => {
-  User.update({ ...req.body }, { where: { id: req.params.id } })
+  User.update({ ...req.body }, { where: { uuid: req.params.uuid } })
     .then(() => res.status(200).json({ message: "L'utilisateur a été modifié !" }))
     .catch((err) => {
       if (err) {

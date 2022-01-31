@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../assets/icon-left-font-monochrome-black.svg";
 import { useNavigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
+import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
   let navigate = useNavigate();
@@ -19,7 +20,6 @@ function Navbar() {
           <div className="navbar-nav">
             <a
               className="nav-item nav-link active"
-              href={Profile}
               onClick={() => {
                 navigate("/profil/");
               }}
@@ -28,7 +28,6 @@ function Navbar() {
             </a>
             <a
               className="nav-item nav-link"
-              href={Login}
               onClick={() => {
                 navigate("/");
               }}

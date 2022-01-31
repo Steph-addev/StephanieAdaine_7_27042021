@@ -5,16 +5,53 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import axios from "axios";
 import { format } from "timeago.js";
 import { AuthContext } from "../context/AuthContext";
+import Comments from "./Comments";
+import { FaPencilAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 
 function NewPost({ post }) {
   const [like, setLike] = useState(post.likes);
   const [liked, setLiked] = useState(false);
   const { user } = useContext(AuthContext);
   const [dataUser, setDataUser] = useState({});
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [textUpdate, setTextUpdate] = useState(null);
+  const [showComments, setShowComments] = useState(false);
+
+  const dataUpdate = {
+    UserId: post.UserId,
+    uuid: post.uuid,
+    content: textUpdate,
+  };
 
   const likeClick = () => {
     setLike(liked ? like - 1 : like + 1);
     setLiked(true);
+  };
+  const updatePost = async () => {
+    if (textUpdate) {
+      axios
+        .put(`http://localhost:5000/posts/${post.uuid}`, dataUpdate)
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const deletePost = async () => {
+    axios
+      .delete(`http://localhost:5000/posts/${post.uuid}`)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -27,6 +64,7 @@ function NewPost({ post }) {
         console.log(err);
       });
   }, []);
+
   return (
     <Fragment>
       <div className="newpost d-flex justify-content-center p-3">
@@ -44,8 +82,32 @@ function NewPost({ post }) {
             <div className="col-1"></div>
             <div className="col-6 newpost">
               <h2>{post.title}</h2>
-              <p>{post.content}</p>
+              {isUpdated === false && <p>{post.content}</p>}
+              {isUpdated && (
+                <div className="newpost-news_update">
+                  <textarea defaultValue={post.content} onChange={(e) => setTextUpdate(e.target.value)} />
+                  <div className="newpost-news_update--button-container">
+                    <button type="submit" className="newpost-news_update--btn" onClick={updatePost}>
+                      Valider les modifications
+                    </button>
+                  </div>
+                </div>
+              )}
               <img src={post.images}></img>
+              {dataUser.id === post.UserId && (
+                <div className="button-container d-flex">
+                  <div onClick={() => setIsUpdated(!isUpdated)}>
+                    <FaPencilAlt />
+                  </div>
+                  <div
+                    onClick={() => {
+                      if (window.confirm("Voulez-vous supprimer votre publication?")) deletePost();
+                    }}
+                  >
+                    <FaTrashAlt />
+                  </div>
+                </div>
+              )}
             </div>
             <div className="row text-center">
               <button className="col-4 d-flex newpost_likeComment">
@@ -53,17 +115,17 @@ function NewPost({ post }) {
                 <p>J'aime</p>
                 <p onClick={likeClick}>{like}</p>
               </button>
-              {/*<button className="col-4 d-flex newpost_likeComment">
-                <FaRegThumbsDown />
-                <p>Je n'aime pas</p>
-          
-              </button> */}
-              <button className="col-4 d-flex newpost_likeComment">
+              <button className="col-4 d-flex newpost_likeComment" onClick={() => setShowComments(!showComments)}>
                 <FaRegCommentAlt />
                 <p>Commenter</p>
               </button>
             </div>
           </div>
+          {showComments && (
+            <div className="row newpost-comments">
+              <Comments post={post} userInfo={dataUser} />
+            </div>
+          )}
         </div>
       </div>
     </Fragment>

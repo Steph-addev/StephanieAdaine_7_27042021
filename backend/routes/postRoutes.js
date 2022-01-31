@@ -12,11 +12,10 @@ router.put("/:uuid", postsCtrl.modifyPost);
 router.delete("/:uuid", postsCtrl.deletePost);
 
 //Routes for comments
-router.post("/comments", commentsCtrl.createComment);
-router.get("/comments", commentsCtrl.getAllComments);
-router.get("/comments/:uuid", commentsCtrl.getOneComment);
-router.put("/comments/:uuid", commentsCtrl.modifyComment);
-router.delete("/comments/:uuid", commentsCtrl.deleteComment);
+router.patch("/comment-add/:id", commentsCtrl.addComment);
+router.put("/comment-update/:id", commentsCtrl.modifyComment);
+router.get("/comment-display/:id", commentsCtrl.getComments);
+router.delete("/comment-delete/:id", commentsCtrl.deleteComment);
 
 // Routes for likes
 router.post("/:uuid/like", likesCtrl.likePost);

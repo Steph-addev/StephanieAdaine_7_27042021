@@ -4,9 +4,9 @@ import NewPost from "./NewPost";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
-function Feed({ data }) {
+function Feed() {
   const [newPost, setNewPost] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext); // A voir si la mention de cette fonction est toujours nécessaires?
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -23,7 +23,7 @@ function Feed({ data }) {
   return (
     <div className="feed">
       <div className="feed-box p-3">
-        <AddPost userImage={data} />
+        <AddPost />
         {newPost.map((param) => (
           <NewPost key={param.id} post={param} />
         ))}

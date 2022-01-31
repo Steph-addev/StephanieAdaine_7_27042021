@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ProfilePicture from "./ProfilePicture";
 import { AuthContext } from "../context/AuthContext";
+import ProfileButton from "./ProfileButton";
 
-function ProfileForm({ profile }) {
+function ProfileForm() {
   let navigate = useNavigate();
   const [profileName, setprofileName] = useState("");
   const [profilePassword, setprofilePassword] = useState("");
@@ -13,18 +13,53 @@ function ProfileForm({ profile }) {
   const [profileDepartment, setprofileDepartment] = useState("");
   const [profileSite, setprofileSite] = useState("");
   const [profileUser, setProfileUser] = useState({});
+
   const { user } = useContext(AuthContext);
+
+  const userData = {
+    username: profileName,
+    workplace: profileSite,
+    profileDesc: profileBio,
+    password: profilePassword,
+    department: profileDepartment,
+    email: profileEmail,
+  };
 
   const setProfile = (event) => {
     event.preventDefault();
-    /*     const recupUrl = window.location.search;
-    const recupId = new URLSearchParams(recupUrl);
-    const userId = recupId.get("uuid"); */
+  };
+
+  const deleteUser = (e) => {
+    axios
+      .delete(`http://localhost:5000/users/${profileUser.uuid}`)
+      .then((res) => {
+        console.log(res);
+        console.log("L'utilisateur a été supprimé");
+        window.location = "/";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const saveChanges = (e) => {
+    e.preventDefault();
+    if ((profileName, profileSite, profileBio, profilePassword, profileDepartment, profileEmail)) {
+      axios
+        .put(`http://localhost:5000/users/${profileUser.uuid}`, userData)
+        .then((res) => {
+          console.log(res);
+          console.log("L'utilisateur a été modifé");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${user.userId}`) // trouver le moyen de liéer l'id à la session
+      .get(`http://localhost:5000/users/${user.userId}`)
       .then((userId) => {
         setProfileUser(userId.data);
         console.log(userId);
@@ -40,7 +75,7 @@ function ProfileForm({ profile }) {
         <h1>Profil de {profileUser.username}</h1>
         <div>
           <div>
-            <form className="profileForm-box_image d-flex" method="post" action="http://localhost:5000/users/1/upload" encType="multipart/form-data" data={profileUser.username}>
+            <form className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.uuid}/upload`} encType="multipart/form-data" data={profileUser.username}>
               <img src={profileUser.profileImage} alt="" className="profileForm-box_image--picture"></img>
               <input type="file" className="profileForm-box_image--input" name="image"></input>
               <input
@@ -80,6 +115,14 @@ function ProfileForm({ profile }) {
           <div>
             <label>Site de travail:</label>
             <input placeholder={profileUser.workplace} id="profileSite" value={profileSite} onChange={(e) => setprofileSite(e.target.value)}></input>
+          </div>
+          <div>
+            <button type="submit" onClick={deleteUser}>
+              Supprimer mon compte
+            </button>
+            <button type="submit" onClick={saveChanges}>
+              Enregistrer les modifications
+            </button>
           </div>
         </form>
       </div>

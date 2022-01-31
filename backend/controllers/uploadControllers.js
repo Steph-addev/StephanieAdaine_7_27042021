@@ -13,12 +13,12 @@ module.exports.uploadPicture = async (req, res, next) => {
     return res.status(201).json(err);
   }
 
-  const fileName = req.body.username + ".jpg";
+  const fileName = req.params.uuid + "profile" + ".jpg";
   const filePath = await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}../../images/${fileName}`));
 
   console.log(filePath);
 
-  User.findOne({ where: { id: req.params.id } })
+  User.findOne({ where: { uuid: req.params.uuid } })
     .then((User) => {
       User.update({ profileImage: `${req.protocol}://${req.get("host")}/images/${fileName}` })
         .then(() => res.status(200).json({ message: "La photo de profil a été mise à jour" }))

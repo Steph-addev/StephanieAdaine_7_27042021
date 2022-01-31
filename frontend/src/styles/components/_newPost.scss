@@ -12,4 +12,20 @@
     height: 50px;
     width: 50px;
   }
+  .newpost-comments {
+    &_form {
+      &--image {
+        height: 30px;
+        width: 30px;
+      }
+    }
+  }
+  .newpost-comments_form--image {
+    height: 30px;
+    width: 30px;
+  }
+  form > img {
+    height: 30px;
+    width: 30px;
+  }
 }

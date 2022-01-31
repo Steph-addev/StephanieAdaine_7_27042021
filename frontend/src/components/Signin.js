@@ -1,9 +1,7 @@
 import React, { useState, Fragment, useContext } from "react";
-import axios from "axios";
 import { loginCall } from "../apiCall";
 import { AuthContext } from "../context/AuthContext";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import Home from "../pages/Home";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -66,7 +64,7 @@ function Signin() {
               type="submit"
               disabled={isFetching}
               onClick={() => {
-                if (user.auth == true) {
+                if (user.auth === true) {
                   setAuthUser({ loggedIn: true });
                   navigate("/accueil");
                 } else {
