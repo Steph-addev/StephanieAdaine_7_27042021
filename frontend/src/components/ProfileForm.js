@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import ProfileButton from "./ProfileButton";
 
 function ProfileForm() {
   let navigate = useNavigate();
@@ -16,7 +15,10 @@ function ProfileForm() {
 
   const { user } = useContext(AuthContext);
 
+  const PF = process.env.REACT_APP_PICTURES_URL;
+
   const userData = {
+    id: user.userId,
     username: profileName,
     workplace: profileSite,
     profileDesc: profileBio,
@@ -25,16 +27,15 @@ function ProfileForm() {
     email: profileEmail,
   };
 
-  const setProfile = (event) => {
-    event.preventDefault();
+  const setProfile = (e) => {
+    e.preventDefault();
   };
 
   const deleteUser = (e) => {
     axios
-      .delete(`http://localhost:5000/users/${profileUser.id}`)
+      .delete(`http://localhost:5000/users/${user.userId}`)
       .then((res) => {
-        console.log(res);
-        console.log("L'utilisateur a été supprimé");
+        window.confirm("Êtes-vous sûr de vouloir supprimer votre compte? Votre compte sera définitivement supprimé de notre base de donnée");
         window.location = "/";
       })
       .catch((err) => {
@@ -42,11 +43,10 @@ function ProfileForm() {
       });
   };
 
-  const saveChanges = (e) => {
-    e.preventDefault();
+  const saveChanges = () => {
     if ((profileName, profileSite, profileBio, profilePassword, profileDepartment, profileEmail)) {
       axios
-        .put(`http://localhost:5000/users/${profileUser.id}`, userData)
+        .put(`http://localhost:5000/users/${user.userId}`, userData)
         .then((res) => {
           console.log(res);
           console.log("L'utilisateur a été modifé");
@@ -60,9 +60,9 @@ function ProfileForm() {
   useEffect(() => {
     axios
       .get(`http://localhost:5000/users/${user.userId}`)
-      .then((userId) => {
-        setProfileUser(userId.data);
-        console.log(userId);
+      .then((user) => {
+        setProfileUser(user.data);
+        console.log(user.data);
       })
       .catch((err) => {
         console.log(err);
@@ -76,12 +76,12 @@ function ProfileForm() {
         <div>
           <div>
             <form className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.id}/upload`} encType="multipart/form-data">
-              <img src={profileUser.profileImage} alt="photo de profil" className="profileForm-box_image--picture"></img>
+              <img src={profileUser.profileImage ? profileUser.profileImage : PF + "profile-picture.png"} alt="photo de profil" className="profileForm-box_image--picture"></img>
               <input type="file" className="profileForm-box_image--input" name="image"></input>
               <input
                 type="submit"
                 className="profileForm-box_image--button"
-                onClick={() => {
+                onSubmit={() => {
                   navigate("/profil");
                 }}
               ></input>
@@ -94,7 +94,7 @@ function ProfileForm() {
         <form className="profileForm-box" onSubmit={setProfile}>
           <div>
             <label>Nom de profil:</label>
-            <input placeholder={profileUser.username} id="profileName" value={profileName} onChange={(e) => setprofileName(e.target.value)}></input>
+            <input defaultValue={profileUser.username} id="profileName" value={profileName} onChange={(e) => setprofileName(e.target.value)}></input>
           </div>
           <div>
             <label>Email:</label>

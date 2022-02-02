@@ -5,9 +5,10 @@ const commentsCtrl = require("../controllers/commentControllers");
 const likesCtrl = require("../controllers/likeControllers");
 const multer = require("multer");
 const upload = multer();
+/* const authsMiddleware = require("../middlewares/authMiddlewares"); */
 
 //Routes for posts
-router.post("/", upload.single("picture"), postsCtrl.createPost);
+router.post("/", upload.single("image"), postsCtrl.createPost);
 router.get("/", postsCtrl.getAllPosts);
 router.get("/:id", postsCtrl.getOnePost);
 router.put("/:id", postsCtrl.modifyPost);

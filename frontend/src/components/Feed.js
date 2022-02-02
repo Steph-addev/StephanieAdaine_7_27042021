@@ -1,18 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddPost from "./AddPost";
 import NewPost from "./NewPost";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
 
-function Feed() {
+function Feed({ users }) {
   const [newPost, setNewPost] = useState([]);
-  const { user } = useContext(AuthContext); // A voir si la mention de cette fonction est toujours nécessaires?
+
+  newPost.sort((param1, param2) => {
+    return new Date(param2.createdAt) - new Date(param1.createdAt);
+  });
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const res = await axios.get(process.env.REACT_APP_SERVER_URL + "/posts");
         setNewPost(res.data);
+        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -23,9 +26,9 @@ function Feed() {
   return (
     <div className="feed">
       <div className="feed-box p-3">
-        <AddPost />
+        <AddPost userData={users} />
         {newPost.map((param) => (
-          <NewPost key={param.id} post={param} />
+          <NewPost key={param.id} post={param} users={users} />
         ))}
       </div>
     </div>

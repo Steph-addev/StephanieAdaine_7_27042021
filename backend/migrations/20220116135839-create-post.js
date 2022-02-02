@@ -20,23 +20,18 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        required: true,
-      },
       content: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true,
       },
       images: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB,
         allowNull: true,
       },
       likes: {
         type: Sequelize.INTEGER,
-        defaultValue: "0",
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,

@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useContext } from "react";
 import { loginCall } from "../apiCall";
 import { AuthContext } from "../context/AuthContext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -11,38 +11,11 @@ function Signin() {
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
   const [authUser, setAuthUser] = useState(false);
   let navigate = useNavigate();
-  const location = useLocation();
 
   const subConnection = (e) => {
     e.preventDefault();
     loginCall({ email: email, password: password }, dispatch);
     console.log(user);
-
-    /*     axios({
-      method: "post",
-      url: "http://localhost:5000/authentification/login",
-      credentials: true,
-      data: {
-        email: email,
-        password: password,
-      },
-    })
-      .then((resp) => {
-        console.log(resp);
-        console.log(resp.data);
-        if (resp.data.errors) {
-          emailError.textContent = resp.data.errors.email;
-          passwordError.textContent = resp.data.errors.password;
-          setloginStatus(false);
-        } else {
-          window.location = "/accueil/";
-          setloginStatus(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setloginStatus(false);
-      }); */
   };
 
   return (

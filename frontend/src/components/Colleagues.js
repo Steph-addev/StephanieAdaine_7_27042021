@@ -1,29 +1,19 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import React from "react";
 
-// A FAIRE SI LE TEMPS LE PERMET SINON ON LAISSE TOMBER
-
-function Colleagues() {
-  /*   const { user } = useContext(AuthContext); */
-
-  /*   const [users, setUsers] = useState({}); */
-
-  /*   useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await axios.get(`http://localhost:5000/users`);
-      console.log(res);
-    };
-    fetchUsers();
-  }, []); */
+function Colleagues({ users }) {
+  const PF = process.env.REACT_APP_PICTURES_URL;
 
   return (
-    <div className="friends">
-      <div className="friends-list">
-        {/*       {listColleagues.map((param) => (
-          <NewPost key={param.id} post={param} />
-        ))} */}
+    <div className="colleagues">
+      <div className="colleagues-list">
+        <p>Mes collègues</p>
         <ul>
-          <li>Username</li>
+          {users.map((param) => (
+            <li key={param.id} post={param} className="colleagues-list_data p-1">
+              <img src={param.profileImage ? param.profileImage : PF + "profile-picture.png"} className="colleagues-list_data--profilePic" alt="profil pic"></img>
+              {param.username}
+            </li>
+          ))}
         </ul>
       </div>
     </div>

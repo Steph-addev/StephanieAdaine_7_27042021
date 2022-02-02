@@ -26,14 +26,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      title: DataTypes.STRING,
-      content: DataTypes.STRING,
-      images: DataTypes.STRING,
-      create_at: DataTypes.DATE,
-      update_at: DataTypes.DATE,
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        required: true,
+      },
+      images: DataTypes.BLOB,
       likes: {
         type: DataTypes.INTEGER,
-        defaultValue: "0",
+        defaultValue: 0,
       },
     },
     {

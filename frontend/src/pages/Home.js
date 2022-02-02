@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Feed from "../components/Feed";
 import Navbar from "../components/Navbar";
 import Leftbar from "../components/Leftbar";
@@ -8,20 +8,22 @@ import Colleagues from "../components/Colleagues";
 
 function Home() {
   const { user } = useContext(AuthContext);
+  const [users, setUsers] = useState([]);
 
   /*   if (!user) {
     window.location = "/";
   } */
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUsers = async () => {
       try {
-        const res = await axios.get(process.env.REACT_APP_SERVER_URL + `/users/${user.userId}`);
+        const res = await axios.get("http://localhost:5000/users");
+        setUsers(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchUser();
+    fetchUsers();
   }, []);
 
   return (
@@ -29,14 +31,14 @@ function Home() {
       <Navbar />
       <div className="container"></div>
       <div className="home row">
-        <div className="col-2">
+        <div className="col-1">
           <Leftbar />
         </div>
         <div className="col-8">
-          <Feed />
+          <Feed users={users} />
         </div>
-        <div className="Friends col-2">
-          <Colleagues />
+        <div className="Friends col-3">
+          <Colleagues users={users} />
         </div>
       </div>
     </div>

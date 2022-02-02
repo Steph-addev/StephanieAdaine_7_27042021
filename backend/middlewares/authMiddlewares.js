@@ -24,6 +24,7 @@ module.exports = (req, res, next) => {
         res.json({ auth: false, message: "The authentication has failed" });
       } else {
         req.userId = decodedToken.userId;
+        res.send("You are authenticated");
         next();
       }
     });

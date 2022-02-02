@@ -1,33 +1,39 @@
 const { Post } = require("../models");
-const fs = require("fs");
+const { uploadErrors } = require("../utils/errorsUtils");
+/* const fs = require("fs");
 const { promisify } = require("util");
-const pipeline = promisify(require("stream").pipeline);
+const pipeline = promisify(require("stream").pipeline); */
 
 exports.createPost = async (req, res) => {
-  /*   try {
-    //Check of the image's format
-    if (req.file.detectedMimeType !== "image/jpg" && req.file.detectedMimeType !== "image/jpeg" && req.file.detectedMimeType !== "image/png") throw "invalid image format";
-    //Check of the image's size
-    if (req.file.size > 500000) throw "image too heavy";
-  } catch (err) {
-    return res.status(201).json(err);
-  }
- */
-  const fileName = req.body.postId + "posts" + Date.now() + "jpg";
-  /*  await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}../../images/posts/${fileName}`)); */
+  /*   let fileName;
 
-  Post.create({
+  if (req.file !== null) {
+    try {
+      if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") throw Error("invalid file");
+
+      if (req.file.size > 500000) throw Error("max size");
+    } catch (err) {
+      const errors = uploadErrors(err);
+      return res.status(201).json({ errors });
+    }
+    
+  } */
+  const fileName = req.file ? req.file.filename + "posts" + Date.now() + "jpg" : "";
+  /*   const fileName = req.body.postId + "posts" + Date.now() + "jpg";
+ await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}../../images/posts/${fileName}`));  */
+
+  const addPost = new Post({
     UserId: req.body.UserId,
     content: req.body.content,
-    images: req.file !== null ? `${req.protocol}://${req.get("host")}/images/${fileName}` : "",
+    images: req.file === null ? "" : `${req.protocol}://${req.get("host")}/images/${fileName}`,
     likes: req.body.likes,
-  })
-    .then((post) => res.send(post))
-    .catch((err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+  });
+  try {
+    const post = await addPost.save();
+    return res.status(200).json(post);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
 };
 
 exports.getAllPosts = (req, res) => {

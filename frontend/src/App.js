@@ -14,9 +14,9 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter value={user}>
           <Routes value={user}>
-            <Route path="/" element={<Login />} value={user} />
-            <Route path="/accueil" element={<Home value={user} />} />
-            <Route path="/profil/" element={<Profile value={user} />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/accueil" element={<Home />} />
+            <Route path="/profil/" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

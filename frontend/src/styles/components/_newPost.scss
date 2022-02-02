@@ -2,8 +2,14 @@
   .newpost-news {
     background-color: rgb(221, 218, 218);
     border-radius: 30px;
-    width: 550px;
-    height: 240px;
+    &_likeComment {
+      align-items: baseline;
+    }
+  }
+  .newpost-news-admin {
+    background-color: rgb(223, 172, 172);
+    border: 4px solid rgb(219, 141, 141);
+    border-radius: 30px;
     &_likeComment {
       align-items: baseline;
     }
@@ -19,13 +25,5 @@
         width: 30px;
       }
     }
-  }
-  .newpost-comments_form--image {
-    height: 30px;
-    width: 30px;
-  }
-  form > img {
-    height: 30px;
-    width: 30px;
   }
 }

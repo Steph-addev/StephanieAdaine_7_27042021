@@ -28,9 +28,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       PostId: DataTypes.INTEGER,
       UserId: DataTypes.INTEGER,
-      uuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+      likeNumber: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
     },
     {

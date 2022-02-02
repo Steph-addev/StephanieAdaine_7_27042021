@@ -6,6 +6,7 @@ const mysql = require("mysql2");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+const multer = require("./middlewares/multer-config");
 
 //Import files & folders
 const db = require("./models");
@@ -44,7 +45,7 @@ app.use(express.json());
 
 //Middleware jwt on each routes
 /* app.get("*", authsMiddleware, (req, res) => {
-  res.send("You are authenticate");
+  res.send("You are authenticated");
 }); */
 
 //Endpoints & Controllers
@@ -56,9 +57,9 @@ app.use("/authentification", authsRoute);
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 //Automatic update of the to database
-db.sequelize.sync({ force: true }).then((req) => {
+/* db.sequelize.sync({ force: true }).then((req) => {
   app.listen({ port: 3001 });
   console.log("Server is on!");
-});
+}); */
 
 module.exports = app;

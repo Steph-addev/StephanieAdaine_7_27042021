@@ -7,6 +7,8 @@ function AddPostPicture() {
   const { user } = useContext(AuthContext);
   const [dataUser, setDataUser] = useState({});
 
+  const PF = process.env.REACT_APP_PICTURES_URL;
+
   useEffect(() => {
     axios
       .get(`http://localhost:5000/users/${user.userId}`)
@@ -20,7 +22,7 @@ function AddPostPicture() {
 
   return (
     <Fragment>
-      <img src={dataUser.profileImage} className="addPost-image_profile" alt="Profile picture"></img>
+      <img src={dataUser.profileImage ? dataUser.profileImage : PF + "profile-picture.png"} className="addPost-image_profile" alt="Profile picture"></img>
     </Fragment>
   );
 }

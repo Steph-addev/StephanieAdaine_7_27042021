@@ -28,8 +28,8 @@ function AddComments({ postId, userInfo }) {
   };
 
   return (
-    <div>
-      <form className="newpost-comments_form d-flex" onSubmit={addOneComment}>
+    <div className="newpost-comments d-flex mt-3">
+      <form className="newpost-comments_form d-flex mt-3" onSubmit={addOneComment}>
         <AddPostPicture />
         <input type="text" className="newpost-comments_form--input" placeholder="Laisser un commentaire" value={text} onChange={(e) => setText(e.target.value)}></input>
         <button type="submit">

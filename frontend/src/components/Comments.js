@@ -6,7 +6,6 @@ import axios from "axios";
 
 function Comments({ post, userInfo }) {
   const [newComment, setNewComment] = useState([]);
-  const [isComment, setIsComment] = useState(false);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -18,14 +17,14 @@ function Comments({ post, userInfo }) {
       }
     };
     fetchComments();
-  }, []);
+  }, [post.id]);
 
   return (
     <Fragment>
       <div className="comments-box container">
         <div className="comments-box_newcomment row">
           {newComment.map((dataComment) => (
-            <NewComment key={dataComment.id} comment={dataComment} userInfo={userInfo} post={post} />
+            <NewComment key={dataComment.id} post={post.id} comment={dataComment} userInfo={userInfo} />
           ))}
         </div>
         <div className="comment-box_addcomment row">
