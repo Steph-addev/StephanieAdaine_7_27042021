@@ -29,8 +29,6 @@ exports.createPost = async (req, res) => {
     likes: req.body.likes,
   });
   try {
-    console.log("postcontrollers: req.body.images = " + req.body.images);
-    console.log("postcontrollers: req.file = " + req.file.filename);
     const post = await addPost.save();
     return res.status(200).json(post);
   } catch (err) {

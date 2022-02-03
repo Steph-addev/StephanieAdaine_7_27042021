@@ -48,7 +48,6 @@ function AddPost() {
 
     if (file) {
       if ((file && file.type === "image/png") || file.type === "image/jpeg" || file.type === "image/jpg");
-
       const data = new FormData();
       const fileName = Date.now() + file.name;
       data.append("image", file); //renvoi toutes les données de l'image: last update, name, size, type
@@ -82,7 +81,7 @@ function AddPost() {
             <AddPostPicture />
             <p>Exprimez-vous</p>
           </div>
-          <form onSubmit={addOnePost} method="post" action={`http://localhost:5000/posts`} encType="multipart/form-data">
+          <form onSubmit={addOnePost} /* method="post" action={`http://localhost:5000/posts`} */ encType="multipart/form-data">
             <div className="row">
               <textarea className="addPost-box_publish--content" type="text" placeholder="Votre message ici" className="my-3" value={text} onChange={(e) => setText(e.target.value)}></textarea>
             </div>
