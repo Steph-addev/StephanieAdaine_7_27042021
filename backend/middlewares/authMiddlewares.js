@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { User } = require("../models");
 
 module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
@@ -18,12 +19,17 @@ module.exports = (req, res, next) => {
 
   if (!token) {
     res.send("You need a token to access");
+    next();
   } else {
-    jwt.verify(token, process.env.HIDDEN_TOKEN, (err, decodedToken) => {
+    jwt.verify(token, process.env.HIDDEN_TOKEN, async (err, decodedToken) => {
       if (err) {
+        res.locals.user = null;
+        res.cookie("jwt", "", { maxAge: 1 });
         res.json({ auth: false, message: "The authentication has failed" });
+        next();
       } else {
-        req.userId = decodedToken.userId;
+        let user = await User.findOne(decodedToken.id);
+        res.locals.user = user;
         res.send("You are authenticated");
         next();
       }

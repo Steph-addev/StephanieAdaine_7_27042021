@@ -2,11 +2,9 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const mysql = require("mysql2");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
-const multer = require("./middlewares/multer-config");
 
 //Import files & folders
 const db = require("./models");
@@ -42,6 +40,7 @@ app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Middleware jwt on each routes
 /* app.get("*", authsMiddleware, (req, res) => {

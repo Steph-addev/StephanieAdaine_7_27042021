@@ -5,7 +5,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { format } from "timeago.js";
 
-function NewComment({ comment, userInfo, post }) {
+function NewComment({ comment, userData, postDataId }) {
   const [textUpdate, setTextUpdate] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
 
@@ -15,7 +15,7 @@ function NewComment({ comment, userInfo, post }) {
     content: textUpdate,
   };
 
-  const isMatching = post === comment.PostId;
+  const isMatching = postDataId === comment.PostId;
 
   const updatePost = async () => {
     if (textUpdate) {
@@ -51,7 +51,7 @@ function NewComment({ comment, userInfo, post }) {
               <AddPostPicture />
             </div>
             <div className="newcomment_content-box--info col-10">
-              <h3 className="newcomment_content--title m-0">{userInfo.username}</h3>
+              <h3 className="newcomment_content--title m-0">{userData.username}</h3>
               <p>{format(comment.createdAt)}</p>
             </div>
           </div>
@@ -68,7 +68,7 @@ function NewComment({ comment, userInfo, post }) {
               </div>
             )}
           </div>
-          {userInfo.id === comment.UserId && (
+          {userData.id === comment.UserId && (
             <div className="newcomment-box_icons row justify-content-end">
               <div onClick={() => setIsUpdated(!isUpdated)} className="newcomment-box_icons--update col-1">
                 <FaPencilAlt />

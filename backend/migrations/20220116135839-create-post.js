@@ -26,7 +26,7 @@ module.exports = {
         required: true,
       },
       images: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
         allowNull: true,
       },
       likes: {

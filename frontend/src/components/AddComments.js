@@ -1,21 +1,21 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState } from "react";
+
 import AddPostPicture from "./AddPostPicture";
 import { FaPaperPlane } from "react-icons/fa";
 
-function AddComments({ postId, userInfo }) {
+function AddComments({ postDataId, userDataId }) {
   const [text, setText] = useState("");
 
   const addOneComment = (e) => {
     e.preventDefault();
     axios({
       method: "patch",
-      url: `http://localhost:5000/posts/comment-add/${postId.id}`,
+      url: `http://localhost:5000/posts/comment-add/${postDataId}`,
       credentials: true,
       data: {
-        UserId: userInfo,
-        PostId: postId.id,
+        UserId: userDataId,
+        PostId: postDataId,
         content: text,
       },
     })

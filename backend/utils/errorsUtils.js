@@ -1,5 +1,7 @@
 exports.registrerErrors = (err) => {
-  let errors = { email: "", password: "" };
+  let errors = { username: "", email: "", password: "" };
+
+  if (err.message.includes("username")) errors.username = "Ce nom de profil existe déjà";
 
   if (err.message.includes("email")) errors.email = "L'email existe déjà";
 
@@ -11,9 +13,7 @@ exports.registrerErrors = (err) => {
 };
 
 exports.loginErrors = (err) => {
-  let errors = { username: "", email: "", password: "" };
-
-  if (err.message.includes("username")) errors.username = "Ce nom de profil existe déjà";
+  let errors = { email: "", password: "" };
 
   if (err.message.includes("email")) errors.email = "Cet email est incorrect";
 

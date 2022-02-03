@@ -5,6 +5,7 @@ import axios from "axios";
 
 function Feed({ users }) {
   const [newPost, setNewPost] = useState([]);
+  const WAIT_TIME = 5000;
 
   newPost.sort((param1, param2) => {
     return new Date(param2.createdAt) - new Date(param1.createdAt);
@@ -15,7 +16,6 @@ function Feed({ users }) {
       try {
         const res = await axios.get(process.env.REACT_APP_SERVER_URL + "/posts");
         setNewPost(res.data);
-        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -26,9 +26,9 @@ function Feed({ users }) {
   return (
     <div className="feed">
       <div className="feed-box p-3">
-        <AddPost userData={users} />
+        <AddPost />
         {newPost.map((param) => (
-          <NewPost key={param.id} post={param} users={users} />
+          <NewPost key={param.id} postData={param} users={users} />
         ))}
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useState, Fragment, useContext } from "react";
 import { loginCall } from "../apiCall";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,6 @@ function Signin() {
   const subConnection = (e) => {
     e.preventDefault();
     loginCall({ email: email, password: password }, dispatch);
-    console.log(user);
   };
 
   return (
@@ -39,6 +39,7 @@ function Signin() {
               onClick={() => {
                 if (user.auth === true) {
                   setAuthUser({ loggedIn: true });
+                  Cookies.set("jwt", user.token, { sameSite: "strict" });
                   navigate("/accueil");
                 } else {
                   navigate("/");

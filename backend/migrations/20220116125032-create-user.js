@@ -55,6 +55,7 @@ module.exports = {
       profileDesc: {
         type: Sequelize.STRING,
         allowNull: true,
+        defaultValue: "Ma description",
       },
       createdAt: {
         allowNull: false,

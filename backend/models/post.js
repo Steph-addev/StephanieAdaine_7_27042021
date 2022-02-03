@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         required: true,
       },
-      images: DataTypes.BLOB,
+      images: DataTypes.STRING,
       likes: {
         type: DataTypes.INTEGER,
         defaultValue: 0,

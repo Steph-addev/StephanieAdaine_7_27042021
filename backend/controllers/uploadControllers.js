@@ -18,10 +18,12 @@ module.exports.uploadPicture = async (req, res, next) => {
 
   console.log(filePath); */
 
+  console.log("uploadcontroller:" + req.file);
+
   User.findOne({ where: { id: req.params.id } })
     .then((User) => {
       User.update({ profileImage: `${req.protocol}://${req.get("host")}/images/${req.file.filename}` })
-        .then(() => res.status(200).json({ message: "La photo de profil a été mise à jour" }))
+        .then(() => res.status(200).json({ message: "La photo de profil a été uploadé" }), console.log("uploadcontroller: req.file = " + req.file), console.log("uploadcontroller: req.body.profileImage = " + req.body.profileImage))
         .catch((error) => res.status(400).json({ error }));
     })
     .catch((err) => {

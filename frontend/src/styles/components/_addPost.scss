@@ -1,15 +1,10 @@
-.addPost {
-  .addPost-box {
-    &_publish {
-      background-color: rgb(221, 218, 218);
-      border-radius: 30px;
-      width: 550px;
-      height: 240px; //width et height identique que Newpost, à mettre ensemble
-      &--image {
-        width: 250px;
-        height: 300px;
-      }
-    }
+.addPost-box {
+  background-color: rgb(221, 218, 218);
+  border-radius: 30px;
+  width: 550px;
+  &--image {
+    width: 250px;
+    height: 300px;
   }
 
   .addPost-image_profile {

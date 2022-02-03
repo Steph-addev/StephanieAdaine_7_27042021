@@ -5,36 +5,30 @@ import { AuthContext } from "../context/AuthContext";
 
 function ProfileForm() {
   let navigate = useNavigate();
-  const [profileName, setprofileName] = useState("");
-  const [profilePassword, setprofilePassword] = useState("");
-  const [profileEmail, setprofileEmail] = useState("");
-  const [profileBio, setprofileBio] = useState("");
-  const [profileDepartment, setprofileDepartment] = useState("");
-  const [profileSite, setprofileSite] = useState("");
+  const [profileName, setProfileName] = useState("");
+  const [profileBio, setProfileBio] = useState("");
   const [profileUser, setProfileUser] = useState({});
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const { user } = useContext(AuthContext);
 
   const PF = process.env.REACT_APP_PICTURES_URL;
 
-  const userData = {
+  const updatedData = {
     id: user.userId,
     username: profileName,
-    workplace: profileSite,
     profileDesc: profileBio,
-    password: profilePassword,
-    department: profileDepartment,
-    email: profileEmail,
   };
 
   const setProfile = (e) => {
     e.preventDefault();
+    return false;
   };
 
   const deleteUser = (e) => {
     axios
       .delete(`http://localhost:5000/users/${user.userId}`)
-      .then((res) => {
+      .then(() => {
         window.confirm("Êtes-vous sûr de vouloir supprimer votre compte? Votre compte sera définitivement supprimé de notre base de donnée");
         window.location = "/";
       })
@@ -43,10 +37,10 @@ function ProfileForm() {
       });
   };
 
-  const saveChanges = () => {
-    if ((profileName, profileSite, profileBio, profilePassword, profileDepartment, profileEmail)) {
+  const updateUser = () => {
+    if (profileName || profileBio) {
       axios
-        .put(`http://localhost:5000/users/${user.userId}`, userData)
+        .put(`http://localhost:5000/users/${user.userId}`, updatedData)
         .then((res) => {
           console.log(res);
           console.log("L'utilisateur a été modifé");
@@ -75,15 +69,15 @@ function ProfileForm() {
         <h1>Profil de {profileUser.username}</h1>
         <div>
           <div>
-            <form className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.id}/upload`} encType="multipart/form-data">
+            <form onSubmit={setProfile} className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.id}/upload`} encType="multipart/form-data">
               <img src={profileUser.profileImage ? profileUser.profileImage : PF + "profile-picture.png"} alt="photo de profil" className="profileForm-box_image--picture"></img>
               <input type="file" className="profileForm-box_image--input" name="image"></input>
               <input
                 type="submit"
                 className="profileForm-box_image--button"
-                onSubmit={() => {
+                /*                 onClick={() => {
                   navigate("/profil");
-                }}
+                }} */
               ></input>
               <label className="profileForm-box_image--label" htmlFor="file">
                 Changer sa photo de profil
@@ -91,40 +85,55 @@ function ProfileForm() {
             </form>
           </div>
         </div>
-        <form className="profileForm-box" onSubmit={setProfile}>
-          <div>
-            <label>Nom de profil:</label>
-            <input defaultValue={profileUser.username} id="profileName" value={profileName} onChange={(e) => setprofileName(e.target.value)}></input>
+        <div className="Profile container">
+          <div className="Profile-box row ">
+            <div className="Profile-box_user--fixed col-6">
+              <div className="Profile-box_user--data d-flex">
+                <label>Email:</label>
+                <p>{profileUser.email}</p>
+              </div>
+              <div className="Profile-box_user--data d-flex">
+                <label>Département:</label>
+                <p>{profileUser.department}</p>
+              </div>
+              <div className="Profile-box_user--data d-flex">
+                <label>Site de travail:</label>
+                <p>{profileUser.workplace}</p>
+              </div>
+            </div>
+            <div className="Profile-box_user--changeable col-6">
+              <div className="Profile-box_user--dataChange d-flex">
+                <label>Nom de profil:</label>
+                {isUpdated === false && <p>{profileUser.username}</p>}
+                {isUpdated && (
+                  <div className="profile-box_update">
+                    <input defaultValue={profileUser.username} onChange={(e) => setProfileName(e.target.value)} />
+                  </div>
+                )}
+              </div>
+              <div className="Profile-box_user--dataChange d-flex">
+                <label>Bio:</label>
+                {isUpdated === false && <p>{profileUser.profileDesc}</p>}
+                {isUpdated && (
+                  <div className="profile-box_update">
+                    <textarea defaultValue={profileUser.profileDesc} onChange={(e) => setProfileBio(e.target.value)} />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="Profile-box_user--dataChange_btn d-flex justify-content-center">
+              <button type="submit" onClick={deleteUser}>
+                Supprimer mon compte
+              </button>
+              <button type="submit" onClick={updateUser}>
+                Enregistrer les modifications
+              </button>
+              <button type="submit" onClick={() => setIsUpdated(!isUpdated)}>
+                Modifier mon profil
+              </button>
+            </div>
           </div>
-          <div>
-            <label>Email:</label>
-            <input placeholder={profileUser.email} id="profileEmail" value={profileEmail} onChange={(e) => setprofileEmail(e.target.value)}></input>
-          </div>
-          <div>
-            <label>Mot de passe:</label>
-            <input type="password" id="profilePassword" value={profilePassword} onChange={(e) => setprofilePassword(e.target.value)}></input>
-          </div>
-          <div>
-            <label>Bio:</label>
-            <textarea placeholder={profileUser.profileDesc} id="profileBio" value={profileBio} onChange={(e) => setprofileBio(e.target.value)}></textarea>
-          </div>
-          <div>
-            <label>Département:</label>
-            <input placeholder={profileUser.department} id="profileDepartment" value={profileDepartment} onChange={(e) => setprofileDepartment(e.target.value)}></input>
-          </div>
-          <div>
-            <label>Site de travail:</label>
-            <input placeholder={profileUser.workplace} id="profileSite" value={profileSite} onChange={(e) => setprofileSite(e.target.value)}></input>
-          </div>
-          <div>
-            <button type="submit" onClick={deleteUser}>
-              Supprimer mon compte
-            </button>
-            <button type="submit" onClick={saveChanges}>
-              Enregistrer les modifications
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-/* const { Like, Post } = require("../models");
+const { Like, Post } = require("../models");
 
 // Code à re-travailler après
 
@@ -6,7 +6,7 @@
 const DISLIKED = 0;
 const LIKED = 1;
 
-// Routes
+/* // Routes
 exports.likePost = (req, res) => {
   // Params
   var postId = parseInt(req.params.postId);
@@ -118,18 +118,43 @@ exports.likePost = (req, res) => {
       }
     )
     .catch((error) => res.status(500).json({ error }));
-}; */
+};  */
 
 exports.likePost = (req, res) => {
-  Post.findOne({ where: { id: req.params.id } }, { where: { likes: req.body.likes } })
-    .then(() => {
+  Post.find({ where: { id: req.params.id } })
+    .then((post) => {
+      console.log(post);
+      User.find({ where: { id: req.body.id } })
+        .then((user) => {
+          console.log(user);
+          if (!user) {
+            Like.create({
+              UserId: req.body.UserId,
+              PostId: req.body.PostId,
+              likeNumber: req.body.likeNumber,
+            })
+              .then((like) => {
+                Post.update({ likes: LIKED })
+                  .then((post) => res.status(200).json({ message: "Post Liké !" }), console.log(post))
+                  .catch((error) => res.status(500).json({ message: "Cannot update post" + error }), console.log(err));
+              })
+              .catch((error) => res.status(500).json({ message: "Cannot create like" + error }), console.log(err));
+          } else {
+            res.send("user already known, you cannot like twice the post");
+          }
+        })
+        .catch((error) => res.status(500).json({ message: "Cannot find user" + error }), console.log(err)); // User non trouvé
+    })
+    .catch((error) => res.status(500).json({ message: "Cannont find post" + error }), console.log(err)); //Post non trouvé
+
+  /*  .then(() => {
       Like.create({
         UserId: req.body.UserId,
         PostId: req.body.PostId,
         likeNumber: req.body.likeNumber,
       })
         .then((like) => {
-          (likeNumber = 1), res.send(like);
+          (likeNumber = +1), res.send(like);
         })
         .catch((err) => {
           if (err) {
@@ -137,7 +162,7 @@ exports.likePost = (req, res) => {
           }
         });
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ error })); */
 };
 
 exports.dislikePost = (req, res) => {

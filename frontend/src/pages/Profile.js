@@ -1,14 +1,12 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProfileForm from "../components/ProfileForm";
 import Home from "../pages/Home";
-import { AuthContext } from "../context/AuthContext";
 
 function Profile() {
   let navigate = useNavigate();
-  const { user } = useContext(AuthContext);
 
   return (
     <Fragment>
@@ -23,7 +21,7 @@ function Profile() {
       >
         <FaArrowLeft />
       </a>
-      <ProfileForm value={user} />
+      <ProfileForm />
     </Fragment>
   );
 }

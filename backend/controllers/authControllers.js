@@ -1,6 +1,7 @@
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { loginErrors, registrerErrors } = require("../utils/errorsUtils");
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
 exports.registration = (req, res) => {
@@ -61,7 +62,7 @@ exports.login = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
+  res.clearCookie("jwt");
   res.send("You are disconnected");
   res.redirect("/");
 };

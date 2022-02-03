@@ -5,7 +5,7 @@ import axios from "axios";
 
 function AddPostPicture() {
   const { user } = useContext(AuthContext);
-  const [dataUser, setDataUser] = useState({});
+  const [userData, setUserData] = useState({});
 
   const PF = process.env.REACT_APP_PICTURES_URL;
 
@@ -13,7 +13,7 @@ function AddPostPicture() {
     axios
       .get(`http://localhost:5000/users/${user.userId}`)
       .then((userApi) => {
-        setDataUser(userApi.data);
+        setUserData(userApi.data);
       })
       .catch((err) => {
         console.log(err);
@@ -22,7 +22,7 @@ function AddPostPicture() {
 
   return (
     <Fragment>
-      <img src={dataUser.profileImage ? dataUser.profileImage : PF + "profile-picture.png"} className="addPost-image_profile" alt="Profile picture"></img>
+      <img src={userData.profileImage ? userData.profileImage : PF + "profile-picture.png"} className="addPost-image_profile" alt="Profile picture"></img>
     </Fragment>
   );
 }

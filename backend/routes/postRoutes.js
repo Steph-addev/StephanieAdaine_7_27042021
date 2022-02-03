@@ -3,12 +3,11 @@ const router = express.Router();
 const postsCtrl = require("../controllers/postControllers");
 const commentsCtrl = require("../controllers/commentControllers");
 const likesCtrl = require("../controllers/likeControllers");
-const multer = require("multer");
-const upload = multer();
+const multer = require("../middlewares/multer-config");
 /* const authsMiddleware = require("../middlewares/authMiddlewares"); */
 
 //Routes for posts
-router.post("/", upload.single("image"), postsCtrl.createPost);
+router.post("/", multer, postsCtrl.createPost);
 router.get("/", postsCtrl.getAllPosts);
 router.get("/:id", postsCtrl.getOnePost);
 router.put("/:id", postsCtrl.modifyPost);
@@ -21,7 +20,7 @@ router.get("/comment-display/:id", commentsCtrl.getComments);
 router.delete("/comment-delete/:id", commentsCtrl.deleteComment);
 
 // Routes for likes
-router.post("/:id/like", likesCtrl.likePost);
+router.patch("/:id/like", likesCtrl.likePost);
 router.post("/:id/dislike", likesCtrl.dislikePost);
 
 module.exports = router;

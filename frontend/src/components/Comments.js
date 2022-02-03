@@ -4,31 +4,33 @@ import AddComment from "./AddComments";
 import NewComment from "./NewComment";
 import axios from "axios";
 
-function Comments({ post, userInfo }) {
+function Comments({ postData, userData }) {
   const [newComment, setNewComment] = useState([]);
+  console.log(userData);
+  console.log(postData);
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(process.env.REACT_APP_SERVER_URL + `/posts/comment-display/${post.id}`);
+        const res = await axios.get(process.env.REACT_APP_SERVER_URL + `/posts/comment-display/${postData.id}`);
         setNewComment(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchComments();
-  }, [post.id]);
+  }, [postData.id]);
 
   return (
     <Fragment>
       <div className="comments-box container">
         <div className="comments-box_newcomment row">
           {newComment.map((dataComment) => (
-            <NewComment key={dataComment.id} post={post.id} comment={dataComment} userInfo={userInfo} />
+            <NewComment key={dataComment.id} postDataId={postData.id} comment={dataComment} userData={userData} />
           ))}
         </div>
         <div className="comment-box_addcomment row">
-          <AddComment postId={post} userInfo={userInfo.id} />
+          <AddComment postDataId={postData.id} userDataId={userData.id} />
         </div>
       </div>
     </Fragment>

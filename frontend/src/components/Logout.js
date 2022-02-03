@@ -1,11 +1,18 @@
 import axios from "axios";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { FaDoorOpen } from "react-icons/fa";
+import Cookies from "js-cookie";
+import { AuthContext } from "../context/AuthContext";
+
 function Logout() {
+  const { user } = useContext(AuthContext);
+  const [auth, setAuth] = useState(true);
+
   const disconnect = async () =>
     await axios
       .get(process.env.REACT_APP_SERVER_URL + "/authentification/logout")
       .then(() => {
+        Cookies.remove("jwt");
         window.location = "/";
       })
       .catch((err) => console.log(err));
