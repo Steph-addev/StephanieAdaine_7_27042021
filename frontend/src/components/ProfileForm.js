@@ -69,15 +69,15 @@ function ProfileForm() {
         <h1>Profil de {profileUser.username}</h1>
         <div>
           <div>
-            <form onSubmit={setProfile} className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.id}/upload`} encType="multipart/form-data">
+            <form className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.id}/upload`} encType="multipart/form-data">
               <img src={profileUser.profileImage ? profileUser.profileImage : PF + "profile-picture.png"} alt="photo de profil" className="profileForm-box_image--picture"></img>
               <input type="file" className="profileForm-box_image--input" name="image"></input>
               <input
                 type="submit"
                 className="profileForm-box_image--button"
-                /*                 onClick={() => {
+                onClick={() => {
                   navigate("/profil");
-                }} */
+                }}
               ></input>
               <label className="profileForm-box_image--label" htmlFor="file">
                 Changer sa photo de profil

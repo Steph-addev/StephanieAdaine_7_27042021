@@ -19,13 +19,13 @@ exports.createPost = async (req, res) => {
       /*   const fileName = req.body.postId + "posts" + Date.now() + "jpg";
  await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}../../images/posts/${fileName}`)); 
   } */
-
-  const fileName = req.file + "posts" + Date.now() + ".jpg";
+  /* 
+  const fileName = req.file.filename + "posts" + Date.now() + ".jpg"; */
 
   const addPost = new Post({
     UserId: req.body.UserId,
     content: req.body.content,
-    images: req.file === null ? "" : `${req.protocol}://${req.get("host")}/images/${fileName}`,
+    images: req.file === null ? "" : `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     likes: req.body.likes,
   });
   try {

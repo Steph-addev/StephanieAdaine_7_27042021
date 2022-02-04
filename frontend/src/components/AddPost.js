@@ -9,23 +9,12 @@ function AddPost() {
   const [text, setText] = useState("");
   const { user } = useContext(AuthContext);
   const [postPicture, setPostPicture] = useState(null);
-  const [file, setFile] = useState(null);
-  const [post, setPost] = useState([]);
+  const [file, setFile] = useState("");
 
-  // La fonction addPicture fonctionne très bien car le lien de l'image côté front est renvoyé via "postPicture" = http://localhost:3000/référence de l'image(ID)
   const addPicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
   };
-  /* 
-  const sendPost = async (e) => {
-    if (text || postPicture) {
-      const data = new FormData();
-      data.append("UserId", user.userId);
-      data.append("content", text);
-      if (file) data.append("image", file);
-    }
-  }; */
 
   //Fonctionne!
   const cancelPost = () => {
@@ -34,20 +23,55 @@ function AddPost() {
     setFile("");
   };
 
-  console.log("file:");
   console.log(file);
 
   const addOnePost = async (e) => {
     e.preventDefault();
 
-    //newPost renvoi l'userId, le contenu et l'image sous format data+nom.extension
     const newPost = {
       UserId: user.userId,
       content: text,
     };
 
     if (file) {
-      if ((file && file.type === "image/png") || file.type === "image/jpeg" || file.type === "image/jpg");
+      let myform = e.target;
+      let data = new FormData(myform);
+      data.append("image", "image");
+      data.append("UserId", user.userId);
+      data.append("content", text);
+      newPost.images = file;
+
+      axios({
+        method: "post",
+        url: "http://localhost:5000/posts",
+        credentials: true,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+        data: data,
+      })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    /*     let url = "http://localhost:5000/posts";
+    let req = new Request(url, {
+      body: data,
+      /*       UserId: user.userId,
+      content: text, 
+      method: "POST",
+    });
+    fetch(req, newPost)
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(console.warn); */
+    /*     if (file) {
+      /*      if ((file && file.type === "image/png") || file.type === "image/jpeg" || file.type === "image/jpg");
       const data = new FormData();
       const fileName = Date.now() + file.name;
       data.append("image", file); //renvoi toutes les données de l'image: last update, name, size, type
@@ -55,11 +79,25 @@ function AddPost() {
       newPost.images = fileName;
       console.log(newPost);
       console.log(postPicture);
+      console.log(data);
     }
-    axios({
+ */
+    /*     if (file) {
+      const data = new FormData(formElement);
+      const request = new XMLHttpRequest();
+      request.open("POST", "http://localhost:5000/posts");
+      data.append("image", file);
+      request.send(new FormData(data));
+      console.log(data);
+    } */
+
+    /*     axios({
       method: "post",
       url: "http://localhost:5000/posts",
       credentials: true,
+      /*       headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      }, 
       data: {
         UserId: user.userId,
         content: text,
@@ -70,7 +108,7 @@ function AddPost() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      }); */
   };
 
   return (
@@ -81,7 +119,7 @@ function AddPost() {
             <AddPostPicture />
             <p>Exprimez-vous</p>
           </div>
-          <form onSubmit={addOnePost} /* method="post" action={`http://localhost:5000/posts`} */ encType="multipart/form-data">
+          <form onSubmit={addOnePost} id="addPost-box_form">
             <div className="row">
               <textarea className="addPost-box_publish--content" type="text" placeholder="Votre message ici" className="my-3" value={text} onChange={(e) => setText(e.target.value)}></textarea>
             </div>
@@ -95,7 +133,7 @@ function AddPost() {
                     Annuler message
                   </button>
                 ) : null}
-                <input type="submit" className="button-style button-style_publish" defaultValue="Publier" /*  onSubmit={sendPost} */></input>
+                <input type="submit" className="button-style button-style_publish" defaultValue="Publier"></input>
               </label>
             </div>
           </form>
