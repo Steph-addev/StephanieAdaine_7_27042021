@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import useFetch from "../useFetch";
 
 function ProfileForm() {
   let navigate = useNavigate();
@@ -9,8 +10,8 @@ function ProfileForm() {
   const [profileBio, setProfileBio] = useState("");
   const [profileUser, setProfileUser] = useState({});
   const [isUpdated, setIsUpdated] = useState(false);
-
   const { user } = useContext(AuthContext);
+  const { refetch } = useFetch(`http://localhost:5000/users/${user.userId}`);
 
   const PF = process.env.REACT_APP_PICTURES_URL;
 
@@ -20,9 +21,28 @@ function ProfileForm() {
     profileDesc: profileBio,
   };
 
-  const setProfile = (e) => {
+  const updateProfilePicture = (e) => {
     e.preventDefault();
-    return false;
+    console.log("refresh prevented");
+    let myform = e.target;
+    let data = new FormData(myform);
+    data.append("image", "image");
+
+    axios({
+      method: "post",
+      url: `http://localhost:5000/users/${profileUser.id}/upload`,
+      credentials: true,
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+      data: data,
+    })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const deleteUser = (e) => {
@@ -69,16 +89,10 @@ function ProfileForm() {
         <h1>Profil de {profileUser.username}</h1>
         <div>
           <div>
-            <form className="profileForm-box_image d-flex" method="post" action={`http://localhost:5000/users/${profileUser.id}/upload`} encType="multipart/form-data">
+            <form onSubmit={updateProfilePicture} id="form" className="profileForm-box_image d-flex">
               <img src={profileUser.profileImage ? profileUser.profileImage : PF + "profile-picture.png"} alt="photo de profil" className="profileForm-box_image--picture"></img>
               <input type="file" className="profileForm-box_image--input" name="image"></input>
-              <input
-                type="submit"
-                className="profileForm-box_image--button"
-                onClick={() => {
-                  navigate("/profil");
-                }}
-              ></input>
+              <button type="submit" className="profileForm-box_image--button"></button>
               <label className="profileForm-box_image--label" htmlFor="file">
                 Changer sa photo de profil
               </label>

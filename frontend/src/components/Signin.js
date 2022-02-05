@@ -16,6 +16,15 @@ function Signin() {
   const subConnection = (e) => {
     e.preventDefault();
     loginCall({ email: email, password: password }, dispatch);
+
+    if (user.auth === true) {
+      setAuthUser({ loggedIn: true });
+      Cookies.set("jwt", user.token, { sameSite: "strict" });
+      localStorage.setItem("isAuthenticated", "true");
+      navigate("/accueil");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -33,19 +42,7 @@ function Signin() {
               <input required type="password" id="password" className="form control" value={password} onChange={(e) => setPassword(e.target.value)}></input>
               <span id="password-check-error"></span>
             </div>
-            <button
-              type="submit"
-              disabled={isFetching}
-              onClick={() => {
-                if (user.auth === true) {
-                  setAuthUser({ loggedIn: true });
-                  Cookies.set("jwt", user.token, { sameSite: "strict" });
-                  navigate("/accueil");
-                } else {
-                  navigate("/");
-                }
-              }}
-            >
+            <button type="submit" disabled={isFetching}>
               {isFetching ? "chargement" : "Se connecter"}
             </button>
           </form>

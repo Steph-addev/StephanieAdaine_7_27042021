@@ -13,6 +13,7 @@ function Logout() {
       .get(process.env.REACT_APP_SERVER_URL + "/authentification/logout")
       .then(() => {
         Cookies.remove("jwt");
+        localStorage.clear();
         window.location = "/";
       })
       .catch((err) => console.log(err));

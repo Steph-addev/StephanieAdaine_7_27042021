@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
 import { FaImage } from "react-icons/fa";
-
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import AddPostPicture from "./AddPostPicture";
+import useFetch from "../useFetch";
 
 function AddPost() {
   const [text, setText] = useState("");
   const { user } = useContext(AuthContext);
   const [postPicture, setPostPicture] = useState(null);
   const [file, setFile] = useState("");
+  const { refetch } = useFetch(process.env.REACT_APP_SERVER_URL + "/posts");
 
   const addPicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
@@ -23,10 +24,9 @@ function AddPost() {
     setFile("");
   };
 
-  console.log(file);
-
   const addOnePost = async (e) => {
     e.preventDefault();
+    refetch();
 
     const newPost = {
       UserId: user.userId,
@@ -56,7 +56,25 @@ function AddPost() {
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      axios({
+        method: "post",
+        url: "http://localhost:5000/posts",
+        credentials: true,
+        data: {
+          UserId: user.userId,
+          content: text,
+          images: "",
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
+    console.log(file);
     /*     let url = "http://localhost:5000/posts";
     let req = new Request(url, {
       body: data,

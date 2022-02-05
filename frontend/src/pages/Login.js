@@ -7,6 +7,7 @@ function Login() {
   const [signUpForm, setSignUpForm] = useState(false);
 
   const formAppearance = (e) => {
+    //TODO: Front: faire un system d'onglet login
     if (e.target.id === "connection") {
       setSignInForm(true);
       setSignUpForm(false);

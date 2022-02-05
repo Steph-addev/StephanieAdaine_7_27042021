@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 //Import files & folders
-const db = require("./models");
+const db = require("./models"); //Only when need to update the database with sequelize
 const usersRoute = require("./routes/userRoutes");
 const postsRoute = require("./routes/postRoutes");
 const authsRoute = require("./routes/authRoutes");
@@ -34,6 +34,7 @@ sequelize
     console.log("Connexion à la base de donnée MySQL échouée!", error);
   });
 
+//What we need to run the app
 const app = express();
 
 app.use(cors(corsOptions));
@@ -47,15 +48,15 @@ app.use(express.urlencoded({ extended: true }));
   res.send("You are authenticated");
 }); */
 
-//Endpoints & Controllers
+//API endpoints & routes for controllers
 app.use("/users", usersRoute);
 app.use("/posts", postsRoute);
 app.use("/authentification", authsRoute);
 
-//Images access link
+//Images forlder access link
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-//Automatic update of the to database
+//Only enable when updates on the database are needed
 /* db.sequelize.sync({ force: true }).then((req) => {
   app.listen({ port: 3001 });
   console.log("Server is on!");

@@ -1,31 +1,21 @@
 const { Post } = require("../models");
 const { uploadErrors } = require("../utils/errorsUtils");
-/* const fs = require("fs");
-const { promisify } = require("util");
-const pipeline = promisify(require("stream").pipeline); */
 
 exports.createPost = async (req, res) => {
-  /*   let fileName;
-
-  if (req.file !== null) {
+  if (req.file) {
     try {
-      if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") throw Error("invalid file");
-
+      if (req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpeg") throw Error("invalid file");
       if (req.file.size > 500000) throw Error("max size");
     } catch (err) {
       const errors = uploadErrors(err);
       return res.status(201).json({ errors });
     }
-      /*   const fileName = req.body.postId + "posts" + Date.now() + "jpg";
- await pipeline(req.file.stream, fs.createWriteStream(`${__dirname}../../images/posts/${fileName}`)); 
-  } */
-  /* 
-  const fileName = req.file.filename + "posts" + Date.now() + ".jpg"; */
+  }
 
   const addPost = new Post({
     UserId: req.body.UserId,
     content: req.body.content,
-    images: req.file === null ? "" : `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    images: req.file !== null ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : "",
     likes: req.body.likes,
   });
   try {

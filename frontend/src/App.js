@@ -4,13 +4,13 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-import { AuthContext } from "./context/AuthContext";
-import { AuthContextProvider } from "./context/AuthContext";
+import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import Cookies from "js-cookie";
 
 function App() {
-  const { user } = useContext(AuthContext);
   const [auth, setAuth] = useState(false);
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   const readCookie = () => {
     const cookieUser = Cookies.get("jwt");

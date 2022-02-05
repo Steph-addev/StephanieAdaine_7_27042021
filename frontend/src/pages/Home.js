@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Feed from "../components/Feed";
 import Navbar from "../components/Navbar";
 import Leftbar from "../components/Leftbar";
-import { AuthContext } from "../context/AuthContext";
+/* import { AuthContext } from "../context/AuthContext"; */
 import axios from "axios";
 import Colleagues from "../components/Colleagues";
 
 function Home() {
-  const { user } = useContext(AuthContext);
+  /*   const { user } = useContext(AuthContext); */
   const [users, setUsers] = useState([]);
 
   /*   if (!user) {

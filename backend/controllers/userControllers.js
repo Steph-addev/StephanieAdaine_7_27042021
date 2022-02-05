@@ -9,7 +9,7 @@ exports.createUser = (req, res) => {
     adminRole: req.body.adminRole,
     department: req.body.name,
     workplace: req.body.firstname,
-    profileImage: req.body.profileImage,
+    profileImage: `${req.protocol}://${req.get("host")}/images/profile-picture.png`,
     profileDesc: req.body.profileDesc,
   })
     .then((user) => res.send(user))
@@ -42,13 +42,10 @@ exports.getOneUser = (req, res) => {
 
 exports.deleteUser = (req, res) => {
   User.findOne({ where: { id: req.params.id } })
-    .then((user) => {
-      const filename = user.profileImage.split("/images/")[1];
-      fs.unlink(`images/${filename}`, () => {
-        User.destroy({ where: { id: req.params.id } })
-          .then(() => res.status(200).json({ message: "L'utilisateur a été supprimé !" }))
-          .catch((error) => res.status(400).json({ error }));
-      });
+    .then(() => {
+      User.destroy({ where: { id: req.params.id } })
+        .then(() => res.status(200).json({ message: "L'utilisateur a été supprimé !" }))
+        .catch((error) => res.status(400).json({ error }));
     })
     .catch((error) => res.status(500).json({ error }));
 };
