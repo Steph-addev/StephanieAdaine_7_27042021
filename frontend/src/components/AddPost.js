@@ -3,7 +3,7 @@ import { FaImage } from "react-icons/fa";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import AddPostPicture from "./AddPostPicture";
-import useFetch from "../useFetch";
+import useFetch from "../hooks/useFetch";
 
 function AddPost() {
   const [text, setText] = useState("");

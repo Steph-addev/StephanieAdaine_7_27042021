@@ -18,7 +18,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="Login-box">
       <div>
         <ul>
           <li id="connection" onClick={formAppearance}>

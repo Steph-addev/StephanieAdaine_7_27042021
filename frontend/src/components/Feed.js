@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import AddPost from "./AddPost";
 import NewPost from "./NewPost";
 import axios from "axios";
-import useFetch from "../useFetch";
+import useFetch from "../hooks/useFetch";
 
 function Feed({ users }) {
   const [newPost, setNewPost] = useState([]);

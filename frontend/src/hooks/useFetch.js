@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 function useFetch(url) {
   const [data, setData] = useState(null);
+  const [updateData, setUpdateData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -26,7 +27,7 @@ function useFetch(url) {
     axios
       .get(url)
       .then((response) => {
-        setData(response.data);
+        setUpdateData(response.data);
       })
       .catch((err) => {
         setError(err);

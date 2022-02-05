@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import Cookies from "js-cookie";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [auth, setAuth] = useState(false);

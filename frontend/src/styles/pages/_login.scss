@@ -1,0 +1,14 @@
+.login-box {
+  &__connection {
+    &--email {
+      input {
+        border-radius: 15px;
+      }
+    }
+    &--password {
+      input {
+        border-radius: 15px;
+      }
+    }
+  }
+}
