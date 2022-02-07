@@ -1,4 +1,4 @@
-const { Comment, Post } = require("../models");
+const { Comment, Post, User } = require("../models");
 
 exports.addComment = (req, res) => {
   Comment.create({
@@ -45,3 +45,14 @@ exports.getComments = (req, res) => {
       }
     });
 };
+
+/* exports.getOneComment = (req, res) => {
+  Post.findOne({ where: { id: req.params.id } });
+  Comment.findOne({include: User})
+    .then((comments) => res.send(comments).json())
+    .catch((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+}; */

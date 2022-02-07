@@ -10,7 +10,17 @@ function Comments({ postData, userData }) {
   console.log(postData);
 
   useEffect(() => {
-    const fetchComments = async () => {
+    const fetchComments = () => {
+      try {
+        const res = axios.get(process.env.REACT_APP_SERVER_URL + `/posts/comment-display/${postData.id}`);
+        setNewComment(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchComments();
+
+    /*     const fetchComments = async () => {
       try {
         const res = await axios.get(process.env.REACT_APP_SERVER_URL + `/posts/comment-display/${postData.id}`);
         setNewComment(res.data);
@@ -18,7 +28,7 @@ function Comments({ postData, userData }) {
         console.log(err);
       }
     };
-    fetchComments();
+    fetchComments(); */
   }, [postData.id]);
 
   return (

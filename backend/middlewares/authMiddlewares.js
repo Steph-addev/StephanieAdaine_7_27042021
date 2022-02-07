@@ -28,8 +28,9 @@ module.exports = (req, res, next) => {
         res.json({ auth: false, message: "The authentication has failed" });
         next();
       } else {
-        let user = await User.findOne(decodedToken.id);
+        let user = await User.findAll(decodedToken.id);
         res.locals.user = user;
+        console.log("tu es connecté");
         res.send("You are authenticated");
         next();
       }

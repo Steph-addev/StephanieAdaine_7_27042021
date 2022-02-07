@@ -28,6 +28,7 @@ function useFetch(url) {
       .get(url)
       .then((response) => {
         setUpdateData(response.data);
+        console.log(updateData);
       })
       .catch((err) => {
         setError(err);

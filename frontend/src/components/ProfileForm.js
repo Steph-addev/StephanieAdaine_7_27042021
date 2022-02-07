@@ -46,15 +46,21 @@ function ProfileForm() {
   };
 
   const deleteUser = (e) => {
-    axios
-      .delete(`http://localhost:5000/users/${user.userId}`)
-      .then(() => {
-        window.confirm("Êtes-vous sûr de vouloir supprimer votre compte? Votre compte sera définitivement supprimé de notre base de donnée");
-        window.location = "/";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (e.target) {
+      window.confirm("Êtes-vous sûr de vouloir supprimer votre compte? Votre compte sera définitivement supprimé de notre base de donnée");
+      if ("ok") {
+        axios
+          .delete(`http://localhost:5000/users/${user.userId}`)
+          .then(() => {
+            window.location = "/";
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        return false;
+      }
+    }
   };
 
   const updateUser = () => {

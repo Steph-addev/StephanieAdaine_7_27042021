@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -7,6 +7,8 @@ import NotFound from "./pages/NotFound";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import Cookies from "js-cookie";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Signin from "./components/Signin";
+import Signup from "./components/Signup";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -29,8 +31,10 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/accueil" element={<Home />} />
-            <Route path="/profil/" element={<Profile />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/accueil" element={<Home />} />
+              <Route path="/profil/" element={<Profile />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

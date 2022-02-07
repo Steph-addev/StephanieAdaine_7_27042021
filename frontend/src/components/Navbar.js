@@ -1,11 +1,10 @@
 import React from "react";
 import logo from "../assets/icon-left-font-monochrome-black.svg";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logout from "./Logout";
 import { FaUserAlt } from "react-icons/fa";
 
 function Navbar() {
-  let navigate = useNavigate();
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex">
@@ -17,14 +16,9 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse col-1" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <a
-              className="nav-item nav-link active"
-              onClick={() => {
-                navigate("/profil/");
-              }}
-            >
+            <Link to="/profil" className="nav-item nav-link active">
               <FaUserAlt title="Mon profil" />
-            </a>
+            </Link>
             <Logout />
           </div>
         </div>

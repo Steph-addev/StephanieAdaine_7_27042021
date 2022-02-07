@@ -17,7 +17,7 @@ exports.loginErrors = (err) => {
 
   if (err.message.includes("email")) errors.email = "Cet email est incorrect";
 
-  if (err.message.includes("password")) errors.password = "Ce mot de passe n'est pas assez long";
+  if (err.message.includes("password")) errors.password = "Ce mot de passe n'est pas assez long ou est incorrect";
 
   return errors;
 };

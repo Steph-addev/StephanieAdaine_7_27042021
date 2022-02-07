@@ -4,12 +4,13 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import AddPostPicture from "./AddPostPicture";
 import useFetch from "../hooks/useFetch";
+import { isEmpty } from "../Utils";
 
 function AddPost() {
   const [text, setText] = useState("");
   const { user } = useContext(AuthContext);
   const [postPicture, setPostPicture] = useState(null);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const { refetch } = useFetch(process.env.REACT_APP_SERVER_URL + "/posts");
 
   const addPicture = (e) => {
@@ -17,116 +18,41 @@ function AddPost() {
     setFile(e.target.files[0]);
   };
 
-  //Fonctionne!
   const cancelPost = () => {
     setText("");
     setPostPicture("");
     setFile("");
   };
 
-  const addOnePost = async (e) => {
+  const addOnePost = (e) => {
     e.preventDefault();
-    refetch();
 
-    const newPost = {
-      UserId: user.userId,
-      content: text,
-    };
-
+    let myform = e.target;
+    let data = new FormData(myform);
     if (file) {
-      let myform = e.target;
-      let data = new FormData(myform);
-      data.append("image", "image");
       data.append("UserId", user.userId);
       data.append("content", text);
-      newPost.images = file;
-
-      axios({
-        method: "post",
-        url: "http://localhost:5000/posts",
-        credentials: true,
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-        data: data,
-      })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      data.append("image", "image");
     } else {
-      axios({
-        method: "post",
-        url: "http://localhost:5000/posts",
-        credentials: true,
-        data: {
-          UserId: user.userId,
-          content: text,
-          images: "",
-        },
-      })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      data.append("UserId", user.userId);
+      data.append("content", text);
     }
-    console.log(file);
-    /*     let url = "http://localhost:5000/posts";
-    let req = new Request(url, {
-      body: data,
-      /*       UserId: user.userId,
-      content: text, 
-      method: "POST",
-    });
-    fetch(req, newPost)
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch(console.warn); */
-    /*     if (file) {
-      /*      if ((file && file.type === "image/png") || file.type === "image/jpeg" || file.type === "image/jpg");
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("image", file); //renvoi toutes les données de l'image: last update, name, size, type
-      data.append("name", fileName);
-      newPost.images = fileName;
-      console.log(newPost);
-      console.log(postPicture);
-      console.log(data);
-    }
- */
-    /*     if (file) {
-      const data = new FormData(formElement);
-      const request = new XMLHttpRequest();
-      request.open("POST", "http://localhost:5000/posts");
-      data.append("image", file);
-      request.send(new FormData(data));
-      console.log(data);
-    } */
 
-    /*     axios({
+    axios({
       method: "post",
       url: "http://localhost:5000/posts",
       credentials: true,
-      /*       headers: {
-        "content-type": "application/x-www-form-urlencoded",
-      }, 
-      data: {
-        UserId: user.userId,
-        content: text,
+      headers: {
+        "content-type": "multipart/form-data",
       },
+      data: data,
     })
       .then((response) => {
         console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
-      }); */
+      });
   };
 
   return (

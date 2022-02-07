@@ -31,7 +31,7 @@ module.exports = {
       },
       adminRole: {
         type: Sequelize.BOOLEAN,
-        allowNull: true,
+        defaultValue: false,
       },
       username: {
         type: Sequelize.STRING,

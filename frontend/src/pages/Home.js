@@ -15,7 +15,18 @@ function Home() {
   } */
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchUsers = () => {
+      axios
+        .get("http://localhost:5000/users")
+        .then((res) => {
+          setUsers(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchUsers();
+    /*     const fetchUsers = async () => {
       try {
         const res = await axios.get("http://localhost:5000/users");
         setUsers(res.data);
@@ -23,7 +34,7 @@ function Home() {
         console.log(err);
       }
     };
-    fetchUsers();
+    fetchUsers(); */
   }, []);
 
   return (

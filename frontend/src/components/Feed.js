@@ -3,10 +3,12 @@ import AddPost from "./AddPost";
 import NewPost from "./NewPost";
 import axios from "axios";
 import useFetch from "../hooks/useFetch";
+import Spinner from "react-bootstrap/Spinner";
 
 function Feed({ users }) {
   const [newPost, setNewPost] = useState([]);
   const { loading, error, refetch } = useFetch(process.env.REACT_APP_SERVER_URL + "/posts");
+  const [isUpdated, setIsUpdated] = useState(false);
 
   if (error) console.log(error);
 
@@ -16,6 +18,18 @@ function Feed({ users }) {
 
   //TODO: Try to find the good loop to charge and stop the loading
   useEffect(() => {
+    /*     if(isUpdated, setIsUpdated){
+      const fetchPosts = async () => {
+        try {
+          const res = await axios.get(process.env.REACT_APP_SERVER_URL + "/posts");
+          setNewPost(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+        return 
+      };
+      fetchPosts();
+    } */
     const fetchPosts = async () => {
       try {
         const res = await axios.get(process.env.REACT_APP_SERVER_URL + "/posts");
@@ -25,12 +39,23 @@ function Feed({ users }) {
       }
     };
     fetchPosts();
+    /*     const fetchPosts = () => {
+      axios
+        .get(process.env.REACT_APP_SERVER_URL + "/posts")
+        .then((res) => {
+          setNewPost(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchPosts(); */
   }, []);
 
   return (
     <Fragment>
       {loading ? (
-        <h1>Loading datas...</h1>
+        <Spinner animation="border" variant="danger" />
       ) : (
         <div className="feed">
           <div className="feed-box p-3">

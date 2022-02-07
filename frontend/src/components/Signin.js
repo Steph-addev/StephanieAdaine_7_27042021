@@ -10,7 +10,6 @@ function Signin() {
   /*   let emailError = document.getElementById("email-check-error");
   let passwordError = document.getElementById("password-check-error"); */
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
-  console.log(user);
   const [authUser, setAuthUser] = useState(false);
   let navigate = useNavigate();
 
