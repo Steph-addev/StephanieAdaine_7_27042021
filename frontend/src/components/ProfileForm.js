@@ -34,6 +34,7 @@ function ProfileForm() {
       credentials: true,
       headers: {
         "content-type": "multipart/form-data",
+        Authorization: `Bearer ` + localStorage.getItem("token"),
       },
       data: data,
     })
@@ -79,7 +80,11 @@ function ProfileForm() {
 
   useEffect(() => {
     axios
-      .get(`/users/${user.userId}`)
+      .get(`/users/${user.userId}`, {
+        headers: {
+          Authorization: `Bearer ` + localStorage.getItem("token"),
+        },
+      })
       .then((user) => {
         setProfileUser(user.data);
         console.log(user.data);

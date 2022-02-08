@@ -17,9 +17,9 @@ const authsRoute = require("./routes/authRoutes");
 let corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
-  allowedHeaders: ["sessionId", "Content-Type"],
+  allowedHeaders: ["sessionId", "Content-Type", "Authorization"],
   exposedHeaders: ["sessionId"],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  methods: ["GET", "PUT", "PATCH", "POST", "DELETE"],
   preflightContinue: false,
 };
 
@@ -39,14 +39,6 @@ const app = express();
 
 app.use(cors(corsOptions));
 app.use(morgan("dev"));
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-  next();
-});
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

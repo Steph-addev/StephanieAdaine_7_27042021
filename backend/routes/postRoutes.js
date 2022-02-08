@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const postsCtrl = require("../controllers/postControllers");
-/* const commentsCtrl = require("../controllers/commentControllers"); */
-/* const likesCtrl = require("../controllers/likeControllers"); */
 const multer = require("../middlewares/multer-config");
 const authMiddleware = require("../middlewares/authMiddlewares");
 
@@ -14,14 +12,10 @@ router.put("/:id", authMiddleware, postsCtrl.modifyPost);
 router.delete("/:id", authMiddleware, postsCtrl.deletePost);
 
 //Routes for comments
-router.patch("/comment-add/:id", authMiddleware, commentsCtrl.addComment);
-router.put("/comment-update/:id", authMiddleware, commentsCtrl.modifyComment);
-router.get("/comment-display", authMiddleware, commentsCtrl.getComments);
-/* router.get("/comment-display/:id", commentsCtrl.getOneComment); */
-router.delete("/comment-delete/:id", authMiddleware, commentsCtrl.deleteComment);
-
-// Routes for likes
-router.patch("/:id/like", authMiddleware, likesCtrl.likePost);
-router.post("/:id/dislike", authMiddleware, likesCtrl.dislikePost);
+router.patch("/comment-add/:id", authMiddleware, postsCtrl.addComment);
+router.put("/comment-update/:id", authMiddleware, postsCtrl.modifyComment);
+router.get("/comment-display/:id", authMiddleware, postsCtrl.getOneComment);
+router.get("/:id/comment-display", authMiddleware, postsCtrl.getAllComments);
+router.delete("/comment-delete/:id", authMiddleware, postsCtrl.deleteComment);
 
 module.exports = router;

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import AddPostPicture from "./AddPostPicture";
 import { FaPaperPlane } from "react-icons/fa";
 
-function AddComments({ postDataId, userDataId }) {
+function AddComments({ postDataId, userData }) {
   const [text, setText] = useState("");
 
   const addOneComment = (e) => {
@@ -13,8 +13,11 @@ function AddComments({ postDataId, userDataId }) {
       method: "patch",
       url: `/posts/comment-add/${postDataId}`,
       credentials: true,
+      headers: {
+        Authorization: `Bearer ` + localStorage.getItem("token"),
+      },
       data: {
-        UserId: userDataId,
+        UserId: userData.id,
         PostId: postDataId,
         content: text,
       },
@@ -30,7 +33,7 @@ function AddComments({ postDataId, userDataId }) {
   return (
     <div className="newpost-comments d-flex mt-3">
       <form className="newpost-comments_form d-flex mt-3" onSubmit={addOneComment}>
-        <AddPostPicture />
+        <img src={userData.profileImage} className="addPost-image_profile" alt="Profile picture"></img>
         <input type="text" className="newpost-comments_form--input" placeholder="Laisser un commentaire" value={text} onChange={(e) => setText(e.target.value)}></input>
         <button type="submit">
           <FaPaperPlane />

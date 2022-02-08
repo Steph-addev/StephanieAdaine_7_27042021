@@ -11,7 +11,11 @@ function AddPostPicture() {
 
   useEffect(() => {
     axios
-      .get(`/users/${user.userId}`)
+      .get(`/users/${user.userId}`, {
+        headers: {
+          Authorization: `Bearer ` + localStorage.getItem("token"),
+        },
+      })
       .then((userApi) => {
         setUserData(userApi.data);
       })

@@ -3,14 +3,15 @@ import { FaImage } from "react-icons/fa";
 import axios from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import AddPostPicture from "./AddPostPicture";
-import useFetch from "../hooks/useFetch";
-
-function AddPost() {
+/* import useFetch from "../hooks/useFetch";
+ */
+function AddPost({ users }) {
   const [text, setText] = useState("");
   const { user } = useContext(AuthContext);
   const [postPicture, setPostPicture] = useState(null);
   const [file, setFile] = useState(null);
-  const { refetch } = useFetch("/posts");
+  /*   const { refetch } = useFetch("/posts"); */
+  const PF = process.env.REACT_APP_PICTURES_URL;
 
   const addPicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
@@ -43,6 +44,7 @@ function AddPost() {
       credentials: true,
       headers: {
         "content-type": "multipart/form-data",
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
       data: data,
     })
@@ -59,7 +61,16 @@ function AddPost() {
       <div className="addPost-box d-flex justify-content-center">
         <div className="addPost-box_publish px-4 py-4">
           <div className="d-flex ">
-            <AddPostPicture />
+            <img
+              src={users
+                .map((userData) => {
+                  if (userData.id === user.userId) return userData.profileImage ? userData.profileImage : PF + "profile-picture.png";
+                  else return null;
+                })
+                .join("")}
+              className="addPost-image_profile"
+              alt="Profile picture"
+            ></img>
             <p>Exprimez-vous</p>
           </div>
           <form onSubmit={addOnePost} id="addPost-box_form">

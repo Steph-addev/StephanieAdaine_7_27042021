@@ -19,8 +19,6 @@ function NewPost({ postData, users }) {
 
   const PF = process.env.REACT_APP_PICTURES_URL;
 
-  console.log(postData);
-
   const dataUpdate = {
     UserId: postData.UserId,
     id: postData.id,
@@ -34,7 +32,11 @@ function NewPost({ postData, users }) {
   const updatePost = async () => {
     if (textUpdate) {
       axios
-        .put(`/posts/${postData.id}`, dataUpdate)
+        .put(`/posts/${postData.id}`, dataUpdate, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+          },
+        })
         .then((res) => {})
         .catch((err) => {});
     }
@@ -49,7 +51,11 @@ function NewPost({ postData, users }) {
 
   useEffect(() => {
     axios
-      .get(`/users/${user.userId}`)
+      .get(`/users/${user.userId}`, {
+        headers: {
+          Authorization: `Bearer ` + localStorage.getItem("token"),
+        },
+      })
       .then((userApi) => {
         setDataUser(userApi.data);
       })
@@ -107,7 +113,7 @@ function NewPost({ postData, users }) {
                 </div>
               )}
               {postData.images !== "" ? <img src={postData.images} alt="photo postée par l'utilisateur" className="newpost-news_image"></img> : ""}
-              {dataUser.id === postData.UserId && (
+              {(dataUser.id === postData.UserId || dataUser.adminRole === true) && (
                 <div className="button-container row justify-content-end">
                   <div onClick={() => setIsUpdated(!isUpdated)} className="newpost-box_icons--update col-1">
                     <FaPencilAlt />

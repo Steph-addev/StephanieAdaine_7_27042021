@@ -1,7 +1,6 @@
 import axios from "../api/axios";
 import React, { Fragment, useContext, useState } from "react";
 import { FaDoorOpen } from "react-icons/fa";
-import Cookies from "js-cookie";
 import { AuthContext } from "../context/AuthContext";
 
 function Logout() {
@@ -10,9 +9,12 @@ function Logout() {
 
   const disconnect = async () =>
     await axios
-      .get("/authentification/logout")
+      .get("/authentification/logout", {
+        headers: {
+          Authorization: `Bearer ` + localStorage.getItem("token"),
+        },
+      })
       .then(() => {
-        Cookies.remove("jwt");
         localStorage.clear();
         window.location = "/";
       })

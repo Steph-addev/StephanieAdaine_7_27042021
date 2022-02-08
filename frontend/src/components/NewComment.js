@@ -1,6 +1,5 @@
 import axios from "../api/axios";
 import React, { Fragment, useState } from "react";
-import AddPostPicture from "./AddPostPicture";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { format } from "timeago.js";
@@ -20,7 +19,11 @@ function NewComment({ comment, userData, postDataId }) {
   const updatePost = async () => {
     if (textUpdate) {
       axios
-        .put(`/posts/comment-update/${comment.id}`, dataUpdate)
+        .put(`/posts/comment-update/${comment.id}`, dataUpdate, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+          },
+        })
         .then((res) => {
           console.log(res);
           setTextUpdate("");
@@ -33,7 +36,11 @@ function NewComment({ comment, userData, postDataId }) {
 
   const deletePost = async () => {
     axios
-      .delete(`/posts/comment-delete/${comment.id}`)
+      .delete(`/posts/comment-delete/${comment.id}`, {
+        headers: {
+          Authorization: `Bearer ` + localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         console.log(res);
       })
@@ -48,7 +55,7 @@ function NewComment({ comment, userData, postDataId }) {
         <div className="newcomment_content container">
           <div className="newcomment_content-box row">
             <div className="newcomment_content-box--image col-2">
-              <AddPostPicture />
+              <img src={userData.profileImage} className="newcomment-image_profile" alt="Photo de profil"></img>
             </div>
             <div className="newcomment_content-box--info col-10">
               <h3 className="newcomment_content--title m-0">{userData.username}</h3>
@@ -68,7 +75,7 @@ function NewComment({ comment, userData, postDataId }) {
               </div>
             )}
           </div>
-          {userData.id === comment.UserId && (
+          {(userData.id === comment.UserId || userData.adminRole === true) && (
             <div className="newcomment-box_icons row justify-content-end">
               <div onClick={() => setIsUpdated(!isUpdated)} className="newcomment-box_icons--update col-1">
                 <FaPencilAlt />

@@ -28,9 +28,7 @@ exports.createPost = async (req, res) => {
 };
 
 exports.getAllPosts = (req, res) => {
-  Post.findAll({
-    include: [User, { model: Comment, include: User }],
-  })
+  Post.findAll({ include: User })
     .then((posts) => res.send(posts).json())
     .catch((err) => {
       if (err) {
@@ -40,7 +38,7 @@ exports.getAllPosts = (req, res) => {
 };
 
 exports.getOnePost = (req, res) => {
-  Post.findOne({ where: { id: req.params.id }, include: [User] })
+  Post.findOne({ where: { id: req.params.id }, include: User })
     .then((post) => res.send(post).json())
     .catch((err) => {
       if (err) {
@@ -106,10 +104,20 @@ exports.deleteComment = (req, res) => {
     });
 };
 
-exports.getComments = (req, res) => {
+exports.getOneComment = (req, res) => {
   Post.findOne({ where: { id: req.params.id } });
-  Comment.findAll({ include: User })
-    .then((comments) => res.send(comments).json())
+  Comment.findOne({ include: Post })
+    .then((comment) => res.send(comment).json())
+    .catch((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+};
+
+exports.getAllComments = (req, res) => {
+  Comment.findAll()
+    .then((comments) => res.send(comments).json({ message: "Les commentaires s'affichent !" }))
     .catch((err) => {
       if (err) {
         console.log(err);

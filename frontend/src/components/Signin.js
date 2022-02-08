@@ -2,7 +2,6 @@ import React, { useState, Fragment, useContext, useRef, useEffect } from "react"
 import { loginCall } from "../apiCall";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 function Signin() {
   const userRef = useRef();

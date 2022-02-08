@@ -2,12 +2,13 @@ import React, { Fragment, useEffect, useState } from "react";
 import AddPost from "./AddPost";
 import NewPost from "./NewPost";
 import axios from "../api/axios";
-import useFetch from "../hooks/useFetch";
+
 import Spinner from "react-bootstrap/Spinner";
 
 function Feed({ users }) {
   const [newPost, setNewPost] = useState([]);
-  const { loading, error, refetch } = useFetch("/posts");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
 
   if (error) console.log(error);
@@ -30,7 +31,7 @@ function Feed({ users }) {
       };
       fetchPosts();
     } */
-    const fetchPosts = async () => {
+    /*     const fetchPosts = async () => {
       try {
         const res = await axios.get("/posts", {
           headers: {
@@ -42,29 +43,39 @@ function Feed({ users }) {
         console.log(err);
       }
     };
-    fetchPosts();
-    /*     const fetchPosts = () => {
+    fetchPosts(); */
+    const fetchPosts = () => {
       axios
-        .get(process.env.REACT_APP_SERVER_URL + "/posts")
+        .get("/posts", {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+          },
+        })
         .then((res) => {
           setNewPost(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          setError(err);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     };
-    fetchPosts(); */
+    fetchPosts();
   }, []);
 
   return (
     <Fragment>
       {loading ? (
-        <Spinner animation="border" variant="danger" />
+        <div className="feed-spinner">
+          <Spinner animation="border" variant="danger" />
+          <p>Récupération des données en cours...</p>
+        </div>
       ) : (
         <div className="feed">
           <div className="feed-box p-3">
-            <AddPost />
-            <button onClick={refetch}>Actualiser mon feed</button>
+            <AddPost users={users} />
+            <button>Actualiser mon feed</button>
             {newPost.map((param) => (
               <NewPost key={param.id} postData={param} users={users} />
             ))}
