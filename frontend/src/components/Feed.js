@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
 import AddPost from "./AddPost";
 import NewPost from "./NewPost";
-import axios from "axios";
+import axios from "../api/axios";
 import useFetch from "../hooks/useFetch";
 import Spinner from "react-bootstrap/Spinner";
 
 function Feed({ users }) {
   const [newPost, setNewPost] = useState([]);
-  const { loading, error, refetch } = useFetch(process.env.REACT_APP_SERVER_URL + "/posts");
+  const { loading, error, refetch } = useFetch("/posts");
   const [isUpdated, setIsUpdated] = useState(false);
 
   if (error) console.log(error);
@@ -32,7 +32,11 @@ function Feed({ users }) {
     } */
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(process.env.REACT_APP_SERVER_URL + "/posts");
+        const res = await axios.get("/posts", {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+          },
+        });
         setNewPost(res.data);
       } catch (err) {
         console.log(err);

@@ -1,14 +1,33 @@
-.login-box {
-  &__connection {
-    &--email {
-      input {
-        border-radius: 15px;
+.Login-box {
+  height: 100vh;
+  background-color: rgb(243, 165, 165);
+  &__clickConnect {
+    background-color: rgb(211, 214, 214);
+    height: 100vh;
+    &--button {
+      height: 60px;
+    }
+    &--title {
+      padding-right: 20px;
+      line-height: 50px;
+      padding-left: 10px;
+      &:hover {
+        background-color: #dfafaf9a;
+        padding-bottom: 4px;
+        border-bottom: 6px solid #44434325;
       }
     }
-    &--password {
-      input {
-        border-radius: 15px;
-      }
+  }
+  &__connect {
+    background-color: rgb(232, 234, 236);
+    -webkit-box-shadow: 5px 5px 15px 5px #00000080;
+    box-shadow: 5px 5px 15px 5px #00000080;
+    &--logo {
+      width: 150px;
+      height: 150px;
     }
+  }
+  input {
+    border-radius: 15px;
   }
 }

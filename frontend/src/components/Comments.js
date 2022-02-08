@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 /*import { AuthContext } from "../context/AuthContext"; */
 import AddComment from "./AddComments";
 import NewComment from "./NewComment";
-import axios from "axios";
+import axios from "../api/axios";
 
 function Comments({ postData, userData }) {
   const [newComment, setNewComment] = useState([]);
@@ -12,7 +12,7 @@ function Comments({ postData, userData }) {
   useEffect(() => {
     const fetchComments = () => {
       try {
-        const res = axios.get(process.env.REACT_APP_SERVER_URL + `/posts/comment-display/${postData.id}`);
+        const res = axios.get(`/posts/comment-display/${postData.id}`);
         setNewComment(res.data);
       } catch (err) {
         console.log(err);

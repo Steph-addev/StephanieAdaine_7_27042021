@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const postsCtrl = require("../controllers/postControllers");
-const commentsCtrl = require("../controllers/commentControllers");
-const likesCtrl = require("../controllers/likeControllers");
+/* const commentsCtrl = require("../controllers/commentControllers"); */
+/* const likesCtrl = require("../controllers/likeControllers"); */
 const multer = require("../middlewares/multer-config");
 const authMiddleware = require("../middlewares/authMiddlewares");
 

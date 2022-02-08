@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 
 function Signup() {
   const email = useRef();
@@ -18,7 +18,7 @@ function Signup() {
         username: username.current.value,
       };
       try {
-        const res = await axios.post(process.env.REACT_APP_SERVER_URL + "/authentification/registrer", user);
+        const res = await axios.post("/authentification/registrer", user);
         window.location = "/";
       } catch (err) {
         console.log(err);
@@ -27,27 +27,29 @@ function Signup() {
   };
   return (
     <Fragment>
-      <div className="login-box_registration">
-        <form onSubmit={registrerNewUser}>
-          <div className="login-box_registration--username form-group">
-            <label>Nom de profil:</label>
-            <input type="username" id="username" className="form control" ref={username} required></input>
-          </div>
-          <div className="login-box_registration--email form-group">
-            <label>Email:</label>
-            <input type="email" id="email" className="form control" ref={email} required></input>
-          </div>
-          <div className="login-box_registration--password form-group">
-            <label>Mot de passe:</label>
-            <input type="password" id="password" className="form control" ref={password} required></input>
-          </div>
-          <div className="login-box_registration--password-bis form-group">
-            <label>Confirmer votre mot de passe:</label>
-            <input type="password" id="password-bis" className="form control" ref={passwordBis} required></input>
-          </div>
-          <button>S'inscrire</button>
-        </form>
-      </div>
+      <section className="login-box container w-100">
+        <div className="login-box_registration container justify-content-center p-5">
+          <form onSubmit={registrerNewUser}>
+            <div className="login-box_registration--username form-group">
+              <label>Nom de profil:</label>
+              <input type="username" id="username" className="form control" ref={username} required></input>
+            </div>
+            <div className="login-box_registration--email form-group">
+              <label>Email:</label>
+              <input type="email" id="email" className="form control" ref={email} required></input>
+            </div>
+            <div className="login-box_registration--password form-group">
+              <label>Mot de passe:</label>
+              <input type="password" id="password" className="form control" ref={password} required></input>
+            </div>
+            <div className="login-box_registration--password-bis form-group">
+              <label>Confirmer votre mot de passe:</label>
+              <input type="password" id="password-bis" className="form control" ref={passwordBis} required></input>
+            </div>
+            <button className="btn btn-danger row mt-4 justify-content-center">S'inscrire</button>
+          </form>
+        </div>
+      </section>
     </Fragment>
   );
 }

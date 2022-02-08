@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Feed from "../components/Feed";
 import Navbar from "../components/Navbar";
 import Leftbar from "../components/Leftbar";
-/* import { AuthContext } from "../context/AuthContext"; */
-import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import axios from "../api/axios";
 import Colleagues from "../components/Colleagues";
 
 function Home() {
-  /*   const { user } = useContext(AuthContext); */
+  const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
 
   /*   if (!user) {
@@ -17,7 +17,11 @@ function Home() {
   useEffect(() => {
     const fetchUsers = () => {
       axios
-        .get("http://localhost:5000/users")
+        .get("/users", {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+          },
+        })
         .then((res) => {
           setUsers(res.data);
         })

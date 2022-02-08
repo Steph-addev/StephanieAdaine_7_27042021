@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 import React, { useState } from "react";
 
 import AddPostPicture from "./AddPostPicture";
@@ -11,7 +11,7 @@ function AddComments({ postDataId, userDataId }) {
     e.preventDefault();
     axios({
       method: "patch",
-      url: `http://localhost:5000/posts/comment-add/${postDataId}`,
+      url: `/posts/comment-add/${postDataId}`,
       credentials: true,
       data: {
         UserId: userDataId,

@@ -3,6 +3,7 @@ const router = express.Router();
 const usersCtrl = require("../controllers/userControllers");
 const multer = require("../middlewares/multer-config");
 const uploadCtrl = require("../controllers/uploadControllers");
+
 const authMiddleware = require("../middlewares/authMiddlewares");
 
 //Routes for users

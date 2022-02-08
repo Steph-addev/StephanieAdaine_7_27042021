@@ -1,4 +1,4 @@
-const { Comment, Post, User } = require("../models");
+/* const { Comment, Post, User } = require("../models");
 
 exports.addComment = (req, res) => {
   Comment.create({
@@ -44,7 +44,7 @@ exports.getComments = (req, res) => {
         console.log(err);
       }
     });
-};
+}; */
 
 /* exports.getOneComment = (req, res) => {
   Post.findOne({ where: { id: req.params.id } });

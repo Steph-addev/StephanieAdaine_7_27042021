@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment, useContext } from "react";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { FaRegCommentAlt } from "react-icons/fa";
-import axios from "axios";
+import axios from "../api/axios";
 import { format } from "timeago.js";
 import { AuthContext } from "../context/AuthContext";
 import Comments from "./Comments";
@@ -34,7 +34,7 @@ function NewPost({ postData, users }) {
   const updatePost = async () => {
     if (textUpdate) {
       axios
-        .put(`http://localhost:5000/posts/${postData.id}`, dataUpdate)
+        .put(`/posts/${postData.id}`, dataUpdate)
         .then((res) => {})
         .catch((err) => {});
     }
@@ -42,14 +42,14 @@ function NewPost({ postData, users }) {
 
   const deletePost = async () => {
     axios
-      .delete(`http://localhost:5000/posts/${postData.id}`)
+      .delete(`/posts/${postData.id}`)
       .then((res) => {})
       .catch((err) => {});
   };
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${user.userId}`)
+      .get(`/users/${user.userId}`)
       .then((userApi) => {
         setDataUser(userApi.data);
       })

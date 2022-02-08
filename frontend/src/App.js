@@ -7,15 +7,13 @@ import NotFound from "./pages/NotFound";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import Cookies from "js-cookie";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Signin from "./components/Signin";
-import Signup from "./components/Signup";
 
 function App() {
   const [auth, setAuth] = useState(false);
   const { user } = useContext(AuthContext);
   console.log(user);
 
-  const readCookie = () => {
+  /*   const readCookie = () => {
     const cookieUser = Cookies.get("jwt");
     if (cookieUser) {
       setAuth(true);
@@ -24,7 +22,7 @@ function App() {
   useEffect(() => {
     readCookie();
   }, []);
-
+ */
   return (
     <div className="App">
       <AuthContextProvider value={{ auth, setAuth }}>

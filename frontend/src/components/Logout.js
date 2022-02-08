@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 import React, { Fragment, useContext, useState } from "react";
 import { FaDoorOpen } from "react-icons/fa";
 import Cookies from "js-cookie";
@@ -10,7 +10,7 @@ function Logout() {
 
   const disconnect = async () =>
     await axios
-      .get(process.env.REACT_APP_SERVER_URL + "/authentification/logout")
+      .get("/authentification/logout")
       .then(() => {
         Cookies.remove("jwt");
         localStorage.clear();

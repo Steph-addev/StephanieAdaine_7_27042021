@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 import React, { Fragment, useState } from "react";
 import AddPostPicture from "./AddPostPicture";
 import { FaTrashAlt } from "react-icons/fa";
@@ -20,7 +20,7 @@ function NewComment({ comment, userData, postDataId }) {
   const updatePost = async () => {
     if (textUpdate) {
       axios
-        .put(`http://localhost:5000/posts/comment-update/${comment.id}`, dataUpdate)
+        .put(`/posts/comment-update/${comment.id}`, dataUpdate)
         .then((res) => {
           console.log(res);
           setTextUpdate("");
@@ -33,7 +33,7 @@ function NewComment({ comment, userData, postDataId }) {
 
   const deletePost = async () => {
     axios
-      .delete(`http://localhost:5000/posts/comment-delete/${comment.id}`)
+      .delete(`/posts/comment-delete/${comment.id}`)
       .then((res) => {
         console.log(res);
       })

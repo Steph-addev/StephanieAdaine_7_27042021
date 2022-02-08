@@ -1,4 +1,4 @@
-const { Post } = require("../models");
+const { Post, User, Comment } = require("../models");
 const { uploadErrors } = require("../utils/errorsUtils");
 
 exports.createPost = async (req, res) => {
@@ -28,7 +28,9 @@ exports.createPost = async (req, res) => {
 };
 
 exports.getAllPosts = (req, res) => {
-  Post.findAll()
+  Post.findAll({
+    include: [User, { model: Comment, include: User }],
+  })
     .then((posts) => res.send(posts).json())
     .catch((err) => {
       if (err) {
@@ -38,7 +40,7 @@ exports.getAllPosts = (req, res) => {
 };
 
 exports.getOnePost = (req, res) => {
-  Post.findOne({ where: { id: req.params.id } })
+  Post.findOne({ where: { id: req.params.id }, include: [User] })
     .then((post) => res.send(post).json())
     .catch((err) => {
       if (err) {
@@ -60,6 +62,54 @@ exports.deletePost = (req, res) => {
 exports.modifyPost = (req, res) => {
   Post.update({ ...req.body }, { where: { id: req.params.id } })
     .then(() => res.status(200).json({ message: "Le post a été modifié !" }))
+    .catch((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+};
+
+// Get the comments
+
+exports.addComment = (req, res) => {
+  Comment.create({
+    UserId: req.body.UserId,
+    PostId: req.body.PostId,
+    content: req.body.content,
+    likes: req.body.likes,
+  })
+    .then((comment) => res.send(comment).json({ message: "commentaire créé" }))
+    .catch((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+};
+
+exports.modifyComment = (req, res) => {
+  Comment.update({ ...req.body }, { where: { id: req.params.id } })
+    .then(() => res.status(200).json({ message: "Le commentaire a été modifié !" }))
+    .catch((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+};
+
+exports.deleteComment = (req, res) => {
+  Comment.destroy({ where: { id: req.params.id } })
+    .then(() => res.status(200).json({ message: "Le commentaire a été supprimé !" }))
+    .catch((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+};
+
+exports.getComments = (req, res) => {
+  Post.findOne({ where: { id: req.params.id } });
+  Comment.findAll({ include: User })
+    .then((comments) => res.send(comments).json())
     .catch((err) => {
       if (err) {
         console.log(err);

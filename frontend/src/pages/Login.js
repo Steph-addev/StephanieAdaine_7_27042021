@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import Signin from "../components/Signin";
 import Signup from "../components/Signup";
+import logoRed from "../assets/icon-above-font.svg";
 
 function Login() {
   const [signInForm, setSignInForm] = useState(true);
@@ -18,19 +19,24 @@ function Login() {
   };
 
   return (
-    <div className="Login-box">
-      <div>
-        <ul>
-          <li id="connection" onClick={formAppearance}>
+    <div className="Login-box ">
+      <div className="Login-box__clickConnect container">
+        <ul className="Login-box__clickConnect--button d-flex m-0 p-0">
+          <li id="connection" className="Login-box__clickConnect--title" onClick={formAppearance}>
             Se connecter
           </li>
-          <li id="registrer" onClick={formAppearance}>
+          <li id="registrer" className="Login-box__clickConnect--title" onClick={formAppearance}>
             S'inscrire
           </li>
         </ul>
+        <div className="Login-box__connect">
+          <div className="Login-box__connect--logo m-auto pt-4">
+            <img src={logoRed}></img>
+          </div>
+          {signInForm && <Signin />}
+          {signUpForm && <Signup />}
+        </div>
       </div>
-      {signInForm && <Signin />}
-      {signUpForm && <Signup />}
     </div>
   );
 }

@@ -1,17 +1,16 @@
 import React, { useContext, useState } from "react";
 import { FaImage } from "react-icons/fa";
-import axios from "axios";
+import axios from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import AddPostPicture from "./AddPostPicture";
 import useFetch from "../hooks/useFetch";
-import { isEmpty } from "../Utils";
 
 function AddPost() {
   const [text, setText] = useState("");
   const { user } = useContext(AuthContext);
   const [postPicture, setPostPicture] = useState(null);
   const [file, setFile] = useState(null);
-  const { refetch } = useFetch(process.env.REACT_APP_SERVER_URL + "/posts");
+  const { refetch } = useFetch("/posts");
 
   const addPicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
@@ -40,7 +39,7 @@ function AddPost() {
 
     axios({
       method: "post",
-      url: "http://localhost:5000/posts",
+      url: "/posts",
       credentials: true,
       headers: {
         "content-type": "multipart/form-data",

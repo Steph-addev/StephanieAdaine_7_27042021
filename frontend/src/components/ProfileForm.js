@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
@@ -11,7 +11,7 @@ function ProfileForm() {
   const [profileUser, setProfileUser] = useState({});
   const [isUpdated, setIsUpdated] = useState(false);
   const { user } = useContext(AuthContext);
-  const { refetch } = useFetch(`http://localhost:5000/users/${user.userId}`);
+  const { refetch } = useFetch(`/users/${user.userId}`);
 
   const PF = process.env.REACT_APP_PICTURES_URL;
 
@@ -30,7 +30,7 @@ function ProfileForm() {
 
     axios({
       method: "post",
-      url: `http://localhost:5000/users/${profileUser.id}/upload`,
+      url: `/users/${profileUser.id}/upload`,
       credentials: true,
       headers: {
         "content-type": "multipart/form-data",
@@ -50,7 +50,7 @@ function ProfileForm() {
       window.confirm("Êtes-vous sûr de vouloir supprimer votre compte? Votre compte sera définitivement supprimé de notre base de donnée");
       if ("ok") {
         axios
-          .delete(`http://localhost:5000/users/${user.userId}`)
+          .delete(`/users/${user.userId}`)
           .then(() => {
             window.location = "/";
           })
@@ -66,7 +66,7 @@ function ProfileForm() {
   const updateUser = () => {
     if (profileName || profileBio) {
       axios
-        .put(`http://localhost:5000/users/${user.userId}`, updatedData)
+        .put(`/users/${user.userId}`, updatedData)
         .then((res) => {
           console.log(res);
           console.log("L'utilisateur a été modifé");
@@ -79,7 +79,7 @@ function ProfileForm() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${user.userId}`)
+      .get(`/users/${user.userId}`)
       .then((user) => {
         setProfileUser(user.data);
         console.log(user.data);

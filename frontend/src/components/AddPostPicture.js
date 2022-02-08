@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import profileImg from "../assets/icon.svg";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
+import axios from "../api/axios";
 
 function AddPostPicture() {
   const { user } = useContext(AuthContext);
@@ -11,7 +11,7 @@ function AddPostPicture() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${user.userId}`)
+      .get(`/users/${user.userId}`)
       .then((userApi) => {
         setUserData(userApi.data);
       })
