@@ -2,6 +2,7 @@ import React, { useState, Fragment, useContext, useRef, useEffect } from "react"
 import { loginCall } from "../apiCall";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { TextField } from "@mui/material";
 
 function Signin() {
   const userRef = useRef();
@@ -51,12 +52,12 @@ function Signin() {
           <form action="" onSubmit={subConnection}>
             <div className="login-box__connection--email row form-group">
               <label htmlFor="email">Email:</label>
-              <input required type="email" id="email" className="form control" ref={userRef} value={email} onChange={(e) => setEmail(e.target.value)}></input>
+              <TextField required id="outlined-required" label="Required" className="login-box__connection--back" type="email" ref={userRef} value={email} onChange={(e) => setEmail(e.target.value)} />
               <span id="email-check-error"></span>
             </div>
-            <div className="login-box__connection--password row">
+            <div className="login-box__connection--password row form-group">
               <label htmlFor="password">Mot de passe:</label>
-              <input required type="password" id="password" className="form control" ref={userRef} value={password} onChange={(e) => setPassword(e.target.value)}></input>
+              <TextField required id="outlined" label="Required" className="login-box__connection--back" type="password" ref={userRef} value={password} onChange={(e) => setPassword(e.target.value)} />
               <span id="password-check-error"></span>
             </div>
             <button className="btn btn-danger row mt-4 justify-content-center" type="submit" disabled={isFetching} onClick={authAccess}>

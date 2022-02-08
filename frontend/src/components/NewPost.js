@@ -7,6 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import Comments from "./Comments";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
+import { Avatar } from "@mui/material";
 
 function NewPost({ postData, users }) {
   /*   const [like, setLike] = useState(post.likes);
@@ -44,7 +45,11 @@ function NewPost({ postData, users }) {
 
   const deletePost = async () => {
     axios
-      .delete(`/posts/${postData.id}`)
+      .delete(`/posts/${postData.id}`, {
+        headers: {
+          Authorization: `Bearer ` + localStorage.getItem("token"),
+        },
+      })
       .then((res) => {})
       .catch((err) => {});
   };
@@ -75,7 +80,7 @@ function NewPost({ postData, users }) {
         >
           <div className="row">
             <div className="col-2">
-              <img
+              <Avatar
                 src={users
                   .map((user) => {
                     if (user.id === postData.UserId) return user.profileImage ? user.profileImage : PF + "profile-picture.png";
@@ -84,7 +89,7 @@ function NewPost({ postData, users }) {
                   .join("")}
                 className="newpost-image_profile"
                 alt="test"
-              ></img>
+              ></Avatar>
             </div>
             <div className="col-6 ">
               <p className="mb-0">
@@ -115,17 +120,17 @@ function NewPost({ postData, users }) {
               {postData.images !== "" ? <img src={postData.images} alt="photo postée par l'utilisateur" className="newpost-news_image"></img> : ""}
               {(dataUser.id === postData.UserId || dataUser.adminRole === true) && (
                 <div className="button-container row justify-content-end">
-                  <div onClick={() => setIsUpdated(!isUpdated)} className="newpost-box_icons--update col-1">
+                  <button onClick={() => setIsUpdated(!isUpdated)} className="newpost-box_icons--update col-1">
                     <FaPencilAlt />
-                  </div>
-                  <div
+                  </button>
+                  <button
                     className="newpost-box_icons--update col-1"
                     onClick={() => {
                       if (window.confirm("Voulez-vous supprimer votre publication?")) deletePost();
                     }}
                   >
                     <FaTrashAlt />
-                  </div>
+                  </button>
                 </div>
               )}
             </div>

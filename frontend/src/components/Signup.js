@@ -1,5 +1,6 @@
 import React, { Fragment, useRef } from "react";
 import axios from "../api/axios";
+import { TextField } from "@mui/material";
 
 function Signup() {
   const email = useRef();
@@ -32,19 +33,19 @@ function Signup() {
           <form onSubmit={registrerNewUser}>
             <div className="login-box_registration--username form-group">
               <label>Nom de profil:</label>
-              <input type="username" id="username" className="form control" ref={username} required></input>
+              <TextField required id="username" label="Required" className="login-box__connection--back" type="text" ref={username} />
             </div>
             <div className="login-box_registration--email form-group">
               <label>Email:</label>
-              <input type="email" id="email" className="form control" ref={email} required></input>
+              <TextField required id="email" label="Required" className="login-box__connection--back" type="email" ref={email} />
             </div>
             <div className="login-box_registration--password form-group">
               <label>Mot de passe:</label>
-              <input type="password" id="password" className="form control" ref={password} required></input>
+              <TextField required id="password" label="Required" className="login-box__connection--back" type="password" ref={password} />
             </div>
             <div className="login-box_registration--password-bis form-group">
               <label>Confirmer votre mot de passe:</label>
-              <input type="password" id="password-bis" className="form control" ref={passwordBis} required></input>
+              <TextField required id="password-bis" label="Required" className="login-box__connection--back" type="password" ref={passwordBis} />
             </div>
             <button className="btn btn-danger row mt-4 justify-content-center">S'inscrire</button>
           </form>

@@ -44,16 +44,18 @@ function Home() {
   return (
     <div>
       <Navbar />
-      <div className="container"></div>
-      <div className="home row">
-        <div className="col-1">
-          <Leftbar />
-        </div>
-        <div className="col-8">
-          <Feed users={users} />
-        </div>
-        <div className="Friends col-3">
-          <Colleagues users={users} />
+      <div className="container-fluid">
+        <h1></h1>
+        <div className="home row">
+          <div className="col-1">
+            <Leftbar />
+          </div>
+          <div className="col-8">
+            <Feed users={users} />
+          </div>
+          <div className="Friends col-3">
+            <Colleagues users={users} />
+          </div>
         </div>
       </div>
     </div>

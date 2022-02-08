@@ -1,3 +1,5 @@
 .login-box {
-  background-color: grey;
+  &__connection--back {
+    background-color: white;
+  }
 }
