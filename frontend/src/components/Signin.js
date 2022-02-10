@@ -3,41 +3,41 @@ import { loginCall } from "../apiCall";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
+import io from "socket.io-client";
 
-function Signin() {
+let socket = io("localhost:3001/", { transports: ["websocket"] });
+
+function Signin({ errors }) {
   const userRef = useRef();
-  const errRef = useRef();
-
+  /* const errRef = useRef(); */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [success, setSuccess] = useState(false);
-
+  /*   const [success, setSuccess] = useState(false); */
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
   const [authUser, setAuthUser] = useState(false);
   let navigate = useNavigate();
+  let errorMsg = document.getElementById("errorMessage");
 
-  //
-  let emailError = document.getElementById("email-check-error");
-  let passwordError = document.getElementById("password-check-error");
+  if (error) {
+    errorMsg.innerHTML = "Erreur: veuillez vérifier que votre email et votre mot de passe sont bien correctes";
+  }
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    setErrorMsg("");
-  }, [email, password]);
-
+  //The form is submitted and we get back the info
   const subConnection = (e) => {
     e.preventDefault();
     loginCall({ email: email, password: password }, dispatch);
   };
 
+  // On click, we enter in the authorized route and save the authentication
   const authAccess = () => {
+    socket.emit("join_app", authUser);
     if (user.auth === true) {
       navigate("/accueil");
-      setAuthUser({ loggedIn: true });
+      setAuthUser(true);
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("token", user.token);
     } else {
@@ -53,16 +53,18 @@ function Signin() {
             <div className="login-box__connection--email row form-group">
               <label htmlFor="email">Email:</label>
               <TextField required id="outlined-required" label="Required" className="login-box__connection--back" type="email" ref={userRef} value={email} onChange={(e) => setEmail(e.target.value)} />
-              <span id="email-check-error"></span>
             </div>
             <div className="login-box__connection--password row form-group">
               <label htmlFor="password">Mot de passe:</label>
               <TextField required id="outlined" label="Required" className="login-box__connection--back" type="password" ref={userRef} value={password} onChange={(e) => setPassword(e.target.value)} />
-              <span id="password-check-error"></span>
             </div>
-            <button className="btn btn-danger row mt-4 justify-content-center" type="submit" disabled={isFetching} onClick={authAccess}>
-              {isFetching ? "chargement" : "Se connecter"}
-            </button>
+            <br></br>
+            <div className="row w-30 m-auto">
+              <p id="errorMessage" className="font-italic text-danger"></p>
+              <button className="btn btn-danger row mt-4 justify-content-center" type="submit" disabled={isFetching} onClick={authAccess}>
+                {isFetching ? "chargement" : "Se connecter"}
+              </button>
+            </div>
           </form>
         </div>
       </section>

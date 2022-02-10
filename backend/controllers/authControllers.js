@@ -1,9 +1,12 @@
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const express = require("express");
+const router = express.Router();
 const { loginErrors, registrerErrors } = require("../utils/errorsUtils");
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
+// Controller to registrer new user in the database to grant him access to the App
 exports.registration = (req, res) => {
   User.findOne({ where: { email: req.body.email } })
     .then(function (userFound) {
@@ -30,6 +33,7 @@ exports.registration = (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+// Controller to log in the app, a token is created to garantee a safe navigation
 exports.login = (req, res) => {
   User.findOne({ where: { email: req.body.email } })
     .then((user) => {
@@ -43,8 +47,9 @@ exports.login = (req, res) => {
           if (!valid) {
             return res.status(401).json({ error: "Mot de passe incorrect !", auth: false });
           }
-          //generate the token on login
+          //generate the token and the refresh token on login
           const token = jwt.sign({ userId: user.id }, process.env.HIDDEN_TOKEN, { expiresIn: maxAge });
+
           console.log("Login réussie !");
           console.log("Création du token = ", token);
           console.log(user.id);
@@ -64,7 +69,6 @@ exports.login = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie("jwt");
   res.send("You are disconnected");
   res.redirect("/");
 };

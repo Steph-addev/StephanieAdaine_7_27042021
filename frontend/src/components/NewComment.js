@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { format } from "timeago.js";
+import { Avatar } from "@mui/material";
 
 function NewComment({ comment, userData, postDataId }) {
   const [textUpdate, setTextUpdate] = useState(null);
@@ -55,7 +56,7 @@ function NewComment({ comment, userData, postDataId }) {
         <div className="newcomment_content container">
           <div className="newcomment_content-box row">
             <div className="newcomment_content-box--image col-2">
-              <img src={userData.profileImage} className="newcomment-image_profile" alt="Photo de profil"></img>
+              <Avatar src={userData.profileImage} className="newcomment-image_profile" alt="Photo de profil"></Avatar>
             </div>
             <div className="newcomment_content-box--info col-10">
               <h3 className="newcomment_content--title m-0">{userData.username}</h3>

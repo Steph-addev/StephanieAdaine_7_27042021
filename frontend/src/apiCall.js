@@ -1,9 +1,10 @@
 import axios from "axios";
+import Signin from "./components/Signin";
 
 export const loginCall = async (userCredentials, dispatch) => {
   dispatch({ type: "LOGIN_START" });
   try {
-    const res = await axios.post("http://localhost:3001/authentification/login", userCredentials);
+    const res = await axios.post("http://localhost:3001/auth/login", userCredentials);
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
     console.log(res.data);
   } catch (err) {

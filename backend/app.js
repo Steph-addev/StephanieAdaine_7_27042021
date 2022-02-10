@@ -43,15 +43,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Middleware jwt on each routes
-/* app.get("*", authsMiddleware, (req, res) => {
-  res.send("You are authenticated");
-}); */
-
 //API endpoints & routes for controllers
 app.use("/users", usersRoute);
 app.use("/posts", postsRoute);
-app.use("/authentification", authsRoute);
+app.use("/auth", authsRoute);
 
 //Images forlder access link
 app.use("/images", express.static(path.join(__dirname, "images")));

@@ -9,7 +9,6 @@ function Feed({ users }) {
   const [newPost, setNewPost] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isUpdated, setIsUpdated] = useState(false);
 
   if (error) console.log(error);
 
@@ -75,7 +74,7 @@ function Feed({ users }) {
         <div className="feed">
           <div className="feed-box p-3">
             <AddPost users={users} />
-            <button>Actualiser mon feed</button>
+
             {newPost.map((param) => (
               <NewPost key={param.id} postData={param} users={users} />
             ))}

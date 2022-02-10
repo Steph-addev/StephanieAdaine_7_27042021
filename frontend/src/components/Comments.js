@@ -10,38 +10,30 @@ function Comments({ postData, userData }) {
   console.log(postData.id);
 
   useEffect(() => {
-    const fetchComments = () => {
+    /*     setInterval(function () { */
+    const fetchComments = async () => {
       try {
-        const res = axios.get(`/posts/${postData.id}/comment-display`, {
+        const res = await axios.get(`/posts/${postData.id}/comments`, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem("token"),
           },
         });
-        setNewComment(res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchComments();
-
-    /*     const fetchComments = async () => {
-      try {
-        const res = await axios.get(process.env.REACT_APP_SERVER_URL + `/posts/comment-display/${postData.id}`);
         setNewComment(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchComments(); */
-  }, []);
+    fetchComments();
+    /*     }, 2000); */
+  }, [postData.id]);
 
   return (
     <Fragment>
       <div className="comments-box container">
         <div className="comments-box_newcomment row">
-          {/*           {newComment.map((dataComment) => (
+          {newComment.map((dataComment) => (
             <NewComment key={dataComment.id} postDataId={postData.id} comment={dataComment} userData={userData} />
-          ))} */}
+          ))}
         </div>
         <div className="comment-box_addcomment row">
           <AddComment postDataId={postData.id} userData={userData} />

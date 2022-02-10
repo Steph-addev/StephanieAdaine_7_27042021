@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useContext, Fragment } from "react";
 import axios from "../api/axios";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 /* import useFetch from "../hooks/useFetch"; */
 import { FaCamera } from "react-icons/fa";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 function ProfileForm() {
-  let navigate = useNavigate();
-  const [profileName, setProfileName] = useState("");
   const [profileBio, setProfileBio] = useState("");
   const [profileUser, setProfileUser] = useState({});
   const [isUpdated, setIsUpdated] = useState(false);
@@ -24,10 +21,10 @@ function ProfileForm() {
 
   const updateProfilePicture = (e) => {
     e.preventDefault();
-    console.log("refresh prevented");
+    console.log("function uploadProfilePicture");
     let myform = e.target;
     let data = new FormData(myform);
-    data.append("image", "image");
+    data.append("profile", "profile");
 
     axios({
       method: "post",
@@ -41,6 +38,7 @@ function ProfileForm() {
     })
       .then((response) => {
         console.log(response.data);
+        setIsUpdated(true);
       })
       .catch((err) => {
         console.log(err);
@@ -58,6 +56,7 @@ function ProfileForm() {
             },
           })
           .then(() => {
+            localStorage.clear();
             window.location = "/";
           })
           .catch((err) => {
@@ -109,12 +108,12 @@ function ProfileForm() {
         <h1 className="profileForm-title row justify-content-center">Profil de {profileUser.username}</h1>
         <div className="profileForm-box row m-5">
           <form onSubmit={updateProfilePicture} id="form" className="profileForm-box_image container m-auto">
-            <div className="row">
-              <div className="col-6">
+            <div className="row justify-content-center">
+              <div className="col-4">
                 <img src={profileUser.profileImage ? profileUser.profileImage : PF + "profile-picture.png"} alt="photo de profil" className="profileForm-box_image--picture row"></img>
-                <label className="profileForm-box_image--label row" htmlFor="file">
-                  <FaCamera />
-                  <input type="file" className="profileForm-box_image--input" name="image" display="none"></input>
+                <label className="profileForm-box_image--label row justify-content-center" htmlFor="camera">
+                  <FaCamera className="profileForm-box_icon " />
+                  <input style={{ display: "none" }} type="file" id="camera" className="profileForm-box_image--input" name="profile" display="none"></input>
                 </label>
               </div>
               <div className="col-4 d-flex align-items-center">
@@ -127,7 +126,7 @@ function ProfileForm() {
         </div>
         <div className="profile-box row container card bg-light mb-3 text-center m-auto">
           <div className="profile-box_user row container">
-            <div class="card-header">
+            <div className="card-header">
               <h2>Mes données</h2>
             </div>
             <div className="profile-box_user--fixed card-body m-3 row">

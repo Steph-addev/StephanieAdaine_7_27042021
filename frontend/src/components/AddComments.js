@@ -1,7 +1,5 @@
 import axios from "../api/axios";
 import React, { useState } from "react";
-
-import AddPostPicture from "./AddPostPicture";
 import { FaPaperPlane } from "react-icons/fa";
 
 function AddComments({ postDataId, userData }) {

@@ -31,7 +31,7 @@ function Login() {
         </ul>
         <div className="Login-box__connect">
           <div className="Login-box__connect--logo m-auto pt-4">
-            <img src={logoRed}></img>
+            <img src={logoRed} alt="Logo Groupomania"></img>
           </div>
           {signInForm && <Signin />}
           {signUpForm && <Signup />}

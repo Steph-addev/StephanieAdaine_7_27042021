@@ -26,10 +26,6 @@ function NewPost({ postData, users }) {
     content: textUpdate,
   };
 
-  /*   const likeClick = () => {
-    setLike(liked ? like - 1 : like + 1);
-    setLiked(true);
-  }; */
   const updatePost = async () => {
     if (textUpdate) {
       axios
@@ -103,8 +99,7 @@ function NewPost({ postData, users }) {
               <p>{format(postData.createdAt)}</p>
             </div>
           </div>
-          <div className="row">
-            <div className="col-1"></div>
+          <div className="row justify-content-center">
             <div className="col-11 newpost">
               {isUpdated === false && <p>{postData.content}</p>}
               {isUpdated && (
@@ -134,7 +129,7 @@ function NewPost({ postData, users }) {
                 </div>
               )}
             </div>
-            <div className="row text-center">
+            <div className="row newpost-news_interactions">
               <button className="col-4 d-flex newpost_likeComment">
                 <FaRegThumbsUp />
                 <p>J'aime</p>

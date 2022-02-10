@@ -9,7 +9,7 @@ function Logout() {
 
   const disconnect = async () =>
     await axios
-      .get("/authentification/logout", {
+      .get("/auth/logout", {
         headers: {
           Authorization: `Bearer ` + localStorage.getItem("token"),
         },

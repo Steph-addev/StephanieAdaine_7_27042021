@@ -10,9 +10,9 @@ function Home() {
   const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
 
-  /*   if (!user) {
+  if (!user) {
     window.location = "/";
-  } */
+  }
 
   useEffect(() => {
     const fetchUsers = () => {
@@ -45,7 +45,7 @@ function Home() {
     <div>
       <Navbar />
       <div className="container-fluid">
-        <h1></h1>
+        <h1 className="p-4">Mon fil d'actualités</h1>
         <div className="home row">
           <div className="col-1">
             <Leftbar />

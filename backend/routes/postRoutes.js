@@ -1,3 +1,4 @@
+//Import plugins and files
 const express = require("express");
 const router = express.Router();
 const postsCtrl = require("../controllers/postControllers");
@@ -15,7 +16,7 @@ router.delete("/:id", authMiddleware, postsCtrl.deletePost);
 router.patch("/comment-add/:id", authMiddleware, postsCtrl.addComment);
 router.put("/comment-update/:id", authMiddleware, postsCtrl.modifyComment);
 router.get("/comment-display/:id", authMiddleware, postsCtrl.getOneComment);
-router.get("/:id/comment-display", authMiddleware, postsCtrl.getAllComments);
+router.get("/:id/comments", authMiddleware, postsCtrl.getAllComments);
 router.delete("/comment-delete/:id", authMiddleware, postsCtrl.deleteComment);
 
 module.exports = router;
