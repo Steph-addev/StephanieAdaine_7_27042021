@@ -1,23 +1,29 @@
+//Import mandatories to run the App
 import React, { useState, useEffect, Fragment, useContext } from "react";
+import axios from "../api/axios";
+import { AuthContext } from "../context/AuthContext";
+//Import Components
+import Comments from "./Comments";
+//Import front visuals
+import { format } from "timeago.js";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { FaRegCommentAlt } from "react-icons/fa";
-import axios from "../api/axios";
-import { format } from "timeago.js";
-import { AuthContext } from "../context/AuthContext";
-import Comments from "./Comments";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { Avatar } from "@mui/material";
 
+//Function to get all the info of posts after the POST
 function NewPost({ postData, users }) {
-  /*   const [like, setLike] = useState(post.likes);
-  const [liked, setLiked] = useState(false); */
   const { user } = useContext(AuthContext);
   const [dataUser, setDataUser] = useState({});
   const [isUpdated, setIsUpdated] = useState(false);
   const [textUpdate, setTextUpdate] = useState(null);
   const [showComments, setShowComments] = useState(false);
+  const userId = localStorage.getItem("user");
 
+  const isMatching = postData.UserId == parseInt(userId);
+
+  //Server adress to get the pictures stored in: backend/images
   const PF = process.env.REACT_APP_PICTURES_URL;
 
   const dataUpdate = {
@@ -34,7 +40,9 @@ function NewPost({ postData, users }) {
             Authorization: `Bearer ` + localStorage.getItem("token"),
           },
         })
-        .then((res) => {})
+        .then((res) => {
+          window.location.reload();
+        })
         .catch((err) => {});
     }
   };
@@ -46,19 +54,21 @@ function NewPost({ postData, users }) {
           Authorization: `Bearer ` + localStorage.getItem("token"),
         },
       })
-      .then((res) => {})
+      .then((res) => {
+        window.location.reload();
+      })
       .catch((err) => {});
   };
 
   useEffect(() => {
     axios
-      .get(`/users/${user.userId}`, {
+      .get(`/users/${users.id}`, {
         headers: {
           Authorization: `Bearer ` + localStorage.getItem("token"),
         },
       })
-      .then((userApi) => {
-        setDataUser(userApi.data);
+      .then((res) => {
+        setDataUser(res.data);
       })
       .catch((err) => {});
   }, []);
@@ -113,7 +123,7 @@ function NewPost({ postData, users }) {
                 </div>
               )}
               {postData.images !== "" ? <img src={postData.images} alt="photo postée par l'utilisateur" className="newpost-news_image"></img> : ""}
-              {(dataUser.id === postData.UserId || dataUser.adminRole === true) && (
+              {(isMatching || postData.User.adminRole === true) && (
                 <div className="button-container row justify-content-end">
                   <button onClick={() => setIsUpdated(!isUpdated)} className="newpost-box_icons--update col-1">
                     <FaPencilAlt />
@@ -133,7 +143,6 @@ function NewPost({ postData, users }) {
               <button className="col-4 d-flex newpost_likeComment">
                 <FaRegThumbsUp />
                 <p>J'aime</p>
-                {/*                 <p onClick={likeClick}>{like}</p> */}
               </button>
               <button className="col-4 d-flex newpost_likeComment" onClick={() => setShowComments(!showComments)}>
                 <FaRegCommentAlt />

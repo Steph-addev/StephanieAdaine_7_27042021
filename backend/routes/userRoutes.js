@@ -14,6 +14,6 @@ router.put("/:id", authMiddleware, usersCtrl.modifyUser);
 router.delete("/:id", authMiddleware, usersCtrl.deleteUser);
 
 //Routes for uploads
-router.post("/:id/upload", authMiddleware, uploadCtrl.uploadPicture);
+router.post("/:id/upload", authMiddleware, multer, uploadCtrl.uploadPicture);
 
 module.exports = router;

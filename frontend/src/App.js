@@ -1,11 +1,12 @@
+//Import mandatories to run the app
 import React, { useContext, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthContext, AuthContextProvider } from "./context/AuthContext";
+//Import components
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-import { AuthContext, AuthContextProvider } from "./context/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -18,10 +19,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/accueil" element={<Home />} />
-              <Route path="/profil/" element={<Profile />} />
-            </Route>
+            <Route path="/accueil" element={<Home />} />
+            <Route path="/profil/" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

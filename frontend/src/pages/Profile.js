@@ -1,16 +1,17 @@
-import React, { Fragment, useContext } from "react";
-import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+// Import mandatories to run the app
+import React, { Fragment } from "react";
+// Import Components
 import Navbar from "../components/Navbar";
 import ProfileForm from "../components/ProfileForm";
-import { AuthContext } from "../context/AuthContext";
-import Home from "../pages/Home";
+//Import front visuals
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
-  const { user } = useContext(AuthContext);
+  const userId = localStorage.getItem("user");
   let navigate = useNavigate();
 
-  if (!user) {
+  if (!userId) {
     window.location = "/";
   }
 
@@ -20,7 +21,7 @@ function Profile() {
       <a
         className="profile-icon"
         title="Retour"
-        href={Home}
+        href="#"
         onClick={() => {
           navigate("/accueil");
         }}

@@ -7,7 +7,7 @@ import { FaUserAlt } from "react-icons/fa";
 function Navbar() {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex">
+      <nav className="navbar navbar-expand-lg navbar-light bg-danger d-flex">
         <div className="col-11">
           <img className="navbar-brand" src={logo} alt="logo"></img>
         </div>

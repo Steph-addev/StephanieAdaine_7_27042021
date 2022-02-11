@@ -1,6 +1,8 @@
-import { Avatar } from "@mui/material";
+//Import mandatories to run the app
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+// Import front visuals
+import { Avatar } from "@mui/material";
 
 function Colleagues({ users }) {
   const { user } = useContext(AuthContext);

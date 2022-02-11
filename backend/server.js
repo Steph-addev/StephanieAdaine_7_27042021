@@ -1,7 +1,7 @@
 const http = require("http");
 const app = require("./app");
 
-/* const normalizePort = (val) => {
+const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -11,10 +11,10 @@ const app = require("./app");
     return port;
   }
   return false;
-}; */
-/* const port = normalizePort(process.env.PORT || "3001");
-app.set("port", port); */
-/* 
+};
+const port = normalizePort(process.env.PORT || "3001");
+app.set("port", port);
+
 const errorHandler = (error) => {
   if (error.syscall !== "listen") {
     throw error;
@@ -33,19 +33,19 @@ const errorHandler = (error) => {
     default:
       throw error;
   }
-}; */
-const webSocketServerPort = 3001;
+};
+/* const webSocketServerPort = 3001; */
 const server = http.createServer(app);
-const io = require("socket.io")(server);
+/* const io = require("socket.io")(server); */
 
-/* server.on("error", errorHandler);
+server.on("error", errorHandler);
 server.on("listening", () => {
   const address = server.address();
   const bind = typeof address === "string" ? "pipe " + address : "port " + port;
   console.log("Listening on " + bind);
-}); */
+});
 
-io.on("connection", (socket) => {
+/* io.on("connection", (socket) => {
   console.log("Socket connected");
   console.log(socket.id);
 
@@ -59,5 +59,5 @@ io.on("connection", (socket) => {
   });
 });
 
-console.log("Listening on port " + webSocketServerPort);
-server.listen(webSocketServerPort);
+console.log("Listening on port " + webSocketServerPort); */
+server.listen(port);

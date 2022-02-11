@@ -15,7 +15,7 @@ exports.createPost = async (req, res) => {
   const addPost = new Post({
     UserId: req.body.UserId,
     content: req.body.content,
-    images: req.file === null ? `${req.protocol}://${req.get("host")}/images/posts/${req.file.filename}` : "",
+    images: req.file === null ? "" : `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     likes: req.body.likes,
   });
   try {

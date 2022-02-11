@@ -14,7 +14,9 @@ function AddPost({ users }) {
   const [postPicture, setPostPicture] = useState(null);
   const [file, setFile] = useState(null);
   const PF = process.env.REACT_APP_PICTURES_URL;
-
+  const userId = localStorage.getItem("user");
+  console.log(userId);
+  console.log(users);
   //If picture in the post, the picture will be previsualized on click on the input with the URL of the image and send if we are ok
   const addPicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
@@ -35,48 +37,37 @@ function AddPost({ users }) {
     let myform = e.target;
     let data = new FormData(myform);
     if (file) {
-      data.append("UserId", user.userId);
+      data.append("UserId", userId);
       data.append("content", text);
-      data.append("posts", "posts");
+      data.append("image", "image");
     } else {
-      data.append("UserId", user.userId);
+      data.append("UserId", userId);
       data.append("content", text);
     }
-    console.log(data);
+
     if (!text) {
       alert("Le texte de votre publication ne peut pas être vide");
-    } else {
-      //Axios to post our new publication in the database
-      axios({
-        method: "post",
-        url: "/posts",
-        credentials: true,
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        data: data,
-      })
-        .then((response) => {
-          console.log(response.data);
-          setText("");
-          axios
-            .get("/posts", {
-              headers: {
-                Authorization: `Bearer ` + localStorage.getItem("token"),
-              },
-            })
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     }
+
+    //Axios to post our new publication in the database
+    axios({
+      method: "post",
+      url: "/posts",
+      credentials: true,
+      headers: {
+        "content-type": "multipart/form-data",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      data: data,
+    })
+      .then((response) => {
+        console.log(response.data);
+        setText("");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -89,7 +80,7 @@ function AddPost({ users }) {
           <Avatar
             src={users
               .map((userData) => {
-                if (userData.id === user.userId) return userData.profileImage ? userData.profileImage : PF + "profile-picture.png";
+                if (userData.id === userId) return userData.profileImage ? userData.profileImage : PF + "profile-picture.png";
                 else return null;
               })
               .join("")}
@@ -109,7 +100,7 @@ function AddPost({ users }) {
             <div className="d-flex justify-content-around addPost-box_publish--imageBtn">
               <label htmlFor="file">
                 <FaImage className="addPost-box_icon text-danger " />
-                <input style={{ display: "none" }} type="file" id="file" className="button-style button-style_image" name="posts" accept=".jpg, .png, .gif" onChange={(e) => addPicture(e)}></input>
+                <input style={{ display: "none" }} type="file" id="file" className="button-style button-style_image" name="image" accept=".jpg, .png, .gif" onChange={(e) => addPicture(e)}></input>
               </label>
               {postPicture ? (
                 <button className="cancel btn btn-warning" onClick={cancelPost}>

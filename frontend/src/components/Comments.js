@@ -1,8 +1,9 @@
+//Import mandatories to run the app
 import React, { useState, useEffect, Fragment } from "react";
-/*import { AuthContext } from "../context/AuthContext"; */
+import axios from "../api/axios";
+//Import Components
 import AddComment from "./AddComments";
 import NewComment from "./NewComment";
-import axios from "../api/axios";
 
 function Comments({ postData, userData }) {
   const [newComment, setNewComment] = useState([]);
@@ -10,7 +11,6 @@ function Comments({ postData, userData }) {
   console.log(postData.id);
 
   useEffect(() => {
-    /*     setInterval(function () { */
     const fetchComments = async () => {
       try {
         const res = await axios.get(`/posts/${postData.id}/comments`, {
@@ -24,7 +24,6 @@ function Comments({ postData, userData }) {
       }
     };
     fetchComments();
-    /*     }, 2000); */
   }, [postData.id]);
 
   return (

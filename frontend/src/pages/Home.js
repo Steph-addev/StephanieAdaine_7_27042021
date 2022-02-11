@@ -1,18 +1,25 @@
-import React, { useEffect, useState, useContext } from "react";
+//Import mandatories to run the app
+import React, { useEffect, useState } from "react";
+import axios from "../api/axios";
+//Import Components
 import Feed from "../components/Feed";
 import Navbar from "../components/Navbar";
 import Leftbar from "../components/Leftbar";
-import { AuthContext } from "../context/AuthContext";
-import axios from "../api/axios";
 import Colleagues from "../components/Colleagues";
 
 function Home() {
-  const { user } = useContext(AuthContext);
+  const userId = localStorage.getItem("user");
   const [users, setUsers] = useState([]);
 
-  if (!user) {
+  if (!userId) {
+    // Revert back to login if user does not exist in the localStorage
     window.location = "/";
   }
+
+  window.onunload = () => {
+    // Clear the local storage on close page
+    window.Storage.clear();
+  };
 
   useEffect(() => {
     const fetchUsers = () => {
@@ -30,15 +37,6 @@ function Home() {
         });
     };
     fetchUsers();
-    /*     const fetchUsers = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/users");
-        setUsers(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUsers(); */
   }, []);
 
   return (

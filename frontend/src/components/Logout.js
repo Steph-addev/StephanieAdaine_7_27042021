@@ -1,12 +1,10 @@
+//Import mandatories to run the app
 import axios from "../api/axios";
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment } from "react";
+// Import front visuals
 import { FaDoorOpen } from "react-icons/fa";
-import { AuthContext } from "../context/AuthContext";
 
 function Logout() {
-  const { user } = useContext(AuthContext);
-  const [auth, setAuth] = useState(true);
-
   const disconnect = async () =>
     await axios
       .get("/auth/logout", {

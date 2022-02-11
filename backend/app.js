@@ -11,7 +11,6 @@ const db = require("./models"); //Only when need to update the database with seq
 const usersRoute = require("./routes/userRoutes");
 const postsRoute = require("./routes/postRoutes");
 const authsRoute = require("./routes/authRoutes");
-/* const authsMiddleware = require("./middlewares/authMiddlewares"); */
 
 //Import variables
 let corsOptions = {

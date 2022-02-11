@@ -1,8 +1,10 @@
+// Import mandatories to run the app
 import React, { Fragment, useEffect, useState } from "react";
+import axios from "../api/axios";
+// Import Components
 import AddPost from "./AddPost";
 import NewPost from "./NewPost";
-import axios from "../api/axios";
-
+//Import front visuals
 import Spinner from "react-bootstrap/Spinner";
 
 function Feed({ users }) {
@@ -16,33 +18,7 @@ function Feed({ users }) {
     return new Date(param2.createdAt) - new Date(param1.createdAt);
   });
 
-  //TODO: Try to find the good loop to charge and stop the loading
   useEffect(() => {
-    /*     if(isUpdated, setIsUpdated){
-      const fetchPosts = async () => {
-        try {
-          const res = await axios.get(process.env.REACT_APP_SERVER_URL + "/posts");
-          setNewPost(res.data);
-        } catch (err) {
-          console.log(err);
-        }
-        return 
-      };
-      fetchPosts();
-    } */
-    /*     const fetchPosts = async () => {
-      try {
-        const res = await axios.get("/posts", {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-          },
-        });
-        setNewPost(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchPosts(); */
     const fetchPosts = () => {
       axios
         .get("/posts", {
@@ -74,7 +50,6 @@ function Feed({ users }) {
         <div className="feed">
           <div className="feed-box p-3">
             <AddPost users={users} />
-
             {newPost.map((param) => (
               <NewPost key={param.id} postData={param} users={users} />
             ))}

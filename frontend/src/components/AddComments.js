@@ -22,6 +22,7 @@ function AddComments({ postDataId, userData }) {
     })
       .then((response) => {
         console.log(response.data);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

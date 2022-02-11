@@ -1,5 +1,7 @@
+// Import mandatories to run the app
 import axios from "../api/axios";
 import React, { Fragment, useState } from "react";
+// Import front for visuals
 import { FaTrashAlt } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { format } from "timeago.js";
@@ -8,6 +10,7 @@ import { Avatar } from "@mui/material";
 function NewComment({ comment, userData, postDataId }) {
   const [textUpdate, setTextUpdate] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
+  console.log(userData);
 
   const dataUpdate = {
     PostId: comment.PostId,
@@ -16,6 +19,10 @@ function NewComment({ comment, userData, postDataId }) {
   };
 
   const isMatching = postDataId === comment.PostId;
+  const commentMatch = userData.id === comment.UserId;
+  console.log(commentMatch);
+  console.log(userData.id);
+  console.log(comment.UserId);
 
   const updatePost = async () => {
     if (textUpdate) {
@@ -28,6 +35,7 @@ function NewComment({ comment, userData, postDataId }) {
         .then((res) => {
           console.log(res);
           setTextUpdate("");
+          window.location.reload();
         })
         .catch((err) => {
           console.log(err);
@@ -44,6 +52,7 @@ function NewComment({ comment, userData, postDataId }) {
       })
       .then((res) => {
         console.log(res);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

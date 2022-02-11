@@ -1,5 +1,4 @@
 import axios from "axios";
-import Signin from "./components/Signin";
 
 export const loginCall = async (userCredentials, dispatch) => {
   dispatch({ type: "LOGIN_START" });
