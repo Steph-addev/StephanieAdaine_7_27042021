@@ -2,21 +2,21 @@ import axios from "../api/axios";
 import React, { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 
-function AddComments({ postDataId, userData }) {
+function AddComments({ postData, userData }) {
   const [text, setText] = useState("");
 
   const addOneComment = (e) => {
     e.preventDefault();
     axios({
       method: "patch",
-      url: `/posts/comment-add/${postDataId}`,
+      url: `/posts/comment-add/${postData.id}`,
       credentials: true,
       headers: {
         Authorization: `Bearer ` + localStorage.getItem("token"),
       },
       data: {
         UserId: userData.id,
-        PostId: postDataId,
+        PostId: postData.id,
         content: text,
       },
     })

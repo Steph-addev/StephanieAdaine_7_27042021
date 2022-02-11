@@ -57,6 +57,7 @@ exports.login = (req, res) => {
             auth: true,
             userId: user.id,
             token: token,
+            admin: user.adminRole,
           });
         })
         .catch((err) => {

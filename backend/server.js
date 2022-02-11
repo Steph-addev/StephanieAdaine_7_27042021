@@ -12,7 +12,7 @@ const normalizePort = (val) => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || "3001");
+const port = normalizePort(process.env.PORT || "5000");
 app.set("port", port);
 
 const errorHandler = (error) => {
@@ -34,9 +34,8 @@ const errorHandler = (error) => {
       throw error;
   }
 };
-/* const webSocketServerPort = 3001; */
+
 const server = http.createServer(app);
-/* const io = require("socket.io")(server); */
 
 server.on("error", errorHandler);
 server.on("listening", () => {
@@ -45,19 +44,4 @@ server.on("listening", () => {
   console.log("Listening on " + bind);
 });
 
-/* io.on("connection", (socket) => {
-  console.log("Socket connected");
-  console.log(socket.id);
-
-  socket.on("join_app", (data) => {
-    socket.join(data);
-    console.log("User inside the App " + data);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
-});
-
-console.log("Listening on port " + webSocketServerPort); */
 server.listen(port);

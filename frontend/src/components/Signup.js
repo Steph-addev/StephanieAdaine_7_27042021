@@ -18,7 +18,6 @@ function Signup() {
   const registrerNewUser = async (event) => {
     event.preventDefault();
     if (passwordBis !== password) {
-      passwordBis.setCustomValidity("Le mot de passe est différent");
       notMatch.innerHTML = "Le mot de passe est différent";
     } else {
       const user = {
@@ -54,7 +53,7 @@ function Signup() {
             <div className="login-box_registration--password-bis row form-group">
               <label>Confirmer votre mot de passe:</label>
               <TextField required id="password-bis" label="Required" className="login-box__connection--back" type="password" value={passwordBis} onChange={(e) => setPasswordBis(e.target.value)} />
-              <span id="password-check"></span>
+              <span id="password-check" className="font-italic text-danger"></span>
             </div>
             <button className="btn btn-danger row mt-4 justify-content-center">S'inscrire</button>
           </form>

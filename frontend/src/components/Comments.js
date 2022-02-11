@@ -28,14 +28,14 @@ function Comments({ postData, userData }) {
 
   return (
     <Fragment>
-      <div className="comments-box container">
+      <div className="comments-box container mt-3">
         <div className="comments-box_newcomment row">
           {newComment.map((dataComment) => (
-            <NewComment key={dataComment.id} postDataId={postData.id} comment={dataComment} userData={userData} />
+            <NewComment key={dataComment.id} postData={postData} comment={dataComment} userData={userData} />
           ))}
         </div>
         <div className="comment-box_addcomment row">
-          <AddComment postDataId={postData.id} userData={userData} />
+          <AddComment postData={postData} userData={userData} />
         </div>
       </div>
     </Fragment>

@@ -118,7 +118,7 @@ exports.getOneComment = (req, res) => {
 
 exports.getAllComments = (req, res) => {
   Post.findOne({ where: { id: req.params.id } });
-  Comment.findAll()
+  Comment.findAll({ include: User })
     .then((comments) => res.send(comments).json({ message: "Les commentaires s'affichent !" }))
     .catch((err) => {
       if (err) {

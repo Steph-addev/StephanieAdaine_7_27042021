@@ -10,13 +10,11 @@ import TextField from "@mui/material/TextField";
 // Component to add a new Post in the database
 function AddPost({ users }) {
   const [text, setText] = useState("");
-  const { user } = useContext(AuthContext);
   const [postPicture, setPostPicture] = useState(null);
   const [file, setFile] = useState(null);
   const PF = process.env.REACT_APP_PICTURES_URL;
   const userId = localStorage.getItem("user");
-  console.log(userId);
-  console.log(users);
+
   //If picture in the post, the picture will be previsualized on click on the input with the URL of the image and send if we are ok
   const addPicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
@@ -47,27 +45,28 @@ function AddPost({ users }) {
 
     if (!text) {
       alert("Le texte de votre publication ne peut pas être vide");
-    }
-
-    //Axios to post our new publication in the database
-    axios({
-      method: "post",
-      url: "/posts",
-      credentials: true,
-      headers: {
-        "content-type": "multipart/form-data",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-      data: data,
-    })
-      .then((response) => {
-        console.log(response.data);
-        setText("");
-        window.location.reload();
+    } else {
+      //Axios to post our new publication in the database
+      axios({
+        method: "post",
+        url: "/posts",
+        credentials: true,
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        data: data,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((response) => {
+          console.log(response.data);
+          setText("");
+          setPostPicture("");
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -80,7 +79,7 @@ function AddPost({ users }) {
           <Avatar
             src={users
               .map((userData) => {
-                if (userData.id === userId) return userData.profileImage ? userData.profileImage : PF + "profile-picture.png";
+                if (userData.id == parseInt(userId)) return userData.profileImage ? userData.profileImage : PF + "profile-picture.png";
                 else return null;
               })
               .join("")}

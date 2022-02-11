@@ -20,6 +20,7 @@ function NewPost({ postData, users }) {
   const [textUpdate, setTextUpdate] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const userId = localStorage.getItem("user");
+  const isAdmin = localStorage.getItem("admin");
 
   const isMatching = postData.UserId == parseInt(userId);
 
@@ -62,13 +63,14 @@ function NewPost({ postData, users }) {
 
   useEffect(() => {
     axios
-      .get(`/users/${users.id}`, {
+      .get(`/users/${userId}`, {
         headers: {
           Authorization: `Bearer ` + localStorage.getItem("token"),
         },
       })
       .then((res) => {
         setDataUser(res.data);
+        console.log(dataUser);
       })
       .catch((err) => {});
   }, []);
@@ -123,7 +125,7 @@ function NewPost({ postData, users }) {
                 </div>
               )}
               {postData.images !== "" ? <img src={postData.images} alt="photo postée par l'utilisateur" className="newpost-news_image"></img> : ""}
-              {(isMatching || postData.User.adminRole === true) && (
+              {(isMatching || isAdmin === "true") && (
                 <div className="button-container row justify-content-end">
                   <button onClick={() => setIsUpdated(!isUpdated)} className="newpost-box_icons--update col-1">
                     <FaPencilAlt />
@@ -140,11 +142,7 @@ function NewPost({ postData, users }) {
               )}
             </div>
             <div className="row newpost-news_interactions">
-              <button className="col-4 d-flex newpost_likeComment">
-                <FaRegThumbsUp />
-                <p>J'aime</p>
-              </button>
-              <button className="col-4 d-flex newpost_likeComment" onClick={() => setShowComments(!showComments)}>
+              <button className="col-4 d-flex newpost_comment" onClick={() => setShowComments(!showComments)}>
                 <FaRegCommentAlt />
                 <p>Commenter</p>
               </button>

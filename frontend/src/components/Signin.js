@@ -36,6 +36,7 @@ function Signin() {
       setAuthUser(true);
       localStorage.setItem("user", user.userId);
       localStorage.setItem("token", user.token);
+      localStorage.setItem("admin", user.admin);
     } else {
       navigate("/");
     }

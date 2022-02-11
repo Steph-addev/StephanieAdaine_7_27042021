@@ -39,11 +39,17 @@ function Home() {
     fetchUsers();
   }, []);
 
+  const Name = users
+    .map((user) => {
+      if (user.id == parseInt(userId)) return user.username;
+    })
+    .join("");
+
   return (
     <div>
       <Navbar />
       <div className="container-fluid">
-        <h1 className="p-4">Mon fil d'actualités</h1>
+        <h1 className="p-4">Bienvenue {Name}</h1>
         <div className="home row">
           <div className="col-1">
             <Leftbar />

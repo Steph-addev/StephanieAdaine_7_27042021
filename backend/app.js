@@ -54,6 +54,6 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 /* db.sequelize.sync({ force: true }).then((req) => {
   app.listen({ port: 3001 });
   console.log("Server is on!");
-}); */
-
+});
+ */
 module.exports = app;

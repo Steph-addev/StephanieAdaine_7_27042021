@@ -7,10 +7,11 @@ import { FaPencilAlt } from "react-icons/fa";
 import { format } from "timeago.js";
 import { Avatar } from "@mui/material";
 
-function NewComment({ comment, userData, postDataId }) {
+function NewComment({ comment, postData, userData }) {
   const [textUpdate, setTextUpdate] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
-  console.log(userData);
+  const userId = localStorage.getItem("user");
+  console.log(postData);
 
   const dataUpdate = {
     PostId: comment.PostId,
@@ -18,11 +19,12 @@ function NewComment({ comment, userData, postDataId }) {
     content: textUpdate,
   };
 
-  const isMatching = postDataId === comment.PostId;
+  const isMatching = postData.id === comment.PostId;
   const commentMatch = userData.id === comment.UserId;
-  console.log(commentMatch);
-  console.log(userData.id);
-  console.log(comment.UserId);
+  console.log();
+  console.log("Match userData.id avec userId du commentaire " + commentMatch);
+  console.log("userData.id " + userData.id);
+  console.log("comment.UserId " + comment.UserId);
 
   const updatePost = async () => {
     if (textUpdate) {
@@ -65,10 +67,10 @@ function NewComment({ comment, userData, postDataId }) {
         <div className="newcomment_content container">
           <div className="newcomment_content-box row">
             <div className="newcomment_content-box--image col-2">
-              <Avatar src={userData.profileImage} className="newcomment-image_profile" alt="Photo de profil"></Avatar>
+              <Avatar src={comment.User.profileImage} className="newcomment-image_profile" alt="Photo de profil"></Avatar>
             </div>
             <div className="newcomment_content-box--info col-10">
-              <h3 className="newcomment_content--title m-0">{userData.username}</h3>
+              <h3 className="newcomment_content--title m-0">{comment.User.username}</h3>
               <p>{format(comment.createdAt)}</p>
             </div>
           </div>
@@ -85,7 +87,7 @@ function NewComment({ comment, userData, postDataId }) {
               </div>
             )}
           </div>
-          {(userData.id === comment.UserId || userData.adminRole === true) && (
+          {(commentMatch || userData.adminRole === true) && (
             <div className="newcomment-box_icons row justify-content-end">
               <div onClick={() => setIsUpdated(!isUpdated)} className="newcomment-box_icons--update col-1">
                 <FaPencilAlt />
