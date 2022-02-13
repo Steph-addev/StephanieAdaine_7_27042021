@@ -24,15 +24,23 @@
         border-radius: 20px;
         max-width: 350px;
       }
-      &--dataChange {
-        @media only screen and (max-width: 768px) {
-          flex-direction: column;
-          align-content: center;
+      &--changeable {
+        @media only screen and (min-width: 768px) {
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
         }
       }
       &--dataChange-textarea {
         border: 2px solid rgb(211, 181, 181);
         border-radius: 20px;
+      }
+      &--dataChange_btn {
+        @media only screen and (min-width: 768px) {
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+        }
       }
     }
   }

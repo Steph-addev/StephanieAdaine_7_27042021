@@ -8,7 +8,6 @@ function Login() {
   const [signUpForm, setSignUpForm] = useState(false);
 
   const formAppearance = (e) => {
-    //TODO: Front: faire un system d'onglet login
     if (e.target.id === "connection") {
       setSignInForm(true);
       setSignUpForm(false);
@@ -19,8 +18,8 @@ function Login() {
   };
 
   return (
-    <div className="Login-box ">
-      <div className="Login-box__clickConnect container">
+    <body className="Login-box ">
+      <main className="Login-box__clickConnect container">
         <ul className="Login-box__clickConnect--button d-flex m-0 p-0">
           <li id="connection" className="Login-box__clickConnect--title" onClick={formAppearance}>
             Se connecter
@@ -36,8 +35,8 @@ function Login() {
           {signInForm && <Signin />}
           {signUpForm && <Signup />}
         </div>
-      </div>
-    </div>
+      </main>
+    </body>
   );
 }
 

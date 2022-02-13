@@ -6,6 +6,7 @@ import Feed from "../components/Feed";
 import Navbar from "../components/Navbar";
 import Leftbar from "../components/Leftbar";
 import Colleagues from "../components/Colleagues";
+import Footer from "../components/Footer";
 
 function Home() {
   const userId = localStorage.getItem("user");
@@ -47,18 +48,19 @@ function Home() {
     <Fragment>
       <div>
         <Navbar />
-        <div className="home-page container-fluid">
+        <div className="home-page container-fluid pb-4">
           <Leftbar />
           <h1 className="p-4 mb-0 text-center">Bienvenue {Name}</h1>
           <div className="home row">
-            <div className="col-9">
+            <section className="col-10 col-sm-9">
               <Feed users={users} />
-            </div>
-            <div className="Colleagues col-3 pt-3">
+            </section>
+            <section className="Colleagues col-2 col-sm-3 pt-3">
               <Colleagues users={users} />
-            </div>
+            </section>
           </div>
         </div>
+        <Footer />
       </div>
     </Fragment>
   );

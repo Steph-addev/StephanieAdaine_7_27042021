@@ -45,20 +45,20 @@ function Signin() {
   return (
     <Fragment>
       <section className="login-box container w-100">
-        <div className="login-box__connection container justify-content-center p-5">
-          <form action="" onSubmit={subConnection}>
-            <div className="login-box__connection--email row form-group">
+        <div className="login-box__connection container justify-content-center p-5 pt-lg-1">
+          <form className="mt-5 mt-sm-1" onSubmit={subConnection}>
+            <div className="login-box__connection--email row form-group py-2">
               <label htmlFor="email">Email:</label>
               <TextField required id="outlined-required" label="Required" className="login-box__connection--back" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
-            <div className="login-box__connection--password row form-group">
+            <div className="login-box__connection--password py-2 row form-group">
               <label htmlFor="password">Mot de passe:</label>
               <TextField required id="outlined" label="Required" className="login-box__connection--back" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <br></br>
-            <div className="row w-30 m-auto">
+            <div className="row m-auto">
               <p id="errorMessage" className="font-italic text-danger"></p>
-              <button className="btn btn-danger row mt-4 justify-content-center" type="submit" disabled={isFetching} onClick={authAccess}>
+              <button className="btn btn-danger btn-login row mt-4 justify-content-center" type="submit" disabled={isFetching} onClick={authAccess}>
                 {isFetching ? <Spinner animation="border" variant="light" /> : "Se connecter"}
               </button>
             </div>

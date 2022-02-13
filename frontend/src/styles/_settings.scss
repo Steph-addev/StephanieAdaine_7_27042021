@@ -24,8 +24,8 @@ a {
 }
 
 button {
-  border-radius: 30px;
   height: 40px;
+  border: none;
 }
 
 .input-test {
@@ -36,9 +36,64 @@ button {
   color: black !important;
 }
 
+.icons-update-delete {
+  border-radius: 60%;
+  height: 40px;
+  width: 40px;
+}
+
+.icons-update-delete:hover {
+  background-color: #d9534f !important;
+  -webkit-box-shadow: 5px 5px 15px 2px #000000;
+  box-shadow: 5px 5px 15px 2px #000000;
+}
+
+// Pages max width when big screen
 @media only screen and (min-width: 1440px) {
   .home-page,
   .profile-page {
     width: 1200px;
+  }
+}
+
+//Fonts
+@media only screen and (max-width: 425px) {
+  .addPost-font_h2 {
+    font-size: 19px;
+  }
+  .newpost-font_h3 {
+    font-size: 18px;
+  }
+  .newpost-font_time {
+    font-size: 13px;
+  }
+  .newpost-font_content {
+    font-size: 15px;
+  }
+  .newcomment-font_h3 {
+    font-size: 15px;
+  }
+  .newcomment-font_content {
+    font-size: 14px;
+  }
+  .newcomment-font_time {
+    font-size: 13px;
+  }
+}
+@media only screen and (min-width: 426px) {
+  .newpost-font_time {
+    font-size: 1.2em;
+  }
+  .newpost-font_content {
+    font-size: 20px;
+  }
+  .newcomment-font_h3 {
+    font-size: 15px;
+  }
+  .newcomment-font_content {
+    font-size: 14px;
+  }
+  .newcomment-font_time {
+    font-size: 13px;
   }
 }

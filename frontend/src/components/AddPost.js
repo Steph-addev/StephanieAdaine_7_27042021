@@ -76,7 +76,7 @@ function AddPost({ users }) {
         <Snackbar />
       </div> */}
       <div className="addPost-box card-post container-fluid justify-content-center mt-0">
-        <div className="row pt-3">
+        <div className="row pt-3 align-items">
           <Avatar
             src={users
               .map((userData) => {
@@ -88,7 +88,7 @@ function AddPost({ users }) {
             alt={"photo de profil"}
           ></Avatar>
           <div className="col-8">
-            <h2>Exprimez-vous</h2>
+            <h2 className="addPost-font_h2">Exprimez-vous</h2>
           </div>
         </div>
         <form onSubmit={addOnePost} id="addPost-box_form container row justify-content-center">

@@ -110,13 +110,13 @@ function ProfileForm() {
           <form onSubmit={updateProfilePicture} id="form" className="container m-auto">
             <div className="row profileForm-box_image justify-content-center">
               <div className="col-sm-4">
-                <img src={profileUser.profileImage ? profileUser.profileImage : PF + "profile-picture.png"} alt={profileUser.username} className="profileForm-box_image--picture row m-auto"></img>
+                <img src={profileUser.profileImage ? profileUser.profileImage : PF + "profile-picture.png"} alt={profileUser.username} className="profileForm-box_image--picture row rounded mx-auto d-block"></img>
                 <label className="profileForm-box_image--label row justify-content-center" htmlFor="camera">
                   <FaCamera className="profileForm-box_icon " />
                   <input style={{ display: "none" }} type="file" id="camera" className="profileForm-box_image--input" name="image" display="none"></input>
                 </label>
               </div>
-              <div className="col-sm-4 d-flex align-items-center">
+              <div className="col-sm-4 d-flex align-items-center justify-content-center">
                 <button type="submit" className="profileForm-box_image--button btn btn-danger">
                   Valider ma photo
                 </button>
@@ -124,53 +124,49 @@ function ProfileForm() {
             </div>
           </form>
         </div>
-        <div className="profile-box row container card bg-light mb-3 text-center m-auto p-0 m-0">
-          <div className="profile-box_user row container flex-column">
-            <div className="card-header">
-              <h2>Mes données</h2>
+        <div className="profile-box row container card bg-light mb-3 text-center m-auto">
+          <div className="card-header row m-auto mb-3">
+            <h2>Mes données</h2>
+          </div>
+          <div className="profile-box_user--fixed card-body row m-auto">
+            <div className="profile-box_user--data d-flex">
+              <label className="label p-2 fw-bold">Nom:</label>
+              <p className="data p-2 mb-0">{profileUser.username}</p>
             </div>
-            <div className="profile-box_user--fixed card-body m-3 row">
-              <div className="profile-box_user--data d-flex">
-                <label className="label p-2 fw-bold">Nom:</label>
-                <p className="data p-2 mb-0">{profileUser.username}</p>
-              </div>
-              <div className="profile-box_user--data d-flex">
-                <label className="label p-2 fw-bold">Email:</label>
-                <p className="data p-2 mb-0">{profileUser.email}</p>
-              </div>
-              <div className="profile-box_user--data d-flex">
-                <label className="label p-2 fw-bold">Département:</label>
-                <p className="data p-2 mb-0">{profileUser.department}</p>
-              </div>
-              <div className="profile-box_user--data d-flex">
-                <label className="label p-2 mb-0 fw-bold">Site de travail:</label>
-                <p className="data p-2">{profileUser.workplace}</p>
-              </div>
+            <div className="profile-box_user--data d-flex">
+              <label className="label p-2 fw-bold">Email:</label>
+              <p className="data p-2 mb-0">{profileUser.email}</p>
             </div>
-            <div className="profile-box_user--changeable card-body row m-3">
-              <div className="profile-box_user--dataChange container row">
-                <div className="profile-box_user--dataChange-textarea m-3 col-sm-8">
-                  <label className="label fw-bold">Bio:</label>
-                  {isUpdated === false && <p>{profileUser.profileDesc}</p>}
-                  {isUpdated && (
-                    <div className="profile-box_update">
-                      <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Minimum 3 rows" style={{ width: 200 }} defaultValue={profileUser.profileDesc} onChange={(e) => setProfileBio(e.target.value)} />
-                    </div>
-                  )}
+            <div className="profile-box_user--data d-flex">
+              <label className="label p-2 fw-bold">Département:</label>
+              <p className="data p-2 mb-0">{profileUser.department}</p>
+            </div>
+            <div className="profile-box_user--data d-flex">
+              <label className="label p-2 mb-0 fw-bold">Site de travail:</label>
+              <p className="data p-2">{profileUser.workplace}</p>
+            </div>
+          </div>
+          <div className="profile-box_user--changeable card-body row m-auto">
+            <div className="profile-box_user--dataChange-textarea my-2 col-sm-6">
+              <label className="label fw-bold">Bio:</label>
+              {isUpdated === false && <p>{profileUser.profileDesc}</p>}
+              {isUpdated && (
+                <div className="profile-box_update">
+                  <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Minimum 3 rows" style={{ width: 300, borderRadius: 20, padding: 10 }} defaultValue={profileUser.profileDesc} onChange={(e) => setProfileBio(e.target.value)} />
                 </div>
-                <button className="btn btn-danger col-sm-3 m-3" type="submit" onClick={() => setIsUpdated(!isUpdated)}>
-                  Modifier ma Bio
-                </button>
-              </div>
+              )}
             </div>
-            <div className="profile-box_user--dataChange_btn container">
-              <button className="btn btn-danger m-3" type="submit" onClick={deleteUser}>
-                Supprimer mon compte
-              </button>
-              <button className="btn btn-danger m-3" type="submit" onClick={updateUser}>
-                Valider
-              </button>
-            </div>
+            <button className="btn btn-danger col-sm-4 my-2" type="submit" onClick={() => setIsUpdated(!isUpdated)}>
+              Modifier ma Bio
+            </button>
+          </div>
+          <div className="profile-box_user--dataChange_btn m-auto row">
+            <button className="btn btn-danger btn-account my-2 col-sm-5" type="submit" onClick={deleteUser}>
+              Supprimer mon compte
+            </button>
+            <button className="btn btn-danger btn-account my-2 col-sm-5" type="submit" onClick={updateUser}>
+              Valider les modifications
+            </button>
           </div>
         </div>
       </div>

@@ -1,5 +1,11 @@
-.addComment_form--input {
-  border-radius: 20px;
-  height: 40px;
-  width: 90%;
+.addComment_form {
+  &--input {
+    border-radius: 20px;
+    height: 40px;
+    width: 80%;
+    background-color: #f3f0f0;
+  }
+  &--input ::placeholder {
+    text-overflow: ellipsis;
+  }
 }

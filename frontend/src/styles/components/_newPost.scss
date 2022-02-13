@@ -3,6 +3,7 @@
     background-color: rgb(221, 218, 218);
     &_image {
       width: 100%;
+      max-width: 300px;
     }
     &_interactions {
       border-top: 1px thick double rgb(145, 141, 141);
@@ -23,6 +24,7 @@
     height: 50px;
     width: 50px;
   }
+
   .newpost-comments {
     &_form {
       &--image {
@@ -37,4 +39,23 @@
       background: none;
     }
   }
+}
+@media only screen and (max-width: 425px) {
+  .button-comments {
+    background: none;
+    border-radius: 60%;
+    height: 40px;
+    width: 40px;
+  }
+}
+@media only screen and (min-width: 426px) {
+  .button-comments {
+    background: none;
+    border-radius: 20px;
+  }
+}
+
+.button-comments:hover {
+  -webkit-box-shadow: 5px 5px 15px 2px #000000;
+  box-shadow: 5px 5px 15px 2px #000000;
 }

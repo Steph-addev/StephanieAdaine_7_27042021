@@ -6,6 +6,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { format } from "timeago.js";
 import { Avatar } from "@mui/material";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 function NewComment({ comment, postData, userData }) {
   const [textUpdate, setTextUpdate] = useState(null);
@@ -60,22 +61,22 @@ function NewComment({ comment, postData, userData }) {
       {isMatching && (
         <div className="newcomment_content container py-2">
           <div className="newcomment_content-box row">
-            <div className="newcomment_content-box--image col-2">
+            <div className="newcomment_content-box--image col-3 col-sm-2 pe-3">
               <Avatar src={comment.User.profileImage} className="newcomment-image_profile" alt="Photo de profil"></Avatar>
             </div>
-            <div className="newcomment_content-box--info col-10">
-              <h3 className="newcomment_content--title m-0">{comment.User.username}</h3>
-              <p>{format(comment.createdAt)}</p>
+            <div className="newcomment_content-box--info col-9 col-sm-10 ps-0">
+              <h3 className="newcomment-font_h3 m-0">{comment.User.username}</h3>
+              <p className="newcomment-font_time">{format(comment.createdAt)}</p>
             </div>
           </div>
           <div className="newcomment_content-box--content row">
-            {isUpdated === false && <p className="my-0">{comment.content}</p>}
+            {isUpdated === false && <p className="my-0 newcomment-font_content">{comment.content}</p>}
             {isUpdated && (
               <div className="newcomment-box_update">
-                <textarea defaultValue={comment.content} onChange={(e) => setTextUpdate(e.target.value)} />
+                <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Minimum 3 rows" style={{ borderRadius: 20, padding: 10 }} defaultValue={comment.content} onChange={(e) => setTextUpdate(e.target.value)} />
                 <div className="newcomment-box_update--button-container">
-                  <button type="submit" className="comments-box_update--btn" onClick={updatePost}>
-                    Valider les modifications
+                  <button type="submit" className="comments-box_update--btn btn btn-danger my-3" onClick={updatePost}>
+                    Valider
                   </button>
                 </div>
               </div>
@@ -83,11 +84,11 @@ function NewComment({ comment, postData, userData }) {
           </div>
           {(commentMatch || userData.adminRole === true) && (
             <div className="newcomment-box_icons row justify-content-end p-3">
-              <div onClick={() => setIsUpdated(!isUpdated)} className="newcomment-box_icons--update mx-2 col-1">
+              <div onClick={() => setIsUpdated(!isUpdated)} className="newcomment-box_icons--update mx-2 col-1 icons-update-delete">
                 <FaPencilAlt aria_label="pencil" />
               </div>
               <div
-                className="newcomment-box_icons--delete mx-2 col-1"
+                className="newcomment-box_icons--delete mx-2 col-1 icons-update-delete"
                 onClick={() => {
                   if (window.confirm("Voulez-vous supprimer votre publication?")) deletePost();
                 }}

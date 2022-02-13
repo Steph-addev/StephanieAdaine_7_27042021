@@ -30,11 +30,11 @@ function AddComments({ postData, userData }) {
   };
 
   return (
-    <div className="addComment d-flex mt-3">
+    <div className="addComment mt-3">
       <form className="addComment_form d-flex mt-3" onSubmit={addOneComment}>
         {/*         <img src={userData.profileImage} className="addComment-image_profile" alt={userData.username}></img> */}
-        <input type="text" className="addComment_form--input" placeholder="Laisser un commentaire" value={text} onChange={(e) => setText(e.target.value)}></input>
-        <button type="submit">
+        <input type="text" className="addComment_form--input me-2 ps-3" placeholder="Commenter" value={text} onChange={(e) => setText(e.target.value)}></input>
+        <button type="submit" className="btn btn-danger">
           <FaPaperPlane />
         </button>
       </form>

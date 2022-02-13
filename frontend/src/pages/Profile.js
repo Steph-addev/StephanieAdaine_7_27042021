@@ -23,7 +23,7 @@ function Profile() {
   return (
     <Fragment>
       <Navbar />
-      <div className="profile-page container-fluid p-0 m-auto">
+      <div className="profile-page container-fluid p-0 m-auto mb-5">
         <Link to="/accueil" className="profile-icon d-flex align-items-baseline" title="Retour">
           <FaArrowLeft className="svg-arrow" aria-label="arrow-back" /> Retour
         </Link>

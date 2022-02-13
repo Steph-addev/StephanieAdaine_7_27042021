@@ -2,8 +2,6 @@
 import axios from "../api/axios";
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-// Import front visuals
-import { FaDoorOpen } from "react-icons/fa";
 
 function Logout() {
   const disconnect = async () =>
