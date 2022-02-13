@@ -10,8 +10,6 @@ import { Avatar } from "@mui/material";
 function NewComment({ comment, postData, userData }) {
   const [textUpdate, setTextUpdate] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
-  const userId = localStorage.getItem("user");
-  console.log(postData);
 
   const dataUpdate = {
     PostId: comment.PostId,
@@ -21,10 +19,6 @@ function NewComment({ comment, postData, userData }) {
 
   const isMatching = postData.id === comment.PostId;
   const commentMatch = userData.id === comment.UserId;
-  console.log();
-  console.log("Match userData.id avec userId du commentaire " + commentMatch);
-  console.log("userData.id " + userData.id);
-  console.log("comment.UserId " + comment.UserId);
 
   const updatePost = async () => {
     if (textUpdate) {
@@ -64,7 +58,7 @@ function NewComment({ comment, postData, userData }) {
   return (
     <Fragment>
       {isMatching && (
-        <div className="newcomment_content container">
+        <div className="newcomment_content container py-2">
           <div className="newcomment_content-box row">
             <div className="newcomment_content-box--image col-2">
               <Avatar src={comment.User.profileImage} className="newcomment-image_profile" alt="Photo de profil"></Avatar>
@@ -88,17 +82,17 @@ function NewComment({ comment, postData, userData }) {
             )}
           </div>
           {(commentMatch || userData.adminRole === true) && (
-            <div className="newcomment-box_icons row justify-content-end">
-              <div onClick={() => setIsUpdated(!isUpdated)} className="newcomment-box_icons--update col-1">
-                <FaPencilAlt />
+            <div className="newcomment-box_icons row justify-content-end p-3">
+              <div onClick={() => setIsUpdated(!isUpdated)} className="newcomment-box_icons--update mx-2 col-1">
+                <FaPencilAlt aria_label="pencil" />
               </div>
               <div
-                className="newcomment-box_icons--delete col-1"
+                className="newcomment-box_icons--delete mx-2 col-1"
                 onClick={() => {
                   if (window.confirm("Voulez-vous supprimer votre publication?")) deletePost();
                 }}
               >
-                <FaTrashAlt />
+                <FaTrashAlt aria_label="trash" />
               </div>
             </div>
           )}

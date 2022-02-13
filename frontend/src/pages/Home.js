@@ -1,5 +1,5 @@
 //Import mandatories to run the app
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import axios from "../api/axios";
 //Import Components
 import Feed from "../components/Feed";
@@ -39,30 +39,28 @@ function Home() {
     fetchUsers();
   }, []);
 
-  const Name = users
-    .map((user) => {
-      if (user.id == parseInt(userId)) return user.username;
-    })
-    .join("");
+  const Name = users.map((user) => {
+    if (user.id === parseInt(userId)) return user.username;
+  });
 
   return (
-    <div>
-      <Navbar />
-      <div className="container-fluid">
-        <h1 className="p-4">Bienvenue {Name}</h1>
-        <div className="home row">
-          <div className="col-1">
-            <Leftbar />
-          </div>
-          <div className="col-8">
-            <Feed users={users} />
-          </div>
-          <div className="Friends col-3">
-            <Colleagues users={users} />
+    <Fragment>
+      <div>
+        <Navbar />
+        <div className="home-page container-fluid">
+          <Leftbar />
+          <h1 className="p-4 mb-0 text-center">Bienvenue {Name}</h1>
+          <div className="home row">
+            <div className="col-9">
+              <Feed users={users} />
+            </div>
+            <div className="Colleagues col-3 pt-3">
+              <Colleagues users={users} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }
 

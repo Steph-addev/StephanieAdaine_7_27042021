@@ -1,6 +1,9 @@
 .profileForm {
   .profileForm-box {
     &_image {
+      @media only screen and (max-width: 767px) {
+        flex-direction: column;
+      }
       &--picture {
         width: 200px;
         height: 200px;
@@ -19,6 +22,13 @@
         border: 2px solid rgb(211, 181, 181);
         background-color: rgb(248, 222, 222);
         border-radius: 20px;
+        max-width: 350px;
+      }
+      &--dataChange {
+        @media only screen and (max-width: 768px) {
+          flex-direction: column;
+          align-content: center;
+        }
       }
       &--dataChange-textarea {
         border: 2px solid rgb(211, 181, 181);

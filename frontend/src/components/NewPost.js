@@ -1,12 +1,10 @@
 //Import mandatories to run the App
-import React, { useState, useEffect, Fragment, useContext } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import axios from "../api/axios";
-import { AuthContext } from "../context/AuthContext";
 //Import Components
 import Comments from "./Comments";
 //Import front visuals
 import { format } from "timeago.js";
-import { FaRegThumbsUp } from "react-icons/fa";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
@@ -14,7 +12,6 @@ import { Avatar } from "@mui/material";
 
 //Function to get all the info of posts after the POST
 function NewPost({ postData, users }) {
-  const { user } = useContext(AuthContext);
   const [dataUser, setDataUser] = useState({});
   const [isUpdated, setIsUpdated] = useState(false);
   const [textUpdate, setTextUpdate] = useState(null);
@@ -22,7 +19,7 @@ function NewPost({ postData, users }) {
   const userId = localStorage.getItem("user");
   const isAdmin = localStorage.getItem("admin");
 
-  const isMatching = postData.UserId == parseInt(userId);
+  const isMatching = postData.UserId === parseInt(userId);
 
   //Server adress to get the pictures stored in: backend/images
   const PF = process.env.REACT_APP_PICTURES_URL;
@@ -70,18 +67,17 @@ function NewPost({ postData, users }) {
       })
       .then((res) => {
         setDataUser(res.data);
-        console.log(dataUser);
       })
       .catch((err) => {});
-  }, []);
+  }, [userId]);
 
   return (
     <Fragment>
-      <div className="newpost justify-content-center p-3">
+      <div className="newpost-news card-post  container-fluid justify-content-center p-0">
         <div
           className={users
             .map((user) => {
-              if (user.id === postData.UserId) return user.adminRole === true ? "newpost-news-admin container px-4 py-4" : "newpost-news container px-4 py-4";
+              if (user.id === postData.UserId) return user.adminRole === true ? "card-post card-post_admin container-fluid p-3" : "card-post card-post_users container-fluid p-3";
               else return null;
             })
             .join("")}
@@ -100,14 +96,14 @@ function NewPost({ postData, users }) {
               ></Avatar>
             </div>
             <div className="col-6 ">
-              <p className="mb-0">
+              <h3 className="mb-0">
                 {users
                   .map((user) => {
                     if (user.id === postData.UserId) return user.username;
                     else return null;
                   })
                   .join("")}
-              </p>
+              </h3>
               <p>{format(postData.createdAt)}</p>
             </div>
           </div>
@@ -124,25 +120,26 @@ function NewPost({ postData, users }) {
                   </div>
                 </div>
               )}
-              {postData.images !== "" ? <img src={postData.images} alt="photo postée par l'utilisateur" className="newpost-news_image"></img> : ""}
+              {postData.images !== "" ? <img src={postData.images} alt={postData.User.username} className="newpost-news_image"></img> : ""}
               {(isMatching || isAdmin === "true") && (
-                <div className="button-container row justify-content-end">
-                  <button onClick={() => setIsUpdated(!isUpdated)} className="newpost-box_icons--update col-1">
-                    <FaPencilAlt />
+                <div className="button-container row justify-content-end p-3">
+                  <button aria-label="modify" onClick={() => setIsUpdated(!isUpdated)} className="newpost-box_icons--update p-2 mx-2 col-1">
+                    <FaPencilAlt aria-label="pencil" />
                   </button>
                   <button
-                    className="newpost-box_icons--update col-1"
+                    aria-label="delete"
+                    className="newpost-box_icons--update p-2 mx-2 col-1"
                     onClick={() => {
                       if (window.confirm("Voulez-vous supprimer votre publication?")) deletePost();
                     }}
                   >
-                    <FaTrashAlt />
+                    <FaTrashAlt aria-label="trash" />
                   </button>
                 </div>
               )}
             </div>
             <div className="row newpost-news_interactions">
-              <button className="col-4 d-flex newpost_comment" onClick={() => setShowComments(!showComments)}>
+              <button aria-label="comments" className="col-4 d-flex newpost_comment mt-3" onClick={() => setShowComments(!showComments)}>
                 <FaRegCommentAlt />
                 <p>Commenter</p>
               </button>

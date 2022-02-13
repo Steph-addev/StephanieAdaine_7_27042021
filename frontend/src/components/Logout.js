@@ -1,6 +1,7 @@
 //Import mandatories to run the app
 import axios from "../api/axios";
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 // Import front visuals
 import { FaDoorOpen } from "react-icons/fa";
 
@@ -14,15 +15,14 @@ function Logout() {
       })
       .then(() => {
         localStorage.clear();
-        window.location = "/";
       })
       .catch((err) => console.log(err));
 
   return (
     <Fragment>
-      <a className="nav-item nav-link" onClick={disconnect}>
-        <FaDoorOpen title="Se déconnecter" />
-      </a>
+      <Link to="/" className="nav-item nav-link" onClick={disconnect}>
+        Se déconnecter
+      </Link>
     </Fragment>
   );
 }

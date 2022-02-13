@@ -3,7 +3,8 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const path = require("path");
-const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+
 require("dotenv").config();
 
 //Import files & folders
@@ -24,6 +25,7 @@ let corsOptions = {
 
 //Automatic connection to database with sequelize
 const { sequelize } = require("./models");
+
 sequelize
   .authenticate()
   .then(() => {
@@ -36,9 +38,15 @@ sequelize
 //What we need to run the app
 const app = express();
 
+app.use(helmet());
 app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});
 app.use(morgan("dev"));
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

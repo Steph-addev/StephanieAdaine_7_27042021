@@ -1,7 +1,6 @@
 // Import mandatories to succeed
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useState } from "react";
 import axios from "../api/axios";
-import { AuthContext } from "../context/AuthContext";
 //Import front materials
 import { FaImage } from "react-icons/fa";
 import { Avatar } from "@mui/material";
@@ -38,11 +37,13 @@ function AddPost({ users }) {
       data.append("UserId", userId);
       data.append("content", text);
       data.append("image", "image");
+      console.log("test avec");
     } else {
       data.append("UserId", userId);
       data.append("content", text);
+      console.log("test sans image");
     }
-
+    console.log("ijgfdojgodifg");
     if (!text) {
       alert("Le texte de votre publication ne peut pas être vide");
     } else {
@@ -74,12 +75,12 @@ function AddPost({ users }) {
       {/*       <div className="addPost-content-empty">
         <Snackbar />
       </div> */}
-      <div className="addPost-box container-fluid justify-content-center">
+      <div className="addPost-box card-post container-fluid justify-content-center mt-0">
         <div className="row pt-3">
           <Avatar
             src={users
               .map((userData) => {
-                if (userData.id == parseInt(userId)) return userData.profileImage ? userData.profileImage : PF + "profile-picture.png";
+                if (userData.id === parseInt(userId)) return userData.profileImage ? userData.profileImage : PF + "profile-picture.png";
                 else return null;
               })
               .join("")}
@@ -87,12 +88,12 @@ function AddPost({ users }) {
             alt={"photo de profil"}
           ></Avatar>
           <div className="col-8">
-            <p>Exprimez-vous</p>
+            <h2>Exprimez-vous</h2>
           </div>
         </div>
         <form onSubmit={addOnePost} id="addPost-box_form container row justify-content-center">
           <div className="row justify-content-center">
-            <TextField id="standard-basic" label="Quoi de neuf?" variant="standard" type="text" placeholder="Quoi de neuf?" className="my-3 addPost-box_publish--content" style={{ width: 300, backgroundColor: "#f2f2f2" }} value={text} onChange={(e) => setText(e.target.value)} />
+            <TextField id="standard-basic" multiline variant="standard" type="text" placeholder="Quoi de neuf?" className="my-3 addPost-box_publish--content" style={{ width: 300, backgroundColor: "#f2f2f2" }} value={text} onChange={(e) => setText(e.target.value)} />
           </div>
           <div className="row addPost-box_publish--image-box">{postPicture ? <img src={postPicture} alt="" className="addPost-box_publish--image row" /> : null}</div>
           <div className="row py-3">
