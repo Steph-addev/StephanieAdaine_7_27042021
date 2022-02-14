@@ -59,7 +59,7 @@ function Signup() {
     <Fragment>
       <section className="login-box container w-100">
         <div className="login-box_registration container justify-content-center p-5 pt-sm-1">
-          <form onSubmit={registrerNewUser}>
+          <form className="login-box_registration-form" onSubmit={registrerNewUser}>
             <div className="login-box_registration--username row form-group">
               <label>Nom de profil:</label>
               <TextField required id="username" label="Required" className="login-box__connection--back" type="text" value={username} onChange={(e) => setUsername(e.target.value)} />

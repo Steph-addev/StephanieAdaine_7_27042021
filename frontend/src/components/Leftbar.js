@@ -42,7 +42,7 @@ export default function SwipeableTemporaryDrawer() {
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button aria-label="open" onClick={toggleDrawer(anchor, true)} className="btn-sidebars p-0 justify-content-start">
-            <FaRegArrowAltCircleRight aria-label="arrow" />
+            <FaRegArrowAltCircleRight aria-label="arrow" className="arrowLeft" />
           </Button>
           <SwipeableDrawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)} onOpen={toggleDrawer(anchor, true)}>
             {list(anchor)}

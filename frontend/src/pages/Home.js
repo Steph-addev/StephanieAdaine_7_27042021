@@ -52,10 +52,10 @@ function Home() {
           <Leftbar />
           <h1 className="p-4 mb-0 text-center">Bienvenue {Name}</h1>
           <div className="home row">
-            <section className="col-10 col-sm-9">
+            <section className="col-12 col-sm-9 col-md-8">
               <Feed users={users} />
             </section>
-            <section className="Colleagues col-2 col-sm-3 pt-3">
+            <section className="Colleagues col-sm-3 pt-3 col-md-4">
               <Colleagues users={users} />
             </section>
           </div>
