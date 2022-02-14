@@ -148,7 +148,7 @@ function ProfileForm() {
               {isUpdated === false && <p>{profileUser.profileDesc}</p>}
               {isUpdated && (
                 <div className="profile-box_update">
-                  <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Minimum 3 rows" style={{ width: 300, borderRadius: 20, padding: 10 }} defaultValue={profileUser.profileDesc} onChange={(e) => setProfileBio(e.target.value)} />
+                  <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Minimum 3 rows" style={{ borderRadius: 20, padding: 10 }} defaultValue={profileUser.profileDesc} onChange={(e) => setProfileBio(e.target.value)} />
                 </div>
               )}
             </div>
