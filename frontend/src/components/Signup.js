@@ -58,7 +58,7 @@ function Signup() {
   return (
     <Fragment>
       <section className="login-box container w-100">
-        <div className="login-box_registration container justify-content-center p-5">
+        <div className="login-box_registration container justify-content-center p-5 pt-sm-1">
           <form onSubmit={registrerNewUser}>
             <div className="login-box_registration--username row form-group">
               <label>Nom de profil:</label>

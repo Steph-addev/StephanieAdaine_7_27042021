@@ -15,7 +15,7 @@ const authsRoute = require("./routes/authRoutes");
 
 //Import variables
 let corsOptions = {
-  origin: "http://localhost:3000",
+  origin: process.env.CLIENT_URL,
   credentials: true,
   allowedHeaders: ["sessionId", "Content-Type", "Authorization"],
   exposedHeaders: ["sessionId"],

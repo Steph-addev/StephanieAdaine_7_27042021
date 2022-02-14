@@ -6,9 +6,7 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.HIDDEN_TOKEN);
     const userId = decodedToken.userId;
 
-    console.log(token);
-    console.log("authMidd:", userId);
-    console.log(decodedToken);
+    console.log("Vous êtes connecté!");
 
     if (req.body.userId && req.body.userId !== userId) throw "Invalid user ID";
     next();
