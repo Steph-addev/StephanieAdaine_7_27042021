@@ -30,7 +30,6 @@ function NewComment({ comment, postData, userData }) {
           },
         })
         .then((res) => {
-          console.log(res);
           setTextUpdate("");
           window.location.reload();
         })
@@ -48,7 +47,6 @@ function NewComment({ comment, postData, userData }) {
         },
       })
       .then((res) => {
-        console.log(res);
         window.location.reload();
       })
       .catch((err) => {
@@ -59,7 +57,7 @@ function NewComment({ comment, postData, userData }) {
   return (
     <Fragment>
       {isMatching && (
-        <div className="newcomment_content container py-2">
+        <div className={comment.User.adminRole === true ? "newcomment_content container py-2 newcomment_content-box_admin" : "newcomment_content container py-2 newcomment_content-box_user"}>
           <div className="newcomment_content-box row">
             <div className="newcomment_content-box--image col-3 col-sm-2 pe-3">
               <Avatar src={comment.User.profileImage} className="newcomment-image_profile" alt="Photo de profil"></Avatar>

@@ -23,8 +23,7 @@ exports.createPost = async (req, res) => {
     console.log(req.file);
     return res.status(200).json(post);
   } catch (err) {
-    const errors = createPostsErrors;
-    return res.status(400).send(errors);
+    return res.status(400).send(err);
   }
 };
 

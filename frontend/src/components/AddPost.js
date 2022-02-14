@@ -43,7 +43,7 @@ function AddPost({ users }) {
       data.append("content", text);
       console.log("test sans image");
     }
-    console.log("ijgfdojgodifg");
+
     if (!text) {
       alert("Le texte de votre publication ne peut pas être vide");
     } else {
@@ -59,7 +59,6 @@ function AddPost({ users }) {
         data: data,
       })
         .then((response) => {
-          console.log(response.data);
           setText("");
           setPostPicture("");
           window.location.reload();
@@ -72,9 +71,6 @@ function AddPost({ users }) {
 
   return (
     <Fragment>
-      {/*       <div className="addPost-content-empty">
-        <Snackbar />
-      </div> */}
       <div className="addPost-box card-post container-fluid justify-content-center mt-0">
         <div className="row pt-3 align-items">
           <Avatar

@@ -48,6 +48,16 @@ button {
   box-shadow: 5px 5px 15px 2px #000000;
 }
 
+.errorPage {
+  height: 100vh;
+  font-size: 30px;
+  flex-wrap: wrap;
+}
+.error4 {
+  font-size: 60px;
+  color: rgb(22, 67, 150);
+}
+
 // Pages max width when big screen
 @media only screen and (min-width: 1440px) {
   .home-page,

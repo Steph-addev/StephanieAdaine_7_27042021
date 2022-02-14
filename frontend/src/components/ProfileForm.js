@@ -18,7 +18,6 @@ function ProfileForm() {
 
   const updateProfilePicture = (e) => {
     e.preventDefault();
-    console.log("function uploadProfilePicture");
     let myform = e.target;
     let data = new FormData(myform);
     data.append("UserId", userId);
@@ -35,7 +34,6 @@ function ProfileForm() {
       data: data,
     })
       .then((response) => {
-        console.log(response.data);
         window.location.reload();
         setIsUpdated(true);
       })
@@ -76,7 +74,6 @@ function ProfileForm() {
           },
         })
         .then((res) => {
-          console.log(res);
           window.location.reload();
           console.log("L'utilisateur a été modifé");
         })
@@ -95,7 +92,6 @@ function ProfileForm() {
       })
       .then((user) => {
         setProfileUser(user.data);
-        console.log(user.data);
       })
       .catch((err) => {
         console.log(err);
@@ -105,7 +101,7 @@ function ProfileForm() {
   return (
     <Fragment>
       <div className="profileForm container p-0">
-        <h1 className="profileForm-title row justify-content-center">Profil de {profileUser.username}</h1>
+        <h1 className="profileForm-title row justify-content-center p-4 mb-0 text-center">Profil de {profileUser.username}</h1>
         <div className="profileForm-box row m-5">
           <form onSubmit={updateProfilePicture} id="form" className="container m-auto">
             <div className="row profileForm-box_image justify-content-center">

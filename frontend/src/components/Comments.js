@@ -7,8 +7,6 @@ import NewComment from "./NewComment";
 
 function Comments({ postData, userData }) {
   const [newComment, setNewComment] = useState([]);
-  console.log(newComment);
-  console.log(postData.id);
 
   useEffect(() => {
     const fetchComments = async () => {
