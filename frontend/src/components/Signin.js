@@ -24,7 +24,7 @@ function Signin() {
   //Error handling
   let errorMsg = document.getElementById("errorMessage");
   if (error) {
-    errorMsg.innerHTML = "Erreur: veuillez vérifier que votre email et votre mot de passe sont bien correctes";
+    errorMsg.innerHTML = "Erreur: utilisateur non trouvé, veuillez vérifier que votre email et votre mot de passe sont bien correctes";
   }
 
   // On click, we enter in the authorized route and save the authentication

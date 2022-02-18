@@ -1,8 +1,6 @@
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const express = require("express");
-const router = express.Router();
 const { loginErrors, registrerErrors } = require("../utils/errorsUtils");
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 

@@ -66,6 +66,7 @@ function NewPost({ postData, users }) {
       .catch((err) => {});
   };
 
+  //Uniquement pour faire passer le props dans le composant "Comments"
   useEffect(() => {
     axios
       .get(`/users/${userId}`, {
